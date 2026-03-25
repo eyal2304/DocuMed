@@ -1,0 +1,4576 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' https://cdn.jsdelivr.net https://*.supabase.co; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src https://*.supabase.co https://cdn.jsdelivr.net;">
+<title>DocuMed – ניהול מחלות כרוניות</title>
+<style>
+  :root {
+    --font-sans: ui-sans-serif, system-ui, sans-serif;
+    --color-teal-400: oklch(77.7% .152 181.912);
+    --color-teal-500: oklch(70.4% .14 182.503);
+    --color-neutral-50: oklch(98.5% 0 0);
+    --color-neutral-100: oklch(97% 0 0);
+    --color-neutral-200: oklch(92.2% 0 0);
+    --color-neutral-300: oklch(87% 0 0);
+    --color-neutral-400: oklch(70.8% 0 0);
+    --color-neutral-500: oklch(55.6% 0 0);
+    --color-neutral-600: oklch(43.9% 0 0);
+    --color-neutral-700: oklch(37.1% 0 0);
+    --color-neutral-800: oklch(26.9% 0 0);
+    --color-neutral-900: oklch(20.5% 0 0);
+    --color-red-500: oklch(63.7% .237 25.331);
+    --color-red-600: oklch(54% .22 25);
+    --radius-none: 0;
+    --radius-sm: .3rem;
+    --radius-xl: .75rem;
+    --radius-2xl: 1rem;
+    --radius-3xl: 1.5rem;
+    --radius-pill: 9999px;
+    --radius-circle: 50%;
+    --shadow-focus: 0 0 0 3px var(--color-teal-focus);
+
+    --bg-blue-soft: oklch(94% .04 240);
+    --bg-green-soft: oklch(94% .045 155);
+    --bg-purple-soft: oklch(94% .04 290);
+    --bg-pink-soft: oklch(94% .04 350);
+    --bg-orange-soft: oklch(95% .04 60);
+    --bg-teal-soft: oklch(95% .05 185);
+
+    --shadow-sm: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+    --shadow-md: 0 4px 12px rgba(0,0,0,.07), 0 2px 6px rgba(0,0,0,.04);
+    --shadow-lg: 0 8px 24px rgba(0,0,0,.09), 0 3px 8px rgba(0,0,0,.05);
+
+    /* כפתורים — גוון כהה יותר מ-teal-500 להבטחת ניגודיות 4.5:1 על רקע לבן */
+    --color-teal-btn:  oklch(62% .14 182);
+
+    /* Onboarding analyzing step */
+    --ob-dot-size:   .75rem;
+    --ob-dot-color:  var(--color-teal-500);
+    --ob-scan-color: var(--color-teal-400);
+
+    /* Base */
+    --color-white: oklch(100% 0 0);
+    --color-transparent: transparent;
+
+    /* Auth */
+    --color-red-50:     oklch(96% .025 25);
+    --color-red-100:    oklch(90% .05 25);
+    --color-teal-focus: oklch(88% .08 182);
+
+    /* Avatar */
+    --avatar-gradient-end: oklch(70% .12 250);
+
+    /* Card color-variant borders */
+    --border-blue:   oklch(87% .04 240);
+    --border-green:  oklch(87% .05 155);
+    --border-purple: oklch(87% .04 290);
+    --border-pink:   oklch(87% .04 350);
+    --border-orange: oklch(88% .04 60);
+    --border-teal:   oklch(87% .05 185);
+
+    /* Badges */
+    --badge-teal-bg:    oklch(88% .09 182);
+    --badge-teal-text:  oklch(35% .1 182);
+    --badge-red-bg:     oklch(93% .06 25);
+    --badge-red-text:   oklch(45% .18 25);
+    --badge-purple-bg:  oklch(90% .06 290);
+    --badge-purple-text:oklch(38% .1 290);
+    --badge-green-bg:   oklch(88% .07 145);
+    --badge-green-text: oklch(36% .1 145);
+    --badge-orange-bg:  oklch(92% .07 60);
+    --badge-orange-text:oklch(42% .12 60);
+
+    /* Hero card */
+    --hero-bg-from:      oklch(30% .12 182);
+    --hero-bg-to:        oklch(22% .1 220);
+    --hero-card-title:   oklch(80% .08 182);
+    --hero-badge-bg:     oklch(45% .14 182);
+
+    /* Pulse dot */
+    --pulse-dot-color: oklch(85% .18 145);
+
+    /* Medication time badges */
+    --time-morning-bg:   oklch(94% .06 75);
+    --time-morning-text: oklch(42% .12 75);
+    --time-noon-bg:      oklch(92% .07 60);
+    --time-noon-text:    oklch(42% .12 60);
+    --time-evening-bg:   oklch(90% .06 280);
+    --time-evening-text: oklch(38% .1 280);
+    --time-twice-bg:     oklch(91% .06 200);
+    --time-twice-text:   oklch(38% .1 200);
+
+    /* Rights icon backgrounds */
+    --icon-purple-bg: oklch(90% .06 290);
+    --icon-green-bg:  oklch(88% .07 145);
+    --icon-blue-bg:   oklch(90% .05 240);
+    --icon-orange-bg: oklch(92% .07 60);
+
+    /* Status chips */
+    --status-active-bg:   oklch(88% .07 145);
+    --status-active-text: oklch(36% .1 145);
+    --status-pending-bg:  oklch(92% .07 60);
+    --status-pending-text:oklch(42% .12 60);
+    --status-new-bg:      oklch(90% .06 240);
+    --status-new-text:    oklch(38% .1 240);
+
+    /* Document item variants */
+    --doc-needed-border: oklch(87% .04 350);
+    --doc-needed-bg:     oklch(97% .015 350);
+    --doc-ready-border:  oklch(87% .05 155);
+    --doc-ready-bg:      oklch(97% .02 155);
+
+    /* Alert card */
+    --alert-bg:         oklch(97% .02 25);
+    --alert-border:     oklch(88% .07 25);
+    --alert-title-text: oklch(40% .15 25);
+    --alert-body-text:  oklch(48% .1 25);
+
+    /* Stat value colors */
+    --stat-blue-text:   oklch(40% .12 240);
+    --stat-purple-text: oklch(38% .1 290);
+    --stat-red-text:    oklch(45% .18 25);
+    --stat-green-text:  oklch(36% .1 145);
+
+    /* Medication progress bar */
+    --meds-bar-from: oklch(70% .1 155);
+    --meds-bar-to:   oklch(60% .12 145);
+
+    /* Appointment specialty colors (optometry = purple hue, family = pink hue) */
+    --appt-purple-bg:   oklch(94% .04 280);
+    --appt-purple-text: oklch(38% .1 290);
+    --appt-pink-bg:     oklch(94% .04 350);
+    --appt-pink-text:   oklch(38% .1 350);
+
+    /* Documents summary panel */
+    --docs-ready-panel-bg:      oklch(88% .07 145);
+    --docs-ready-panel-num:     oklch(28% .1 145);
+    --docs-ready-panel-label:   oklch(38% .1 145);
+    --docs-needed-panel-bg:     oklch(93% .06 25);
+    --docs-needed-panel-num:    oklch(38% .18 25);
+    --docs-needed-panel-label:  oklch(48% .15 25);
+
+    /* Status text used inside modals / inline */
+    --status-ok-text:      oklch(36% .1 145);
+    --status-warning-text: oklch(45% .18 25);
+    --status-pending-inline: oklch(42% .12 60);
+    --status-new-inline:     oklch(38% .1 240);
+
+    /* Countdown chip (white-transparent overlays on dark hero) */
+    --countdown-chip-bg:     rgba(255,255,255,.13);
+    --countdown-chip-border: rgba(255,255,255,.18);
+
+    /* Modal overlay scrim */
+    --modal-overlay-bg: rgba(0,0,0,.35);
+
+    /* Upload component */
+    --upload-selected-border: oklch(87% .05 185);
+
+    /* Danger button */
+    --btn-danger-hover-bg: oklch(97% .015 25);
+
+    /* Reminder badge */
+    --reminder-badge-color: oklch(38% .1 240);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--color-neutral-100);
+    color: var(--color-neutral-800);
+    min-height: 100vh;
+    direction: rtl;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--color-white);
+    border-bottom: 1px solid var(--color-neutral-200);
+    padding: 0 1.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow-sm);
+  }
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 4rem;
+    gap: 1rem;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--color-neutral-900);
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+  .logo-icon {
+    width: 2rem;
+    height: 2rem;
+    background: linear-gradient(135deg, var(--color-teal-400), var(--color-teal-500));
+    border-radius: var(--radius-xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .9rem;
+  }
+  .patient-chip {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    background: var(--color-neutral-100);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-pill);
+    padding: .3rem .85rem;
+    font-size: .8rem;
+    color: var(--color-neutral-600);
+    font-weight: 500;
+  }
+  .patient-chip .avatar {
+    width: 1.6rem;
+    height: 1.6rem;
+    background: linear-gradient(135deg, var(--color-teal-400), var(--avatar-gradient-end));
+    border-radius: var(--radius-circle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .7rem;
+    color: var(--color-white);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  /* ── NAV TABS ── */
+  .nav-bar {
+    background: var(--color-white);
+    border-bottom: 1px solid var(--color-neutral-200);
+    padding: 0 1.5rem;
+  }
+  .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-inner::-webkit-scrollbar { display: none; }
+  .nav-tab {
+    padding: .75rem 1.1rem;
+    font-size: .875rem;
+    font-weight: 500;
+    color: var(--color-neutral-500);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: color .18s, border-color .18s;
+    user-select: none;
+    background: none;
+    border-block-start: none;
+    border-inline: none;
+    font-family: var(--font-sans);
+    direction: rtl;
+  }
+  .nav-tab:hover { color: var(--color-neutral-700); }
+  .nav-tab:focus-visible {
+    outline: 2px solid var(--color-teal-500);
+    outline-offset: -2px;
+  }
+  .nav-tab.active {
+    color: var(--color-teal-500);
+    border-block-end-color: var(--color-teal-500);
+    font-weight: 600;
+  }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.5rem;
+  }
+
+  /* ── SECTION ── */
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* ── BENTO GRID ── */
+  .bento-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1rem;
+  }
+
+  /* ── CARD BASE ── */
+  .card {
+    background: var(--color-white);
+    border-radius: var(--radius-2xl);
+    padding: 1.25rem;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-neutral-200);
+    transition: transform .2s, box-shadow .2s;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+  .card.blue  { background: var(--bg-blue-soft);   border-color: var(--border-blue); }
+  .card.green { background: var(--bg-green-soft);  border-color: var(--border-green); }
+  .card.purple{ background: var(--bg-purple-soft); border-color: var(--border-purple); }
+  .card.pink  { background: var(--bg-pink-soft);   border-color: var(--border-pink); }
+  .card.orange{ background: var(--bg-orange-soft); border-color: var(--border-orange); }
+  .card.teal  { background: var(--bg-teal-soft);   border-color: var(--border-teal); }
+
+  /* span helpers */
+  .col-span-4  { grid-column: span 4; }
+  .col-span-5  { grid-column: span 5; }
+  .col-span-6  { grid-column: span 6; }
+  .col-span-7  { grid-column: span 7; }
+  .col-span-8  { grid-column: span 8; }
+  .col-span-12 { grid-column: span 12; }
+
+  /* ── BADGE ── */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .25rem;
+    padding: .2rem .55rem;
+    border-radius: var(--radius-pill);
+    font-size: .7rem;
+    font-weight: 600;
+    letter-spacing: .01em;
+  }
+  .badge-teal   { background: var(--badge-teal-bg);   color: var(--badge-teal-text); }
+  .badge-red    { background: var(--badge-red-bg);    color: var(--badge-red-text); }
+  .badge-purple { background: var(--badge-purple-bg); color: var(--badge-purple-text); }
+  .badge-green  { background: var(--badge-green-bg);  color: var(--badge-green-text); }
+  .badge-orange { background: var(--badge-orange-bg); color: var(--badge-orange-text); }
+
+  /* ── CARD HEADER ── */
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: .85rem;
+    gap: .5rem;
+  }
+  .card-icon-title {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+  .card-icon {
+    font-size: 1.1rem;
+    line-height: 1;
+  }
+  .card-title {
+    font-size: .8rem;
+    font-weight: 600;
+    color: var(--color-neutral-500);
+    text-transform: uppercase;
+    letter-spacing: .04em;
+  }
+
+  /* ── NEXT APPOINTMENT HERO ── */
+  .hero-card {
+    background: linear-gradient(135deg, var(--hero-bg-from) 0%, var(--hero-bg-to) 100%);
+    color: var(--color-white);
+    border-color: transparent;
+  }
+  .hero-card:hover { box-shadow: var(--shadow-lg); }
+  .hero-card .card-title { color: var(--hero-card-title); }
+  .hero-card .badge-teal { background: var(--hero-badge-bg); color: var(--color-white); }
+  .hero-appointment-date {
+    font-size: 1.9rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: .25rem;
+    letter-spacing: -.02em;
+  }
+  .hero-appointment-time {
+    font-size: 1rem;
+    font-weight: 500;
+    opacity: .8;
+    margin-bottom: 1rem;
+  }
+  .hero-details {
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+  }
+  .hero-detail-row {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: .875rem;
+    opacity: .9;
+  }
+  .hero-detail-row span:first-child { font-size: .9rem; }
+  .countdown-chip {
+    margin-top: 1.1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    background: var(--countdown-chip-bg);
+    border: 1px solid var(--countdown-chip-border);
+    border-radius: var(--radius-pill);
+    padding: .3rem .8rem;
+    font-size: .78rem;
+    font-weight: 600;
+    backdrop-filter: blur(4px);
+  }
+  .pulse-dot {
+    width: .45rem;
+    height: .45rem;
+    background: var(--pulse-dot-color);
+    border-radius: var(--radius-circle);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: .5; transform: scale(1.3); }
+  }
+
+  /* ── STAT CARD ── */
+  .stat-value {
+    font-size: 2.2rem;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: .2rem;
+    letter-spacing: -.03em;
+  }
+  .stat-label {
+    font-size: .8rem;
+    color: var(--color-neutral-500);
+    font-weight: 500;
+  }
+  .stat-sub {
+    font-size: .72rem;
+    color: var(--color-neutral-400);
+    margin-top: .15rem;
+  }
+
+  /* ── APPOINTMENT LIST ── */
+  .appt-list { display: flex; flex-direction: column; gap: .7rem; }
+  .appt-item {
+    display: flex;
+    align-items: center;
+    gap: .85rem;
+    padding: .75rem;
+    background: var(--color-white);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--color-neutral-200);
+    transition: background .15s, box-shadow .15s;
+  }
+  .appt-item:hover { background: var(--color-neutral-50); box-shadow: var(--shadow-sm); }
+  .appt-date-block {
+    text-align: center;
+    background: var(--bg-teal-soft);
+    border-radius: var(--radius-xl);
+    padding: .35rem .55rem;
+    min-width: 3rem;
+    flex-shrink: 0;
+  }
+  .appt-day { font-size: 1.1rem; font-weight: 800; color: var(--color-teal-500); line-height: 1; }
+  .appt-month { font-size: .65rem; font-weight: 600; color: var(--color-neutral-500); }
+  .appt-info { flex: 1; min-width: 0; }
+  .appt-doctor { font-size: .88rem; font-weight: 600; color: var(--color-neutral-800); }
+  .appt-meta { font-size: .75rem; color: var(--color-neutral-500); margin-top: .1rem; }
+  .appt-time { font-size: .8rem; font-weight: 600; color: var(--color-neutral-600); text-align: end; flex-shrink: 0; direction: ltr; /* ltr: time/number display */ }
+
+  /* ── MEDICATION ── */
+  .med-list { display: flex; flex-direction: column; gap: .6rem; }
+  .med-item {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding: .7rem .85rem;
+    background: var(--color-white);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--color-neutral-200);
+    transition: background .15s;
+  }
+  .med-item:hover { background: var(--color-neutral-50); }
+  .med-checkbox {
+    width: 1.1rem;
+    height: 1.1rem;
+    border-radius: var(--radius-sm);
+    border: 2px solid var(--color-neutral-300);
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+    flex-shrink: 0;
+    position: relative;
+  }
+  .med-checkbox:checked {
+    background: var(--color-teal-500);
+    border-color: var(--color-teal-500);
+  }
+  .med-checkbox:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    inset-inline-start: 50%; /* מרכוז גיאומטרי של סימן ה-✓ */
+    transform: translate(-50%, -50%);
+    color: var(--color-white);
+    font-size: .65rem;
+    font-weight: 700;
+  }
+  .med-info { flex: 1; }
+  .med-name { font-size: .88rem; font-weight: 600; color: var(--color-neutral-800); }
+  .med-dosage { font-size: .75rem; color: var(--color-neutral-500); margin-top: .1rem; }
+  .med-time-badge {
+    font-size: .7rem;
+    font-weight: 600;
+    padding: .18rem .5rem;
+    border-radius: var(--radius-pill);
+    flex-shrink: 0;
+  }
+  .time-morning { background: var(--time-morning-bg); color: var(--time-morning-text); }
+  .time-noon    { background: var(--time-noon-bg);    color: var(--time-noon-text); }
+  .time-evening { background: var(--time-evening-bg); color: var(--time-evening-text); }
+  .time-twice   { background: var(--time-twice-bg);   color: var(--time-twice-text); }
+
+  /* ── RIGHTS ── */
+  .rights-list { display: flex; flex-direction: column; gap: .65rem; }
+  .right-item {
+    display: flex;
+    align-items: flex-start;
+    gap: .75rem;
+    padding: .8rem;
+    background: var(--color-white);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--color-neutral-200);
+    transition: background .15s;
+    cursor: pointer;
+  }
+  .right-item:hover { background: var(--color-neutral-50); }
+  .right-icon-wrap {
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: var(--radius-xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .right-icon-wrap.purple { background: var(--icon-purple-bg); }
+  .right-icon-wrap.green  { background: var(--icon-green-bg); }
+  .right-icon-wrap.blue   { background: var(--icon-blue-bg); }
+  .right-icon-wrap.orange { background: var(--icon-orange-bg); }
+  .right-info { flex: 1; }
+  .right-name { font-size: .875rem; font-weight: 600; color: var(--color-neutral-800); }
+  .right-desc { font-size: .75rem; color: var(--color-neutral-500); margin-top: .15rem; line-height: 1.4; }
+  .right-status {
+    font-size: .7rem;
+    font-weight: 600;
+    padding: .18rem .5rem;
+    border-radius: var(--radius-pill);
+    align-self: flex-start;
+    flex-shrink: 0;
+  }
+  .status-active   { background: var(--status-active-bg);   color: var(--status-active-text); }
+  .status-pending  { background: var(--status-pending-bg);  color: var(--status-pending-text); }
+  .status-new      { background: var(--status-new-bg);      color: var(--status-new-text); }
+
+  /* ── DOCUMENTS ── */
+  .docs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: .65rem;
+  }
+  .doc-item {
+    display: flex;
+    flex-direction: column;
+    gap: .35rem;
+    padding: .85rem;
+    background: var(--color-white);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--color-neutral-200);
+    cursor: pointer;
+    transition: background .15s, box-shadow .15s;
+  }
+  .doc-item:hover { background: var(--color-neutral-50); box-shadow: var(--shadow-sm); }
+  .doc-icon { font-size: 1.4rem; margin-bottom: .1rem; }
+  .doc-name { font-size: .82rem; font-weight: 600; color: var(--color-neutral-800); }
+  .doc-status { font-size: .7rem; color: var(--color-neutral-500); }
+  .doc-item.needed { border-color: var(--doc-needed-border); background: var(--doc-needed-bg); }
+  .doc-item.ready  { border-color: var(--doc-ready-border);  background: var(--doc-ready-bg); }
+
+  /* ── PROGRESS RING ── */
+  .progress-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: .5rem;
+    padding: .5rem 0;
+  }
+  .ring-svg { transform: rotate(-90deg); }
+  .ring-bg   { fill: none; stroke: var(--color-neutral-200); stroke-width: 8; }
+  .ring-fill { fill: none; stroke: var(--color-teal-500); stroke-width: 8; stroke-linecap: round; transition: stroke-dashoffset .6s ease; }
+  .ring-label {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--color-neutral-800);
+  }
+  .ring-sub {
+    font-size: .75rem;
+    color: var(--color-neutral-500);
+    text-align: center;
+  }
+
+  /* ── ALERT CARD ── */
+  .alert-card {
+    background: var(--alert-bg);
+    border-color: var(--alert-border);
+  }
+  .alert-title { font-size: .95rem; font-weight: 700; color: var(--alert-title-text); margin-bottom: .3rem; }
+  .alert-body  { font-size: .8rem; color: var(--alert-body-text); line-height: 1.5; }
+
+  /* ── SECTION TITLE ── */
+  .section-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--color-neutral-800);
+    margin-bottom: 1rem;
+  }
+
+  /* ── FULL SCHEDULE ── */
+  .full-appt-list { display: flex; flex-direction: column; gap: .8rem; }
+  .full-appt-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.1rem;
+    background: var(--color-white);
+    border-radius: var(--radius-2xl);
+    border: 1px solid var(--color-neutral-200);
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow .18s, transform .18s;
+    cursor: pointer;
+  }
+  .full-appt-item:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
+  .full-appt-item.next-appt { border-inline-start: 3px solid var(--color-teal-500); }
+  .appt-date-big {
+    text-align: center;
+    background: var(--bg-teal-soft);
+    border-radius: var(--radius-xl);
+    padding: .5rem .7rem;
+    min-width: 3.5rem;
+    flex-shrink: 0;
+  }
+  .appt-date-big .day  { font-size: 1.4rem; font-weight: 800; color: var(--color-teal-500); line-height: 1; }
+  .appt-date-big .mon  { font-size: .72rem; font-weight: 600; color: var(--color-neutral-500); }
+  .full-appt-info { flex: 1 }
+  .full-appt-doctor { font-size: 1rem; font-weight: 700; color: var(--color-neutral-800); }
+  .full-appt-spec   { font-size: .8rem; color: var(--color-teal-500); font-weight: 500; margin-bottom: .2rem; }
+  .full-appt-meta   { font-size: .78rem; color: var(--color-neutral-500); }
+  .full-appt-side   { text-align: end; flex-shrink: 0; }
+  .full-appt-time   { font-size: .9rem; font-weight: 700; color: var(--color-neutral-700); direction: ltr; /* ltr: שעות ומספרים מוצגים משמאל לימין */ }
+  .full-appt-loc    { font-size: .72rem; color: var(--color-neutral-400); margin-top: .15rem; }
+
+  /* ── FULL MEDS ── */
+  .meds-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: .75rem;
+  }
+  .meds-reset-btn {
+    font-size: .75rem;
+    font-weight: 600;
+    color: var(--color-neutral-500);
+    background: var(--color-neutral-100);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-pill);
+    padding: .25rem .65rem;
+    cursor: pointer;
+    transition: background .15s;
+  }
+  .meds-reset-btn:hover { background: var(--color-neutral-200); }
+  .meds-reset-btn:focus-visible {
+    outline: 2px solid var(--color-teal-500);
+    outline-offset: 2px;
+  }
+  .meds-time-group { margin-bottom: 1.2rem; }
+  .meds-time-label {
+    font-size: .78rem;
+    font-weight: 700;
+    color: var(--color-neutral-500);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    margin-bottom: .5rem;
+    display: flex;
+    align-items: center;
+    gap: .35rem;
+  }
+  .meds-time-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--color-neutral-200);
+  }
+  .full-med-item {
+    display: flex;
+    align-items: center;
+    gap: .85rem;
+    padding: .85rem 1rem;
+    background: var(--color-white);
+    border-radius: var(--radius-2xl);
+    border: 1px solid var(--color-neutral-200);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: .6rem;
+    transition: background .15s;
+  }
+  .full-med-item.checked { background: var(--color-neutral-50); opacity: .7; }
+  .full-med-item.checked .med-name { text-decoration: line-through; color: var(--color-neutral-400); }
+  .med-pill-icon {
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: var(--radius-xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+  .full-med-info { flex: 1; }
+  .full-med-name   { font-size: .92rem; font-weight: 700; color: var(--color-neutral-800); }
+  .full-med-dosage { font-size: .78rem; color: var(--color-neutral-500); margin-top: .1rem; }
+  .full-med-note   { font-size: .72rem; color: var(--color-neutral-400); margin-top: .1rem; font-style: italic; }
+
+  /* ── RIGHTS FULL ── */
+  .rights-full-list { display: flex; flex-direction: column; gap: .9rem; }
+  .right-full-item {
+    padding: 1.1rem;
+    background: var(--color-white);
+    border-radius: var(--radius-2xl);
+    border: 1px solid var(--color-neutral-200);
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+    transition: box-shadow .18s, transform .18s;
+  }
+  .right-full-item:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
+  .right-full-header {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    margin-bottom: .6rem;
+  }
+  .right-full-icon {
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: var(--radius-xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    flex-shrink: 0;
+  }
+  .right-full-title { font-size: 1rem; font-weight: 700; color: var(--color-neutral-800); flex: 1; }
+  .right-full-desc { font-size: .82rem; color: var(--color-neutral-500); line-height: 1.55; }
+  .right-steps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem;
+    margin-top: .7rem;
+  }
+  .right-step-chip {
+    font-size: .72rem;
+    font-weight: 500;
+    background: var(--color-neutral-100);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-pill);
+    padding: .2rem .55rem;
+    color: var(--color-neutral-600);
+  }
+
+  /* ── DOCS FULL ── */
+  .docs-full-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: .9rem;
+  }
+  .doc-full-item {
+    padding: 1.1rem;
+    background: var(--color-white);
+    border-radius: var(--radius-2xl);
+    border: 1px solid var(--color-neutral-200);
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+    transition: box-shadow .18s, transform .18s;
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+  }
+  .doc-full-item:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+  .doc-full-icon { font-size: 1.7rem; margin-bottom: .2rem; }
+  .doc-full-name { font-size: .92rem; font-weight: 700; color: var(--color-neutral-800); }
+  .doc-full-desc { font-size: .77rem; color: var(--color-neutral-500); line-height: 1.45; }
+  .doc-full-status {
+    margin-top: .2rem;
+    font-size: .7rem;
+    font-weight: 600;
+    padding: .2rem .55rem;
+    border-radius: var(--radius-pill);
+    display: inline-block;
+    align-self: flex-start;
+  }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--modal-overlay-bg);
+    backdrop-filter: blur(4px);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .22s;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal {
+    background: var(--color-white);
+    border-radius: var(--radius-3xl);
+    padding: 1.75rem;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: var(--shadow-lg);
+    transform: translateY(12px) scale(.97);
+    transition: transform .22s;
+    max-height: 80vh;
+    overflow-y: auto;
+    direction: rtl;
+  }
+  .modal-overlay.open .modal { transform: translateY(0) scale(1); }
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  .modal-title { font-size: 1.15rem; font-weight: 700; color: var(--color-neutral-900); }
+  .modal-close {
+    width: 1.8rem; height: 1.8rem;
+    background: var(--color-neutral-100);
+    border: none;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    font-size: .85rem;
+    color: var(--color-neutral-500);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .15s;
+    font-family: var(--font-sans);
+  }
+  .modal-close:hover { background: var(--color-neutral-200); }
+  .modal-close:focus-visible {
+    outline: 2px solid var(--color-teal-500);
+    outline-offset: 2px;
+  }
+  .modal-body { font-size: .875rem; color: var(--color-neutral-600); line-height: 1.6; }
+  .modal-row {
+    display: flex;
+    gap: .5rem;
+    padding: .6rem 0;
+    border-bottom: 1px solid var(--color-neutral-100);
+  }
+  .modal-row:last-child { border-bottom: none; }
+  .modal-row-label { font-weight: 600; color: var(--color-neutral-700); min-width: 6rem; flex-shrink: 0; }
+
+  /* ── נסתר ויזואלית אך נגיש לקוראי מסך ── */
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--color-neutral-300); border-radius: var(--radius-pill); }
+
+  /* ── AUTH SCREEN ── */
+  .auth-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: var(--color-neutral-100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+  .auth-screen.is-hidden { display: none; }
+
+  .auth-card {
+    background: var(--color-white);
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--color-neutral-200);
+    padding: 2rem 1.75rem;
+    width: 100%;
+    max-width: 360px;
+  }
+
+  .auth-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .6rem;
+    margin-bottom: 1.75rem;
+  }
+  .auth-logo-icon {
+    width: 2.75rem;
+    height: 2.75rem;
+    background: linear-gradient(135deg, var(--color-teal-400), var(--color-teal-500));
+    border-radius: var(--radius-xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+  }
+  .auth-logo-text {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--color-neutral-900);
+  }
+
+  .auth-tabs {
+    display: flex;
+    background: var(--color-neutral-100);
+    border-radius: var(--radius-xl);
+    padding: .2rem;
+    margin-bottom: 1.5rem;
+    gap: .2rem;
+  }
+  .auth-tab {
+    flex: 1;
+    padding: .5rem;
+    border: none;
+    border-radius: calc(var(--radius-xl) - .1rem);
+    font-family: var(--font-sans);
+    font-size: .875rem;
+    font-weight: 500;
+    cursor: pointer;
+    background: transparent;
+    color: var(--color-neutral-500);
+    transition: background .18s, color .18s;
+    min-height: 44px;
+  }
+  .auth-tab.is-active {
+    background: var(--color-white);
+    color: var(--color-neutral-800);
+    font-weight: 600;
+    box-shadow: var(--shadow-sm);
+  }
+  .auth-tab:focus-visible {
+    outline: 2px solid var(--color-teal-500);
+    outline-offset: 2px;
+  }
+
+  .auth-panel { display: none; }
+  .auth-panel.is-active { display: block; }
+
+  .form-group { margin-bottom: 1rem; }
+  .form-label {
+    display: block;
+    font-size: .8rem;
+    font-weight: 600;
+    color: var(--color-neutral-700);
+    margin-bottom: .35rem;
+  }
+  .form-input {
+    width: 100%;
+    padding: .65rem .9rem;
+    border: 2px solid var(--color-neutral-200);
+    border-radius: var(--radius-xl);
+    font-family: var(--font-sans);
+    font-size: .9rem;
+    color: var(--color-neutral-800);
+    background: var(--color-white);
+    transition: border-color .18s, box-shadow .18s;
+    direction: rtl;
+    text-align: start;
+  }
+  .form-input:focus-visible {
+    outline: 2px solid var(--color-teal-500);
+    outline-offset: 2px;
+    border-color: var(--color-teal-500);
+    box-shadow: var(--shadow-focus);
+  }
+  .form-input::placeholder { color: var(--color-neutral-400); }
+  .form-input.is-error { border-color: var(--color-red-500); }
+
+  .auth-error-banner {
+    background: var(--color-red-50);
+    border: 1px solid var(--color-red-100);
+    border-radius: var(--radius-xl);
+    padding: .65rem .9rem;
+    font-size: .82rem;
+    color: var(--color-red-500);
+    margin-bottom: 1rem;
+    display: none;
+  }
+  .auth-error-banner.is-visible { display: block; }
+
+  .btn-primary {
+    display: block;
+    width: 100%;
+    padding: .75rem;
+    background: var(--color-teal-btn);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--radius-xl);
+    font-family: var(--font-sans);
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .18s, transform .1s;
+    text-align: center;
+    min-height: 44px;
+  }
+  .btn-primary:hover { background: var(--color-teal-500); }
+  .btn-primary:active { transform: scale(.98); }
+  .btn-primary:disabled { opacity: .55; cursor: not-allowed; transform: none; }
+  .btn-primary:focus-visible {
+    /* טבעת פוקוס כהה — ניגודיות ≥3:1 מול רקע כחול-ירוק */
+    outline: 2px solid var(--color-neutral-800);
+    outline-offset: 2px;
+  }
+
+  .auth-pin-hint {
+    font-size: .75rem;
+    color: var(--color-neutral-400);
+    text-align: center;
+    margin-top: 1rem;
+  }
+
+  .form-label--checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: .5rem;
+    font-size: .875rem;
+    color: var(--color-neutral-600);
+    cursor: pointer;
+  }
+
+  .form-label--checkbox input[type="checkbox"] {
+    flex-shrink: 0;
+    width: 1.125rem;
+    height: 1.125rem;
+    margin-top: .125rem;
+    accent-color: var(--color-teal-500);
+    cursor: pointer;
+  }
+
+  /* ── כפתור התראה ניווט למסמכים ── */
+  .btn-alert-docs {
+    font-size: .78rem;
+    font-weight: 600;
+    color: var(--color-white);
+    background: var(--color-red-500);
+    border: none;
+    border-radius: var(--radius-pill);
+    padding: .3rem .8rem;
+    cursor: pointer;
+    font-family: var(--font-sans);
+    transition: background .15s;
+    min-height: 44px;
+  }
+  .btn-alert-docs:hover { background: var(--color-red-600); }
+  .btn-alert-docs:focus-visible {
+    outline: 2px solid var(--color-teal-500);
+    outline-offset: 2px;
+  }
+
+  /* ── CRUD BUTTONS ── */
+  .section-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  .section-header-row .section-title { margin-bottom: 0; }
+
+  .btn-add {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    padding: .45rem .9rem;
+    background: var(--color-teal-500);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--radius-xl);
+    font-family: var(--font-sans);
+    font-size: .85rem;
+    font-weight: 600;
+    cursor: pointer;
+    min-height: 44px;
+    transition: background .18s, transform .1s;
+  }
+  .btn-add:hover { background: var(--color-teal-400); }
+  .btn-add:active { transform: scale(.97); }
+  .btn-add:focus-visible {
+    outline: 2px solid var(--color-teal-500);
+    outline-offset: 2px;
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: .5rem 1.1rem;
+    background: var(--color-neutral-100);
+    color: var(--color-neutral-700);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-xl);
+    font-family: var(--font-sans);
+    font-size: .9rem;
+    font-weight: 600;
+    cursor: pointer;
+    min-height: 44px;
+    transition: background .15s;
+  }
+  .btn-secondary:hover { background: var(--color-neutral-200); }
+  .btn-secondary:focus-visible {
+    outline: 2px solid var(--color-teal-500);
+    outline-offset: 2px;
+  }
+
+  .btn-danger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: .5rem 1.1rem;
+    background: var(--color-red-500);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--radius-xl);
+    font-family: var(--font-sans);
+    font-size: .9rem;
+    font-weight: 600;
+    cursor: pointer;
+    min-height: 44px;
+    transition: background .15s;
+  }
+  .btn-danger:hover { background: var(--color-red-600); }
+  .btn-danger:focus-visible {
+    outline: 2px solid var(--color-red-500);
+    outline-offset: 2px;
+  }
+
+  .btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: var(--color-neutral-100);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-xl);
+    font-size: .85rem;
+    cursor: pointer;
+    transition: background .15s;
+    flex-shrink: 0;
+  }
+  .btn-icon:hover { background: var(--color-neutral-200); }
+  .btn-icon:focus-visible {
+    outline: 2px solid var(--color-teal-500);
+    outline-offset: 2px;
+  }
+  .btn-icon--danger:hover {
+    background: var(--color-red-50);
+    border-color: var(--color-red-100);
+  }
+
+  .item-actions {
+    display: flex;
+    gap: .35rem;
+    align-items: center;
+    flex-shrink: 0;
+    margin-inline-start: auto;
+    padding-inline-start: .5rem;
+  }
+
+  /* ── CRUD FORM ── */
+  .modal-footer {
+    display: flex;
+    gap: .75rem;
+    justify-content: flex-end;
+    padding: 1rem 1.25rem;
+    border-block-start: 1px solid var(--color-neutral-200);
+  }
+
+  .form-group {
+    margin-bottom: .9rem;
+  }
+
+  .form-label {
+    display: block;
+    font-size: .82rem;
+    font-weight: 600;
+    color: var(--color-neutral-700);
+    margin-bottom: .3rem;
+  }
+
+  .form-input {
+    display: block;
+    width: 100%;
+    padding: .55rem .75rem;
+    background: var(--color-neutral-50);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-xl);
+    font-family: var(--font-sans);
+    font-size: .9rem;
+    color: var(--color-neutral-800);
+    box-sizing: border-box;
+    transition: border-color .15s, box-shadow .15s;
+    text-align: start;
+    direction: rtl;
+  }
+  .form-input:focus {
+    outline: 2px solid var(--color-teal-500);
+    outline-offset: 1px;
+    border-color: var(--color-teal-500);
+  }
+  .form-input.is-invalid { border-color: var(--color-red-500); }
+
+  .form-textarea {
+    min-height: 80px;
+    resize: vertical;
+  }
+
+  .form-check-row {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: .9rem;
+    font-weight: 600;
+    color: var(--color-neutral-700);
+    cursor: pointer;
+    min-height: 44px;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .col-span-4, .col-span-5, .col-span-6, .col-span-7, .col-span-8 { grid-column: span 12; }
+    .bento-grid { grid-template-columns: repeat(6, 1fr); }
+    .col-span-6, .col-span-7, .col-span-8, .col-span-12 { grid-column: span 6; }
+    .col-span-4, .col-span-5 { grid-column: span 6; }
+  }
+  @media (max-width: 600px) {
+    .bento-grid { grid-template-columns: 1fr; }
+    .col-span-4, .col-span-5, .col-span-6, .col-span-7, .col-span-8, .col-span-12 { grid-column: span 1; }
+    .main { padding: .75rem; }
+    .docs-grid { grid-template-columns: 1fr; }
+    .hero-appointment-date { font-size: 1.5rem; }
+    .docs-full-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* ── SKIP LINK ── */
+  .skip-to-main {
+    position: absolute;
+    inset-block-start: -100%;
+    inset-inline-start: 0;
+    background: var(--color-teal-500);
+    color: var(--color-white);
+    padding: .5rem 1rem;
+    border-radius: var(--radius-xl);
+    font-weight: 700;
+    z-index: 9999;
+    text-decoration: none;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+  .skip-to-main:focus { inset-block-start: 0; }
+
+  /* הפחתת אנימציות למשתמשים שביקשו זאת */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* ── PRINT OVERLAY (מסך) ────────────────────────────────── */
+  .print-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    background: var(--color-neutral-100);
+    overflow-y: auto;
+    padding: 2rem 1rem;
+  }
+  .print-overlay.is-hidden { display: none; }
+
+  /* ── ONBOARDING WIZARD ────────────────────────────────── */
+  .onboarding-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 400;
+    background: var(--color-neutral-100);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    overflow-y: auto;
+    padding: 2rem 1rem;
+  }
+  .onboarding-overlay.is-hidden { display: none; }
+  .onboarding-card {
+    width: 100%;
+    max-width: 520px;
+    background: var(--color-white);
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-lg);
+    padding: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+  .onboarding-header {
+    text-align: center;
+    margin-bottom: 1.75rem;
+  }
+  .onboarding-logo {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--color-neutral-900);
+    margin-bottom: 1rem;
+  }
+  .onboarding-progress {
+    height: .45rem;
+    background: var(--color-neutral-200);
+    border-radius: var(--radius-pill);
+    overflow: hidden;
+    margin-bottom: .5rem;
+  }
+  .onboarding-progress-bar {
+    height: 100%;
+    background: var(--color-teal-500);
+    border-radius: var(--radius-pill);
+    transition: width 300ms ease;
+  }
+  .onboarding-step-label {
+    font-size: .8rem;
+    color: var(--color-neutral-500);
+  }
+  .onboarding-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--color-neutral-800);
+    margin-bottom: .5rem;
+  }
+  .onboarding-subtitle {
+    font-size: .9rem;
+    color: var(--color-neutral-500);
+    line-height: 1.65;
+    margin-bottom: 1.5rem;
+  }
+  .onboarding-step.is-hidden { display: none; }
+  .onboarding-error {
+    font-size: .85rem;
+    color: var(--color-red-500);
+    margin-top: .5rem;
+  }
+  .onboarding-error.is-hidden { display: none; }
+  .onboarding-actions {
+    display: flex;
+    gap: .75rem;
+    justify-content: flex-start; /* RTL: flex-start = ימין — כפתור ראשי מימין */
+    margin-top: 1.75rem;
+  }
+
+  /* ── ONBOARDING STEP 3 — ניתוח ────────────────────────── */
+  @keyframes ob-bounce {
+    0%, 80%, 100% { transform: scale(0); opacity: .3; }
+    40%           { transform: scale(1); opacity: 1; }
+  }
+  .ob-dots {
+    display: flex;
+    gap: .5rem;
+    justify-content: center;
+    margin: 1.75rem 0 1.25rem;
+  }
+  .ob-dot {
+    display: inline-block;
+    width: var(--ob-dot-size);
+    height: var(--ob-dot-size);
+    background: var(--ob-dot-color);
+    border-radius: var(--radius-circle);
+    animation: ob-bounce 1.4s ease-in-out infinite;
+  }
+  .ob-dot:nth-child(2) { animation-delay: .2s; }
+  .ob-dot:nth-child(3) { animation-delay: .4s; }
+
+  .ob-scan-track {
+    height: .35rem;
+    background: var(--color-neutral-200);
+    border-radius: var(--radius-pill);
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+  .ob-scan-fill {
+    height: 100%;
+    width: 100%;
+    background: var(--ob-scan-color);
+    border-radius: var(--radius-pill);
+    transform-origin: inline-end; /* RTL: מתחיל מקצה הגיוני — ימין ב-RTL */
+    transform: scaleX(0);
+    transition: transform 1.6s ease;
+  }
+  .ob-scan-fill.is-scanning { transform: scaleX(1); }
+
+  /* ── DASHBOARD REVEAL ─────────────────────────────────── */
+  .dashboard-reveal-enter {
+    opacity: 0;
+    transform: translateY(1.5rem);
+  }
+  .dashboard-reveal-active {
+    transition: opacity 350ms ease, transform 350ms ease;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── SUCCESS TOAST ────────────────────────────────────── */
+  .ob-toast {
+    position: fixed;
+    /* RTL: left+translateX(-50%) מרכז אופקי — יוצא מכלל מידות לוגיות במכוון */
+    left: 50%;
+    transform: translateX(-50%) translateY(0);
+    bottom: 2rem;
+    z-index: 500;
+    background: var(--color-teal-btn); /* ניגודיות ≥4.5:1 מול טקסט לבן */
+    color: var(--color-white);
+    padding: .75rem 1.5rem;
+    border-radius: var(--radius-pill);
+    font-size: .9rem;
+    font-weight: 600;
+    box-shadow: var(--shadow-md);
+    white-space: nowrap;
+    transition: opacity 300ms ease, transform 300ms ease;
+  }
+  .ob-toast.is-hidden {
+    opacity: 0;
+    transform: translateX(-50%) translateY(1rem);
+    pointer-events: none;
+  }
+
+  /* ── HIDE HEADER DURING ONBOARDING ───────────────────── */
+  body.is-onboarding .header { display: none; }
+  body.is-onboarding .nav-bar { display: none; }
+
+  .print-form-sheet {
+    max-width: 680px;
+    margin: 0 auto;
+    background: var(--color-white);
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-lg);
+    padding: 2rem;
+  }
+  .print-form-actions {
+    display: flex;
+    gap: .75rem;
+    justify-content: flex-end;
+    margin-bottom: 1.5rem;
+  }
+  .print-form-header {
+    text-align: center;
+    margin-bottom: 1.75rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--color-neutral-200);
+  }
+  .print-form-logo {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--color-neutral-900);
+    margin-bottom: .2rem;
+  }
+  .print-form-right-name {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-teal-500);
+    margin-bottom: .25rem;
+  }
+  .print-field-group { margin-bottom: 1.1rem; }
+  .print-field-label {
+    display: block;
+    font-size: .78rem;
+    font-weight: 700;
+    color: var(--color-neutral-700);
+    margin-bottom: .3rem;
+  }
+  .print-field-value {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: .55rem .75rem;
+    border: 1px solid var(--color-neutral-300);
+    border-radius: var(--radius-xl);
+    font-family: inherit;
+    font-size: .9rem;
+    color: var(--color-neutral-800);
+    background: var(--color-white);
+    direction: rtl;
+    text-align: start;
+  }
+  .print-field-value.editable {
+    background: var(--color-neutral-50);
+    border-style: dashed;
+  }
+  .print-field-value:focus-visible {
+    outline: 2px solid var(--color-teal-500);
+    outline-offset: 2px;
+  }
+  .print-matched-section {
+    background: var(--bg-teal-soft);
+    border: 1px solid var(--color-teal-500);
+    border-radius: var(--radius-xl);
+    padding: .75rem 1rem;
+    margin-bottom: 1.1rem;
+  }
+  .print-steps-list {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+  }
+  .print-step-item {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: .875rem;
+  }
+  .print-step-num {
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: var(--color-teal-500);
+    color: var(--color-white);
+    border-radius: var(--radius-circle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .7rem;
+    font-weight: 700;
+  }
+  .print-disclaimer {
+    font-size: .75rem;
+    color: var(--color-neutral-400);
+    text-align: center;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-neutral-200);
+    line-height: 1.5;
+  }
+  /* אזור הוראות הגשה בטופס */
+  .print-submission-guide {
+    background: var(--bg-teal-soft);
+    border: 1px solid var(--border-teal);
+    border-radius: var(--radius-xl);
+    padding: 1rem;
+    margin-bottom: 1.1rem;
+  }
+  .print-guide-title {
+    font-size: .9rem;
+    font-weight: 700;
+    color: var(--color-neutral-800);
+    margin-bottom: .6rem;
+  }
+  .print-guide-row {
+    display: flex;
+    gap: .5rem;
+    font-size: .875rem;
+    margin-bottom: .35rem;
+    align-items: flex-start;
+  }
+  .print-guide-label {
+    flex-shrink: 0;
+    font-weight: 600;
+    color: var(--color-neutral-700);
+    min-width: 7rem;
+  }
+
+  /* ── @media print ─────────────────────────────────────────── */
+  @media print {
+    body > *:not(#print-overlay) { display: none !important; }
+    #print-overlay {
+      /* מבטיח שה-overlay יוצג גם אם is-hidden פעיל */
+      display: block !important;
+      position: static !important;
+      padding: 0 !important;
+      background: var(--color-white) !important;
+      overflow: visible !important;
+    }
+    .print-form-actions { display: none !important; }
+    .print-form-sheet {
+      max-width: 100% !important;
+      box-shadow: none !important;
+      border-radius: var(--radius-none) !important;
+      padding: 1cm 2cm !important;
+    }
+    .print-field-value.editable {
+      border-style: solid !important;
+      background: var(--color-white) !important;
+    }
+  }
+
+  /* ── SCAN TAB ────────────────────────────────────────────── */
+  .scan-input-card { margin-bottom: 1.25rem; }
+  .scan-instruction {
+    font-size: .9rem;
+    color: var(--color-neutral-600);
+    line-height: 1.65;
+    margin-bottom: 1.1rem;
+  }
+
+  .scan-file-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: .6rem;
+    margin-bottom: 1.1rem;
+  }
+  .scan-file-label { margin-bottom: 0; }
+  .scan-file-input {
+    font-family: inherit;
+    font-size: .82rem;
+    color: var(--color-neutral-600);
+    max-width: 100%;
+  }
+  .scan-file-name {
+    font-size: .8rem;
+    color: var(--color-teal-500);
+    font-weight: 600;
+  }
+  .scan-actions {
+    display: flex;
+    gap: .75rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .scan-btn { min-width: 10rem; }
+
+  /* תוצאות סריקה */
+  .scan-results-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .scan-no-match {
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+    color: var(--color-neutral-500);
+    font-size: .9rem;
+    line-height: 1.65;
+    cursor: default;
+  }
+  .scan-no-match:hover { transform: none; box-shadow: var(--shadow-sm); }
+  .scan-result-card {
+    background: var(--color-white);
+    border: 1.5px solid var(--color-neutral-200);
+    border-radius: var(--radius-2xl);
+    padding: 1.25rem;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+    transition: box-shadow .15s;
+  }
+  .scan-result-card.top-match {
+    border-color: var(--color-teal-500);
+    background: var(--bg-teal-soft);
+  }
+  .scan-result-header {
+    display: flex;
+    align-items: flex-start;
+    gap: .75rem;
+  }
+  .scan-result-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    line-height: 1.2;
+  }
+  .scan-result-meta { flex: 1; }
+  .scan-result-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-neutral-900);
+    margin-bottom: .15rem;
+  }
+  .scan-result-short {
+    font-size: .78rem;
+    color: var(--color-neutral-500);
+  }
+  .scan-result-desc {
+    font-size: .875rem;
+    color: var(--color-neutral-600);
+    line-height: 1.6;
+  }
+  .scan-keywords-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .35rem;
+  }
+  .scan-keywords-label {
+    font-size: .72rem;
+    color: var(--color-neutral-500);
+    font-weight: 600;
+    margin-bottom: .25rem;
+  }
+  .scan-keyword-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: .18rem .55rem;
+    background: var(--color-teal-500);
+    color: var(--color-white);
+    border-radius: var(--radius-pill);
+    font-size: .72rem;
+    font-weight: 600;
+  }
+  .scan-result-footer {
+    display: flex;
+    gap: .5rem;
+    flex-wrap: wrap;
+  }
+  .btn-import-right {
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+    padding: 0 1rem;
+    height: 44px;
+    background: var(--color-teal-500);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--radius-xl);
+    font-family: inherit;
+    font-size: .82rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .15s;
+  }
+  .btn-import-right:hover { background: var(--color-teal-400); }
+  .btn-import-right:focus-visible {
+    outline: 2px solid var(--color-teal-500);
+    outline-offset: 2px;
+  }
+  .btn-import-right:disabled {
+    background: var(--color-neutral-300);
+    color: var(--color-neutral-500);
+    cursor: default;
+  }
+  .btn-view-steps {
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+    padding: 0 1rem;
+    height: 44px;
+    background: var(--color-neutral-100);
+    color: var(--color-neutral-700);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-xl);
+    font-family: inherit;
+    font-size: .82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .15s;
+  }
+  .btn-view-steps:hover { background: var(--color-neutral-200); }
+  .btn-view-steps:focus-visible {
+    outline: 2px solid var(--color-teal-500);
+    outline-offset: 2px;
+  }
+  /* כפתור יצירת טופס בכרטיס זכות */
+  .btn-generate-form {
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+    padding: 0 1rem;
+    height: 44px;
+    background: var(--color-teal-btn);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--radius-xl);
+    font-family: inherit;
+    font-size: .82rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .15s;
+  }
+  .btn-generate-form:hover { background: var(--color-teal-500); }
+  .btn-generate-form:focus-visible {
+    outline: 2px solid var(--color-neutral-800);
+    outline-offset: 2px;
+  }
+  /* אזור כפתורי הזכות בתחתית כרטיס */
+  .right-card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin-top: .75rem;
+    padding-top: .75rem;
+    border-top: 1px solid var(--color-neutral-200);
+  }
+
+  /* ── EMPTY STATE ─────────────────────────────────────────── */
+  .empty-state-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1.5rem;
+    text-align: center;
+    gap: .75rem;
+    cursor: default;
+  }
+  .empty-state-card:hover {
+    transform: none;
+    box-shadow: var(--shadow-sm);
+  }
+  .empty-state-icon {
+    font-size: 2.75rem;
+    line-height: 1;
+  }
+  .empty-state-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-neutral-700);
+  }
+  .empty-state-body {
+    font-size: .875rem;
+    color: var(--color-neutral-500);
+    line-height: 1.65;
+    max-width: 22rem;
+  }
+
+  /* ── SMS OTP ── */
+  .otp-row {
+    display: flex;
+    gap: .5rem;
+    justify-content: center;
+    margin: 1.25rem 0;
+  }
+  .otp-input {
+    width: 2.6rem;
+    height: 3.2rem;
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    border: 2px solid var(--color-neutral-300);
+    border-radius: var(--radius-xl);
+    background: var(--color-neutral-50);
+    color: var(--color-neutral-800);
+    transition: border-color .15s;
+    font-family: var(--font-sans);
+  }
+  .otp-input:focus { outline: none; border-color: var(--color-teal-500); background: white; }
+  .sms-hint { font-size: .8rem; color: var(--color-neutral-500); text-align: center; margin-bottom: .75rem; }
+  .sms-resend-row { display: flex; align-items: center; gap: .5rem; justify-content: center; margin-top: .5rem; }
+  .sms-resend {
+    font-size: .78rem; color: var(--color-teal-500); background: none; border: none;
+    cursor: pointer; padding: 0; font-family: var(--font-sans); text-decoration: underline;
+  }
+  .sms-resend:disabled { color: var(--color-neutral-400); cursor: default; text-decoration: none; }
+  .sms-countdown { font-size: .78rem; color: var(--color-neutral-400); }
+
+  /* ── UPLOAD DROP ZONE ── */
+  .upload-zone {
+    border: 2px dashed var(--color-neutral-300);
+    border-radius: var(--radius-2xl);
+    padding: 2rem 1rem;
+    text-align: center;
+    background: var(--color-neutral-50);
+    transition: border-color .18s, background .18s;
+    cursor: pointer;
+    position: relative;
+  }
+  .upload-zone:hover, .upload-zone.is-dragging { border-color: var(--color-teal-500); background: var(--bg-teal-soft); }
+  .upload-zone__icon { font-size: 2.2rem; margin-block-end: .5rem; display: block; }
+  .upload-zone__text { font-size: .875rem; color: var(--color-neutral-500); line-height: 1.5; }
+  .upload-zone__cta { font-size: .875rem; font-weight: 600; color: var(--color-teal-500); }
+  .upload-zone input[type="file"] {
+    position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+  }
+  .upload-selected {
+    display: flex; align-items: center; gap: .75rem;
+    padding: .85rem 1rem;
+    background: var(--bg-teal-soft);
+    border: 1px solid var(--upload-selected-border);
+    border-radius: var(--radius-xl);
+    margin-block-start: .75rem;
+  }
+  .upload-selected__name {
+    flex: 1; font-size: .875rem; font-weight: 600; color: var(--color-neutral-800); word-break: break-all;
+  }
+  .upload-selected__size { font-size: .75rem; color: var(--color-neutral-500); flex-shrink: 0; }
+
+  /* ── PERSONAL AREA MODAL ── */
+  .personal-area-section {
+    padding-block: 1rem;
+    border-bottom: 1px solid var(--color-neutral-100);
+  }
+  .personal-area-section:last-child { border-bottom: none; }
+  .personal-area-section-title {
+    font-size: .72rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .06em; color: var(--color-neutral-400); margin-block-end: .75rem;
+  }
+  .btn-danger-outline {
+    display: inline-flex; align-items: center; gap: .4rem;
+    padding: .5rem 1rem;
+    background: none;
+    border: 1.5px solid var(--color-red-500);
+    border-radius: var(--radius-xl);
+    color: var(--color-red-500);
+    font-size: .875rem; font-weight: 600; cursor: pointer;
+    transition: background .15s; font-family: var(--font-sans);
+  }
+  .btn-danger-outline:hover { background: var(--btn-danger-hover-bg); }
+
+  /* ── REMINDER TOGGLES ── */
+  .reminder-group {
+    margin-block-start: 1rem; padding-block-start: 1rem;
+    border-top: 1px solid var(--color-neutral-100);
+  }
+  .reminder-group-title {
+    font-size: .78rem; font-weight: 700; color: var(--color-neutral-600); margin-block-end: .5rem;
+  }
+  .reminder-badge {
+    font-size: .65rem; font-weight: 600;
+    background: var(--bg-blue-soft); color: var(--reminder-badge-color);
+    border-radius: 9999px; padding: .1rem .45rem; vertical-align: middle;
+    margin-inline-start: .25rem;
+  }
+
+  /* ── patient-chip AS BUTTON ── */
+  button.patient-chip {
+    background: var(--color-neutral-100); border: 1px solid var(--color-neutral-200);
+    cursor: pointer; transition: background .15s;
+  }
+  button.patient-chip:hover { background: var(--color-neutral-200); }
+  button.patient-chip:focus-visible { outline: 2px solid var(--color-teal-500); outline-offset: 2px; }
+
+  /* ── CONDITIONS GRID (personal area) ── */
+  .condition-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+  .condition-chip {
+    position: relative; display: flex; align-items: center; gap: .5rem;
+    padding: .5rem .7rem; border: 1.5px solid var(--color-neutral-200);
+    border-radius: var(--radius-xl); cursor: pointer; font-size: .83rem; line-height: 1.3;
+    color: var(--color-neutral-700); transition: border-color .12s, background .12s;
+  }
+  .condition-chip input { position: absolute; opacity: 0; width: 0; height: 0; }
+  .condition-chip:has(input:checked) { border-color: var(--color-teal-500); background: var(--bg-teal-soft); }
+  .condition-chip:focus-within { outline: 2px solid var(--color-teal-500); outline-offset: 2px; }
+</style>
+<!-- Phase 4: Supabase JS client — sole approved external dependency (see ruls/01-architecture.md) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+
+<a class="skip-to-main" href="#main-content">דלג לתוכן הראשי</a>
+
+<!-- AUTH SCREEN -->
+<div id="auth-screen" class="auth-screen" role="dialog" aria-modal="true" aria-label="מסך כניסה">
+  <div class="auth-card">
+
+    <div class="auth-logo">
+      <div class="auth-logo-icon">🏥</div>
+      <span class="auth-logo-text">DocuMed</span>
+    </div>
+
+    <div class="auth-tabs" role="tablist">
+      <button class="auth-tab is-active" role="tab" aria-selected="true"
+              aria-controls="panel-login" id="auth-tab-login"
+              data-auth-tab="login">כניסה</button>
+      <button class="auth-tab" role="tab" aria-selected="false"
+              aria-controls="panel-register" id="auth-tab-register"
+              data-auth-tab="register">הרשמה</button>
+    </div>
+
+    <div id="auth-error" class="auth-error-banner" role="alert" aria-live="polite"></div>
+
+    <!-- Login panel -->
+    <div id="panel-login" class="auth-panel is-active" role="tabpanel" aria-labelledby="auth-tab-login">
+      <form id="form-login" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="login-email">אימייל</label>
+          <input id="login-email" class="form-input" type="email"
+                 placeholder="yourname@example.com" autocomplete="email" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="login-password">סיסמה</label>
+          <input id="login-password" class="form-input" type="password"
+                 placeholder="הסיסמה שלך" minlength="6" autocomplete="current-password" required>
+        </div>
+        <button class="btn-primary" type="submit">כניסה למערכת</button>
+      </form>
+    </div>
+
+    <!-- Register panel -->
+    <div id="panel-register" class="auth-panel" role="tabpanel" aria-labelledby="auth-tab-register">
+      <form id="form-register" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="reg-name">שם מלא *</label>
+          <input id="reg-name" class="form-input" type="text"
+                 placeholder="ישראל ישראלי" autocomplete="name" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="reg-email">אימייל *</label>
+          <input id="reg-email" class="form-input" type="email"
+                 placeholder="yourname@example.com" autocomplete="email" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="reg-id-number">מספר תעודת זהות *</label>
+          <input id="reg-id-number" class="form-input" type="text"
+                 placeholder="9 ספרות" inputmode="numeric" pattern="[0-9]{9}" maxlength="9" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="reg-dob">תאריך לידה *</label>
+          <input id="reg-dob" class="form-input" type="date" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="reg-phone">טלפון נייד (לתזכורות — אופציונלי)</label>
+          <input id="reg-phone" class="form-input" type="tel"
+                 placeholder="05X-XXXXXXX" autocomplete="tel" inputmode="tel" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="reg-password">סיסמה (לפחות 6 תווים) *</label>
+          <input id="reg-password" class="form-input" type="password"
+                 placeholder="לפחות 6 תווים" minlength="6" autocomplete="new-password" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="reg-password-confirm">אימות סיסמה *</label>
+          <input id="reg-password-confirm" class="form-input" type="password"
+                 placeholder="חזור על הסיסמה" minlength="6" autocomplete="new-password" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label form-label--checkbox">
+            <input id="reg-consent" type="checkbox" required aria-required="true">
+            אני מאשר/ת את תנאי השימוש ומדיניות שמירת המידע הרפואי
+          </label>
+        </div>
+        <button class="btn-primary" type="submit">יצירת חשבון</button>
+      </form>
+    </div>
+
+    <p class="auth-pin-hint">המידע שלך נשמר בענן באופן מאובטח בהתאם לתקני HIPAA ו-GDPR. לפרטים ראה מדיניות הפרטיות.</p>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-inner">
+    <a class="logo" href="#" aria-label="DocuMed – ניהול מחלות כרוניות, דף הבית">
+      <span class="logo-icon">🏥</span>
+      DocuMed
+    </a>
+    <button class="patient-chip" id="btn-open-personal-area" aria-label="פתח אזור אישי" aria-haspopup="dialog">
+      <div class="avatar" id="header-avatar">?</div>
+      <span id="header-name">—</span>
+      <span style="color:var(--color-neutral-400)">•</span>
+      <span id="header-email">—</span>
+    </button>
+  </div>
+</header>
+
+<!-- NAV TABS -->
+<nav class="nav-bar">
+  <div class="nav-inner">
+    <button class="nav-tab active" data-tab="all">הכל</button>
+    <button class="nav-tab" data-tab="appointments" aria-label="תורים"><span aria-hidden="true">📅</span> תורים</button>
+    <button class="nav-tab" data-tab="rights" aria-label="זכויות"><span aria-hidden="true">⚖️</span> זכויות</button>
+    <button class="nav-tab" data-tab="medications" aria-label="תרופות"><span aria-hidden="true">💊</span> תרופות</button>
+    <button class="nav-tab" data-tab="documents" aria-label="מסמכים"><span aria-hidden="true">📄</span> מסמכים</button>
+    <button class="nav-tab" data-tab="scan" aria-label="העלאת מסמכים"><span aria-hidden="true">📎</span> העלאות</button>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main class="main" id="main-content">
+
+  <!-- ══════════════════════════════════════
+       TAB: הכל (OVERVIEW / BENTO GRID)
+  ══════════════════════════════════════ -->
+  <section class="section active" id="tab-all" aria-labelledby="title-tab-all">
+    <h2 id="title-tab-all" class="visually-hidden" tabindex="-1">סקירה כללית</h2>
+    <div class="bento-grid">
+      <div class="col-span-7" id="render-hero"></div>
+      <div class="col-span-5" id="render-appt-stat"></div>
+      <div class="col-span-5" id="render-meds-overview"></div>
+      <div class="col-span-4" id="render-rights-overview"></div>
+      <div class="col-span-4" id="render-docs-overview"></div>
+      <div class="col-span-4" id="render-alert"></div>
+      <div class="col-span-8" id="render-stats-row"></div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       TAB: תורים
+  ══════════════════════════════════════ -->
+  <section class="section" id="tab-appointments" aria-labelledby="title-tab-appointments">
+    <div class="section-header-row">
+      <h2 class="section-title" id="title-tab-appointments">📅 לוח תורים</h2>
+      <button class="btn-add" id="btn-add-appt" aria-label="הוסף תור">+ הוסף תור</button>
+    </div>
+    <div class="full-appt-list" id="render-full-appts"></div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       TAB: זכויות
+  ══════════════════════════════════════ -->
+  <section class="section" id="tab-rights" aria-labelledby="title-tab-rights">
+    <div class="section-header-row">
+      <h2 class="section-title" id="title-tab-rights">⚖️ זכויות והטבות</h2>
+      <button class="btn-add" id="btn-add-right" aria-label="הוסף זכות">+ הוסף זכות</button>
+    </div>
+    <div class="rights-full-list" id="render-full-rights"></div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       TAB: תרופות
+  ══════════════════════════════════════ -->
+  <section class="section" id="tab-medications" aria-labelledby="title-tab-medications">
+    <div class="meds-section-header">
+      <h2 class="section-title" id="title-tab-medications" style="margin-bottom:0">💊 תרופות יומיות</h2>
+      <div style="display:flex;gap:.5rem;align-items:center">
+        <button class="btn-add" id="btn-add-med" aria-label="הוסף תרופה">+ הוסף</button>
+        <button class="meds-reset-btn" id="btn-reset-meds"><span aria-hidden="true">🔄</span> איפוס יומי</button>
+      </div>
+    </div>
+    <div style="background:var(--color-white);border-radius:var(--radius-2xl);padding:1rem 1.25rem;margin-bottom:1.2rem;border:1px solid var(--color-neutral-200);box-shadow:var(--shadow-sm)">
+      <div style="display:flex;justify-content:space-between;margin-bottom:.5rem">
+        <span style="font-size:.85rem;font-weight:600;color:var(--color-neutral-700)">התקדמות נטילת תרופות היום</span>
+        <span style="font-size:.85rem;font-weight:700;color:var(--color-teal-500)" id="meds-pct-full" aria-live="polite" aria-atomic="true">0%</span>
+      </div>
+      <div style="height:.55rem;background:var(--color-neutral-200);border-radius:var(--radius-pill);overflow:hidden">
+        <div id="meds-bar-full" style="height:100%;width:0%;background:linear-gradient(90deg,var(--color-teal-400),var(--color-teal-500));border-radius:var(--radius-pill);transition:width .4s ease"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:.4rem">
+        <span style="font-size:.72rem;color:var(--color-neutral-400)" id="meds-count-full" aria-live="polite" aria-atomic="true">0 מתוך 0 נטילות הושלמו</span>
+        <span style="font-size:.72rem;color:var(--color-neutral-400)" id="meds-date-full"></span>
+      </div>
+    </div>
+    <div id="render-full-meds"></div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       TAB: מסמכים
+  ══════════════════════════════════════ -->
+  <section class="section" id="tab-documents" aria-labelledby="title-tab-documents">
+    <div class="section-header-row">
+      <h2 class="section-title" id="title-tab-documents">📋 מרכז מסמכים</h2>
+      <button class="btn-add" id="btn-add-doc" aria-label="הוסף מסמך">+ הוסף מסמך</button>
+    </div>
+    <div id="render-docs-summary"></div>
+    <div class="docs-full-grid" id="render-full-docs"></div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       TAB: ניתוח מסמך
+  ══════════════════════════════════════ -->
+  <section class="section" id="tab-scan" aria-labelledby="title-tab-scan">
+    <div class="section-header-row">
+      <h2 class="section-title" id="title-tab-scan">📎 מרכז העלאת מסמכים</h2>
+    </div>
+
+    <div class="card scan-input-card" style="cursor:default">
+      <p class="scan-instruction">
+        העלה מסמך רפואי — מכתב שחרור, תוצאות בדיקה, מרשם או כל מסמך רשמי אחר.
+        המערכת תזהה זכויות רלוונטיות מתוך שם הקובץ.
+      </p>
+
+      <div class="upload-zone" id="scan-drop-zone" role="button" tabindex="0"
+           aria-label="לחץ או גרור קובץ רפואי להעלאה">
+        <span class="upload-zone__icon">📎</span>
+        <p class="upload-zone__text">
+          <span class="upload-zone__cta">לחץ לבחירת קובץ</span><br>או גרור לכאן
+        </p>
+        <p class="upload-zone__text" style="font-size:.75rem;margin-block-start:.25rem">PDF / JPG / PNG בלבד</p>
+        <input id="scan-file-upload" type="file"
+               accept=".pdf,.jpg,.jpeg,.png"
+               aria-label="בחירת קובץ רפואי לניתוח">
+      </div>
+
+      <div id="scan-selected-file" class="upload-selected is-hidden" aria-live="polite">
+        <span style="font-size:1.2rem">📄</span>
+        <span class="upload-selected__name" id="scan-file-name"></span>
+        <span class="upload-selected__size" id="scan-file-size"></span>
+        <button class="btn-secondary" id="btn-scan-remove-file"
+                style="padding:.25rem .6rem;font-size:.75rem;flex-shrink:0"
+                aria-label="הסר קובץ">✕</button>
+      </div>
+
+      <div class="scan-actions">
+        <button class="btn-primary scan-btn" id="btn-scan-document"
+                aria-label="נתח מסמך" disabled>
+          🔍 נתח מסמך
+        </button>
+      </div>
+    </div>
+
+    <!-- אזור תוצאות — מתאכלס על ידי renderScanResults() -->
+    <div id="scan-results" aria-live="polite" aria-atomic="false"></div>
+
+  </section>
+
+</main>
+
+<!-- ══════════════════════════════════════
+     MODAL — DETAIL VIEW
+══════════════════════════════════════ -->
+<div class="modal-overlay" id="modal-detail" role="dialog" aria-modal="true" aria-labelledby="modal-detail-title">
+  <div class="modal">
+    <div class="modal-header">
+      <div id="modal-detail-title" class="modal-title"></div>
+      <button class="modal-close" id="btn-close-modal-detail" aria-label="סגור">✕</button>
+    </div>
+    <div id="modal-detail-body" class="modal-body"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     MODAL — ADD / EDIT FORM
+══════════════════════════════════════ -->
+<div class="modal-overlay" id="modal-form" role="dialog" aria-modal="true" aria-labelledby="modal-form-title">
+  <div class="modal">
+    <div class="modal-header">
+      <div id="modal-form-title" class="modal-title"></div>
+      <button class="modal-close" id="btn-close-modal-form" aria-label="סגור">✕</button>
+    </div>
+    <div id="modal-form-body" class="modal-body"></div>
+    <div class="modal-footer">
+      <button class="btn-secondary" id="btn-form-cancel">ביטול</button>
+      <button class="btn-primary" id="btn-form-save">שמירה</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     MODAL — CONFIRM DELETE
+══════════════════════════════════════ -->
+<div class="modal-overlay" id="modal-confirm-delete" role="dialog" aria-modal="true" aria-labelledby="modal-delete-title">
+  <div class="modal" style="max-width:340px">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-delete-title">מחיקת פריט</div>
+      <button class="modal-close" id="btn-close-modal-delete" aria-label="סגור">✕</button>
+    </div>
+    <div class="modal-body">
+      <p id="modal-delete-msg" style="margin:0;line-height:1.6">האם למחוק פריט זה?</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" id="btn-delete-cancel">ביטול</button>
+      <button class="btn-danger" id="btn-delete-confirm">מחיקה</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     MODAL — PERSONAL AREA
+══════════════════════════════════════ -->
+<div class="modal-overlay" id="modal-personal-area" role="dialog" aria-modal="true" aria-labelledby="pa-modal-title">
+  <div class="modal">
+    <div class="modal-header">
+      <div id="pa-modal-title" class="modal-title">👤 האזור האישי שלי</div>
+      <button class="modal-close" id="btn-close-pa" aria-label="סגור">✕</button>
+    </div>
+    <div class="modal-body">
+      <!-- פרטים אישיים -->
+      <div class="personal-area-section">
+        <div class="personal-area-section-title">פרטים אישיים</div>
+        <div class="form-group">
+          <label class="form-label" for="pa-name">שם מלא</label>
+          <input id="pa-name" class="form-input" type="text" autocomplete="name">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="pa-email">אימייל</label>
+          <input id="pa-email" class="form-input" type="email" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="pa-phone">טלפון נייד</label>
+          <input id="pa-phone" class="form-input" type="tel" autocomplete="tel" autocomplete="off">
+        </div>
+      </div>
+      <!-- מצבים רפואיים -->
+      <div class="personal-area-section">
+        <div class="personal-area-section-title">מצבים רפואיים</div>
+        <p style="font-size:.8rem;color:var(--color-neutral-500);margin-block-end:.75rem;line-height:1.5">סמן את המצבים שאובחנו אצלך. המערכת תציע זכויות מתאימות.</p>
+        <div id="pa-conditions-grid" class="condition-grid" role="group" aria-label="מצבים רפואיים"></div>
+      </div>
+
+      <!-- אבטחה -->
+      <div class="personal-area-section">
+        <div class="personal-area-section-title">אבטחה</div>
+        <div class="form-group">
+          <label class="form-label" for="pa-password-new">סיסמה חדשה (השאר ריק לשמור הנוכחית)</label>
+          <input id="pa-password-new" class="form-input" type="password"
+                 placeholder="לפחות 6 תווים" minlength="6" autocomplete="new-password">
+        </div>
+      </div>
+      <!-- מחיקת נתונים -->
+      <div class="personal-area-section">
+        <div class="personal-area-section-title">מחיקת נתונים</div>
+        <p style="font-size:.8rem;color:var(--color-neutral-500);margin-block-end:.75rem;line-height:1.55">
+          מחיקה תסיר את כל הנתונים הרפואיים שלך מהמכשיר הזה ללא אפשרות שחזור.
+        </p>
+        <button class="btn-danger-outline" id="btn-pa-delete-all">🗑️ מחק את כל הנתונים שלי</button>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-danger-outline" id="btn-pa-logout" style="margin-inline-end:auto">
+        ← יציאה מהחשבון
+      </button>
+      <button class="btn-secondary" id="btn-pa-cancel">ביטול</button>
+      <button class="btn-primary" id="btn-pa-save">שמור שינויים</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PRINT OVERLAY — טופס מוכן להדפסה
+══════════════════════════════════════ -->
+<div id="print-overlay" class="print-overlay is-hidden" role="dialog" aria-modal="true" aria-labelledby="print-form-title">
+  <div class="print-form-sheet">
+    <div class="print-form-actions">
+      <button class="btn-primary" id="btn-print-trigger" aria-label="הדפסת הטופס">🖨️ הדפסה</button>
+      <button class="btn-secondary" id="btn-print-close" aria-label="סגירת הטופס">✕ סגור</button>
+    </div>
+    <div id="print-form-content">
+      <!-- מתאכלס על ידי buildPrintForm() -->
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     ONBOARDING WIZARD — Phase 3
+══════════════════════════════════════ -->
+<div id="onboarding-overlay" class="onboarding-overlay is-hidden" role="dialog" aria-modal="true" aria-labelledby="ob-title-1">
+  <div class="onboarding-card">
+
+    <!-- כותרת ופס התקדמות -->
+    <div class="onboarding-header">
+      <div class="onboarding-logo">💊 DocuMed</div>
+      <div class="onboarding-progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="התקדמות הגדרה">
+        <div class="onboarding-progress-bar" id="ob-progress-bar" style="width:0%"></div>
+      </div>
+      <p class="onboarding-step-label" id="ob-step-label">שלב 1 מתוך 2</p>
+    </div>
+
+    <!-- שלב 1: אימות SMS -->
+    <div class="onboarding-step" id="onboarding-step-1">
+      <h2 class="onboarding-title" id="ob-title-1">אימות מספר הטלפון 📱</h2>
+      <p class="onboarding-subtitle" id="ob-sms-subtitle">שלחנו קוד אימות בן 6 ספרות למספר שהזנת. הכנס את הקוד כדי להמשיך.</p>
+
+      <div class="otp-row" role="group" aria-label="קוד אימות בן 6 ספרות">
+        <input class="otp-input" id="otp-1" type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="one-time-code" aria-label="ספרה 1">
+        <input class="otp-input" id="otp-2" type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="off" aria-label="ספרה 2">
+        <input class="otp-input" id="otp-3" type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="off" aria-label="ספרה 3">
+        <input class="otp-input" id="otp-4" type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="off" aria-label="ספרה 4">
+        <input class="otp-input" id="otp-5" type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="off" aria-label="ספרה 5">
+        <input class="otp-input" id="otp-6" type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="off" aria-label="ספרה 6">
+      </div>
+
+      <p id="ob-step1-error" class="onboarding-error is-hidden" role="alert">נא להזין קוד אימות בן 6 ספרות.</p>
+
+      <div class="sms-resend-row">
+        <button class="sms-resend" id="ob-sms-resend" disabled aria-label="שלח קוד חדש">שלח שוב</button>
+        <span class="sms-countdown" id="ob-sms-countdown" aria-live="polite"></span>
+      </div>
+
+      <div class="onboarding-actions">
+        <button class="btn-primary" id="ob-btn-next" aria-label="אמת קוד והמשך">המשך</button>
+      </div>
+    </div>
+
+    <!-- שלב 2: אפיון המאובחן — העלאת מסמך (אופציונלי) -->
+    <div class="onboarding-step is-hidden" id="onboarding-step-2">
+      <h2 class="onboarding-title" id="ob-title-2">אפיון המאובחן 📄</h2>
+      <p class="onboarding-subtitle">העלה מסמך רפואי — מכתב שחרור, תוצאות בדיקה, מרשם. המערכת תזהה זכויות שעשויות להיות רלוונטיות עבורך.</p>
+
+      <div class="upload-zone" id="ob-drop-zone" role="button" tabindex="0" aria-label="לחץ או גרור קובץ רפואי להעלאה">
+        <span class="upload-zone__icon">📎</span>
+        <p class="upload-zone__text">
+          <span class="upload-zone__cta">לחץ לבחירת קובץ</span><br>או גרור לכאן
+        </p>
+        <p class="upload-zone__text" style="font-size:.75rem;margin-block-start:.25rem">PDF / JPG / PNG בלבד</p>
+        <input id="ob-file-upload" type="file" accept=".pdf,.jpg,.jpeg,.png" aria-label="בחירת קובץ רפואי">
+      </div>
+
+      <div id="ob-file-preview" class="upload-selected is-hidden" aria-live="polite">
+        <span style="font-size:1.2rem">📄</span>
+        <span class="upload-selected__name" id="ob-file-preview-name"></span>
+        <button class="btn-secondary" id="ob-btn-remove-file" style="padding:.2rem .55rem;font-size:.75rem;flex-shrink:0" aria-label="הסר קובץ">✕</button>
+      </div>
+
+      <p id="ob-step2-error" class="onboarding-error is-hidden" role="alert"></p>
+
+      <div class="onboarding-actions">
+        <button class="btn-primary" id="ob-btn-submit" aria-label="נתח מסמך ופתח את הדשבורד">🔍 נתח וכנס לדשבורד</button>
+        <button class="btn-secondary" id="ob-btn-skip" aria-label="דלג על העלאת מסמך וכנס לאפליקציה">דלג לעת עתה</button>
+      </div>
+    </div>
+
+    <!-- שלב 3: מצב ניתוח -->
+    <div class="onboarding-step is-hidden" id="onboarding-step-3">
+      <h2 class="onboarding-title" id="ob-title-3">מנתח את המסמך שלך...</h2>
+      <p class="onboarding-subtitle" id="ob-status-text" aria-live="polite" aria-atomic="true">מזהה מחלות כרוניות...</p>
+      <div class="ob-dots" aria-hidden="true">
+        <span class="ob-dot"></span>
+        <span class="ob-dot"></span>
+        <span class="ob-dot"></span>
+      </div>
+      <div class="ob-scan-track" aria-hidden="true">
+        <div class="ob-scan-fill" id="ob-scan-bar"></div>
+      </div>
+      <!-- C3: עוגן פוקוס לשלב 3 — מונע בריחת Tab מהאשף כשאין אלמנטים אינטראקטיביים -->
+      <span id="ob-step3-anchor" tabindex="-1" class="visually-hidden" aria-hidden="true"></span>
+    </div>
+
+  </div>
+</div>
+
+<!-- M5: אזור aria-live מחוץ לשלב 3 — מבטיח הכרזת הודעות גם לאחר חשיפת הצעד -->
+<div id="ob-live" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+<!-- M4: הודעת הצלחה לאחר אונבורדינג -->
+<div id="ob-toast" class="ob-toast is-hidden" role="status" aria-live="polite" aria-atomic="true"></div>
+
+<script>
+  // ─── Phase 4: Supabase client ──────────────────────────────
+  const { createClient } = supabase;
+  const supabaseClient = createClient(
+    'https://oxfupebdjpedlcftjyic.supabase.co',
+    'sb_publishable_65AyT3ZjW2pmqWRGKQwxXA_9v_crNjX'
+  );
+  console.log('Supabase connected');
+
+  // ─── 1. CONSTANTS & CONFIG ────────────────────────────────
+  const KEYS = {
+    USER:         'documed_user',
+    APPOINTMENTS: 'documed_appointments',
+    MEDICATIONS:  'documed_medications',
+    RIGHTS:       'documed_rights',
+    DOCUMENTS:    'documed_documents',
+    ONBOARDING:   'documed_onboarding_complete',
+  };
+
+  // ─── 2. IN-MEMORY STATE (Supabase-backed) ─────────────────
+  const _state = {
+    appointments: [],  // מאוכלס מ-Supabase בהתחברות
+    conditions:   [],  // מאוכלס מ-Supabase בהתחברות (מערך של מחרוזות condition_name)
+  };
+
+  // ─── KEYWORD RULES — מילות מפתח → זכויות ─────────────────
+  // כל פריט: { rightId, keywords[] }
+  // הסריקה: text.toLowerCase().includes(keyword.toLowerCase())
+  // אין ניחוש — תוצאה ריקה אם אין התאמה.
+  const KEYWORD_RULES = [
+    // ── סוכרת ──
+    { rightId: 'cat-diabetes-1', keywords: ['סוכרת', 'סוכרתי', 'סוכרתית', 'אינסולין', 'גלוקוז', 'hba1c', 'המוגלובין מסוכרר', 'מטפורמין', 'גלוקופאז'] },
+    { rightId: 'cat-diabetes-2', keywords: ['סוכרת', 'רטינופתיה', 'בדיקת עיניים', 'אופטלמולוגיה', 'אופטומטריסט'] },
+    { rightId: 'cat-diabetes-3', keywords: ['סוכרת', 'כף רגל סוכרתית', 'נוירופתיה', 'פציעת רגל', 'פודיאטריה', 'כיב'] },
+    // ── יתר לחץ דם ──
+    { rightId: 'cat-bp-1',       keywords: ['לחץ דם', 'יתר לחץ דם', 'היפרטנשן', 'היפרטנסיה', 'אמלודיפין', 'קרדיולוגיה', 'קרדיולוג'] },
+    { rightId: 'cat-bp-2',       keywords: ['לחץ דם', 'אקו לב', 'אקוקרדיוגרפיה', 'כלי דם', 'עורקים'] },
+    { rightId: 'cat-bp-3',       keywords: ['שבץ', 'אירוע מוחי', 'שבץ מוחי', 'CVA', 'TIA', 'שיקום נוירולוגי'] },
+    // ── מחלת לב ──
+    { rightId: 'cat-heart-1',    keywords: ['מחלת לב', 'אי ספיקת לב', 'קרדיולוג', 'אנגינה', 'כאב חזה', 'שיקום לב', 'שיקום קרדיאלי'] },
+    { rightId: 'cat-heart-2',    keywords: ['ניתוח לב', 'מסתם', 'קוצב לב', 'דפיברילטור', 'ICD', 'מעקף', 'סטנט', 'אנגיופלסטיה'] },
+    { rightId: 'cat-heart-3',    keywords: ['אספירין', 'קלופידוגרל', 'פלביקס', 'קומדין', 'ורפארין', 'אנטי קואגולנט', 'דילויד', 'ביסופרולול'] },
+    // ── ריאות / COPD ──
+    { rightId: 'cat-lung-1',     keywords: ['copd', 'ריאות', 'אמפיזמה', 'ברונכיטיס כרונית', 'חמצן ביתי', 'מכשיר חמצן', 'ריאות כרוני'] },
+    { rightId: 'cat-lung-2',     keywords: ['ספירומטריה', 'אסתמה', 'משאף', 'ונטולין', 'סרבנט', 'פולמיקורט', 'שאיפה'] },
+    { rightId: 'cat-lung-3',     keywords: ['עישון', 'הפסקת עישון', 'ניקוטין', 'מרפאת גמילה', 'גמילה מעישון'] },
+    // ── נכות / ביטוח לאומי ──
+    { rightId: 'cat-disability-1', keywords: ['נכות', 'ביטוח לאומי', 'ועדה רפואית', 'קצבת נכות', 'אחוזי נכות', 'קצבה', 'טופס 169'] },
+    { rightId: 'cat-disability-2', keywords: ['תו נכה', 'חנייה לנכה', 'תעודת נכה', 'נכה', 'מוגבלות', 'עזרת ניידות'] },
+    { rightId: 'cat-disability-3', keywords: ['מס הכנסה', 'פטור ממס', 'סעיף 9', 'פקיד שומה', 'נכות', 'הכנסה פטורה', 'טופס 116'] },
+    { rightId: 'cat-transport-1',  keywords: ['תחבורה ציבורית', 'כרטיסייה', 'רב קו', 'הנחה בנסיעה', 'אוטובוס', 'רכבת', 'נגישות'] },
+    { rightId: 'cat-transport-2',  keywords: ['מונית', 'הסעה', 'ניידות', 'כסא גלגלים', 'הליכון', 'עגלה', 'סיוע בניידות'] },
+  ];
+
+  // ─── RIGHTS CATALOG — מאגר הזכויות הידועות ───────────────
+  // קריאה בלבד. לעולם לא נכתב ל-localStorage ישירות.
+  // המשתמש מייבא רשומה ידנית דרך כפתור "הוסף לזכויות שלי".
+  const RIGHTS_CATALOG = [
+    {
+      id: 'cat-diabetes-1', icon: '🩺', iconColor: 'teal',
+      name: 'קצבת נכות לחולי סוכרת',
+      shortDesc: 'ביטוח לאומי – תשלום חודשי',
+      description: 'חולי סוכרת עם נכות מוכרת בשיעור 40% ומעלה זכאים לקצבת נכות חודשית מהביטוח הלאומי. שיעור הקצבה נקבע לפי אחוז הנכות המוכר.',
+      steps: ['📋 מלא טופס 169 – בקשה לקצבת נכות', '🩺 קבל דו"ח רפואי עדכני מרופא מטפל', '🏛️ הגש לוועדה רפואית בביטוח הלאומי', '💳 קבל אישור ותשלום חודשי'],
+      details: [['גוף מוסמך', 'המוסד לביטוח לאומי'], ['תנאי זכאות', 'נכות מוכרת 40% ומעלה'], ['מסמכים', 'טופס 169, דו"ח רפואי, ת"ז, אישור בנק'], ['הגשה', 'סניף ביטוח לאומי קרוב או אתר האינטרנט']],
+    },
+    {
+      id: 'cat-diabetes-2', icon: '👁️', iconColor: 'blue',
+      name: 'בדיקות עיניים ממומנות – סוכרת',
+      shortDesc: 'קופת חולים – בדיקה שנתית',
+      description: 'חולי סוכרת זכאים לבדיקת קרקעית עין שנתית ממומנת במלואה על ידי קופת החולים, לשם מניעת סיבוכי רטינופתיה סוכרתית.',
+      steps: ['📞 קבע תור לאופטלמולוג בקופת חולים', '📄 הצג אישור אבחנת סוכרת', '👁️ בצע בדיקה שנתית', '📋 קבל תוצאות והמלצות טיפול'],
+      details: [['גוף מוסמך', 'קופת חולים'], ['תדירות', 'פעם בשנה לפחות'], ['עלות', 'מכוסה במלואה בסל הבריאות'], ['מסמכים', 'תעודת חבר קופה, ת"ז']],
+    },
+    {
+      id: 'cat-diabetes-3', icon: '🦶', iconColor: 'orange',
+      name: 'טיפול בכף רגל סוכרתית',
+      shortDesc: 'פודיאטריה – סל הבריאות',
+      description: 'חולי סוכרת עם סיבוכים בכפות הרגליים זכאים לטיפולי פודיאטריה ומניעת כיבים בסל הבריאות הממלכתי.',
+      steps: ['🩺 קבל הפניה מרופא מטפל לפודיאטריסט', '📋 הצג אישור אבחנת סוכרת', '🦶 בצע טיפולים תקופתיים', '📄 עקוב אחר תוכנית הטיפול'],
+      details: [['גוף מוסמך', 'קופת חולים / מרפאה מיוחדת'], ['תנאי', 'סוכרת עם סיבוכי כף רגל'], ['עלות', 'השתתפות עצמית מופחתת'], ['מסמכים', 'הפניה מרופא, תיעוד אבחנה']],
+    },
+    {
+      id: 'cat-bp-1', icon: '🫀', iconColor: 'purple',
+      name: 'מעקב קרדיולוגי ממומן',
+      shortDesc: 'קופת חולים – ביקורות סדירות',
+      description: 'חולים עם יתר לחץ דם זכאים למעקב קרדיולוגי תקופתי ממומן בסל הבריאות, כולל בדיקות מעבדה ואק"ג שנתי.',
+      steps: ['📞 קבע תור לקרדיולוג בקופת חולים', '📄 הבא תיעוד מדידות לחץ דם', '🏥 בצע בדיקות תקופתיות', '💊 קבל התאמת טיפול תרופתי'],
+      details: [['גוף מוסמך', 'קופת חולים'], ['תדירות', 'לפי המלצת קרדיולוג'], ['כולל', 'אק"ג, בדיקות דם, ייעוץ תרופתי'], ['מסמכים', 'הפניה מרופא משפחה']],
+    },
+    {
+      id: 'cat-bp-2', icon: '📊', iconColor: 'blue',
+      name: 'אקו לב ממומן',
+      shortDesc: 'בדיקת אקוקרדיוגרפיה – שנתית',
+      description: 'חולים עם יתר לחץ דם ממושך זכאים לבדיקת אקו לב שנתית ממומנת לשם הערכת תפקוד לב ומניעת סיבוכים.',
+      steps: ['📞 קבל הפניה מקרדיולוג לאקו לב', '📅 קבע תור למרפאת לב', '🏥 בצע את הבדיקה', '📋 קבל ממצאים והמלצות המשך'],
+      details: [['גוף מוסמך', 'קופת חולים / מרכז רפואי'], ['תדירות', 'אחת לשנה או לפי הוראת רופא'], ['עלות', 'כלול בסל הבריאות'], ['מסמכים', 'הפניה מקרדיולוג']],
+    },
+    {
+      id: 'cat-bp-3', icon: '🧠', iconColor: 'purple',
+      name: 'שיקום לאחר שבץ מוחי',
+      shortDesc: 'ביטוח לאומי / קופת חולים',
+      description: 'מי שעבר שבץ מוחי (CVA) זכאי לתוכנית שיקום מקיפה הכוללת פיזיותרפיה, ריפוי בעיסוק, קלינאות תקשורת וסיוע סוציאלי.',
+      steps: ['🏥 אשפוז ביחידת שבץ', '📋 הפניה לשיקום נוירולוגי', '🏃 תוכנית שיקום אמבולטורית', '🏠 מעקב ביתי ותמיכה מתמשכת'],
+      details: [['גוף מוסמך', 'ביטוח לאומי וקופת חולים'], ['כולל', 'פיזיותרפיה, ריפוי בעיסוק, קלינאות תקשורת'], ['תנאי', 'שבץ מוחי מאושר'], ['מסמכים', 'מכתב שחרור מבית חולים']],
+    },
+    {
+      id: 'cat-heart-1', icon: '❤️‍🩹', iconColor: 'pink',
+      name: 'שיקום לב',
+      shortDesc: 'תוכנית שיקום קרדיאלי',
+      description: 'חולים לאחר אוטם שריר הלב, ניתוח לב, או עם אי-ספיקת לב זכאים לתוכנית שיקום קרדיאלי ממומנת הכוללת פעילות גופנית מפוקחת ותמיכה תזונתית.',
+      steps: ['🩺 קבל הפניה מקרדיולוג לשיקום לב', '📞 קבע תור למרכז שיקום', '🏃 השתתף בתוכנית שיקום (12–24 מפגשים)', '📋 המשך מעקב לאחר השיקום'],
+      details: [['גוף מוסמך', 'קופת חולים / מרכז שיקום'], ['משך', '12–24 מפגשים ממומנים'], ['כולל', 'אימון גופני, תזונה, תמיכה נפשית'], ['מסמכים', 'הפניה לאחר אירוע לבבי']],
+    },
+    {
+      id: 'cat-heart-2', icon: '🔋', iconColor: 'teal',
+      name: 'מענק מכשירים מושתלים',
+      shortDesc: 'ביטוח לאומי / קופת חולים',
+      description: 'חולים עם קוצב לב, דפיברילטור (ICD), או לאחר ניתוח מסתמים זכאים להחזרים ולסיוע בעלויות תחזוקה שוטפת.',
+      steps: ['📄 תיעד את המכשיר המושתל', '📋 הגש בקשה להחזר הוצאות', '🏥 מעקב תקופתי במרפאת מכשירים', '💳 קבל החזר או מענק'],
+      details: [['גוף מוסמך', 'קופת חולים / ביטוח לאומי'], ['תנאי', 'מכשיר מושתל מוכר'], ['מסמכים', 'אישור אשפוז, תעודת מכשיר'], ['הגשה', 'מחלקת ביטוחים בקופת חולים']],
+    },
+    {
+      id: 'cat-heart-3', icon: '💊', iconColor: 'green',
+      name: 'פטור מהשתתפות עצמית בתרופות לב',
+      shortDesc: 'סל תרופות – מחלות לב',
+      description: 'חולים עם מחלת לב כלילית מוכרת זכאים לפטור מלא או מופחת מהשתתפות עצמית בתרופות הנכללות בסל הבריאות לטיפול בלב.',
+      steps: ['📄 קבל אישור אבחנת מחלת לב מקרדיולוג', '🏥 פנה לרוקח קופת חולים', '📋 הגש בקשה לפטור מהשתתפות', '💊 קבל תרופות בעלות מופחתת'],
+      details: [['גוף מוסמך', 'קופת חולים'], ['תנאי', 'אבחנת מחלת לב כלילית'], ['חיסכון', 'עד 100% מההשתתפות העצמית'], ['מסמכים', 'אישור קרדיולוג, מרשם']],
+    },
+    {
+      id: 'cat-lung-1', icon: '🫁', iconColor: 'blue',
+      name: 'מכשיר חמצן ביתי ממומן',
+      shortDesc: 'קופת חולים / ביטוח לאומי',
+      description: 'חולים עם COPD חמור, אמפיזמה, או אי-ספיקת נשימה כרונית זכאים לקבל מכשיר חמצן ביתי ממומן לאחר הוכחת ירידה בריווי חמצן.',
+      steps: ['🩺 בצע בדיקת ריווי חמצן (SaO₂)', '📋 קבל המלצת רופא ריאות', '📄 הגש בקשה לקופת חולים', '🏠 קבל ציוד ומעקב ביתי'],
+      details: [['גוף מוסמך', 'קופת חולים'], ['תנאי', 'SaO₂ < 88% בניטור'], ['כולל', 'ציוד, חלפים, תחזוקה'], ['מסמכים', 'תוצאות בדיקת גזים, המלצת ריאות']],
+    },
+    {
+      id: 'cat-lung-2', icon: '💨', iconColor: 'teal',
+      name: 'בדיקות ריאה ממומנות',
+      shortDesc: 'ספירומטריה – סל הבריאות',
+      description: 'חולים עם אסתמה, COPD, או קשיי נשימה כרוניים זכאים לבדיקות ספירומטריה תקופתיות ממומנות במסגרת סל הבריאות.',
+      steps: ['📞 קבע תור לרופא ריאות בקופת חולים', '🩺 בצע ספירומטריה בסיסית', '💊 קבל התאמת טיפול', '📅 מעקב תקופתי לפי הוראה'],
+      details: [['גוף מוסמך', 'קופת חולים'], ['תדירות', 'לפי הנחיית רופא ריאות'], ['עלות', 'כלול בסל הבריאות'], ['מסמכים', 'הפניה מרופא משפחה']],
+    },
+    {
+      id: 'cat-lung-3', icon: '🚭', iconColor: 'green',
+      name: 'תמיכה בגמילה מעישון',
+      shortDesc: 'מרפאת גמילה – ממומן',
+      description: 'מעשנים המעוניינים להפסיק זכאים לתוכנית גמילה ממומנת הכוללת ייעוץ, תמיכה קבוצתית, ותרופות לגמילה בהחזר מהקופה.',
+      steps: ['📞 פנה למרפאת גמילה מעישון בקופה', '🧑‍⚕️ פגישה עם יועץ גמילה', '💊 קבל תרופות ממומנות לגמילה', '🏆 השתתף בתמיכה קבוצתית'],
+      details: [['גוף מוסמך', 'קופת חולים'], ['כולל', 'ייעוץ, תרופות, תמיכה קבוצתית'], ['עלות', 'מסובסד מלא / חלקי'], ['מסמכים', 'ת"ז, תעודת חבר קופה']],
+    },
+    {
+      id: 'cat-disability-1', icon: '🎖️', iconColor: 'purple',
+      name: 'קצבת נכות כללית',
+      shortDesc: 'ביטוח לאומי – תשלום חודשי',
+      description: 'מי שמוכר כנכה כללי עם נכות רפואית מעל 40% ופגיעה בכושר ההשתכרות, זכאי לקצבת נכות חודשית מהביטוח הלאומי.',
+      steps: ['📋 מלא טופס 169 – בקשה לקצבת נכות', '🩺 הגש דו"ח רפואי מרופא מטפל', '🏛️ השתתף בוועדה רפואית', '💳 קבל תשלום חודשי לאחר אישור'],
+      details: [['גוף מוסמך', 'המוסד לביטוח לאומי'], ['תנאי', 'נכות מוכרת 40%+ ופגיעה בהשתכרות'], ['סכום', 'תלוי בשיעור הנכות ובמצב המשפחתי'], ['מסמכים', 'טופס 169, מסמכים רפואיים, ת"ז, אישור בנק']],
+    },
+    {
+      id: 'cat-disability-2', icon: '🅿️', iconColor: 'orange',
+      name: 'תו נכה לחנייה',
+      shortDesc: 'חנייה ייעודית ללא תשלום',
+      description: 'אנשים עם נכות תנועתית מוכרת זכאים לתו חנייה לנכה המאפשר חנייה במקומות ייעודיים ובמקרים רבים ללא תשלום.',
+      steps: ['🩺 קבל אישור רפואי על מגבלה תנועתית', '🏛️ פנה למשרד הרישוי הקרוב', '📋 הגש בקשה עם מסמכים', '🅿️ קבל תו תוך 30 יום'],
+      details: [['גוף מוסמך', 'משרד הרישוי / עירייה'], ['תנאי', 'נכות תנועתית מוכרת'], ['תוקף', '3 שנים – ניתן לחידוש'], ['מסמכים', 'אישור רפואי, תעודת נכה, ת"ז, רישיון נהיגה']],
+    },
+    {
+      id: 'cat-disability-3', icon: '💰', iconColor: 'green',
+      name: 'פטור ממס הכנסה – סעיף 9(5)',
+      shortDesc: 'פקודת מס הכנסה – עד 100%',
+      description: 'נכה עם אחוזי נכות של 100% לפי סעיף 9(5) לפקודת מס הכנסה זכאי לפטור מלא ממס. גם בנכות חלקית קיימת הקלה ניכרת.',
+      steps: ['📄 קבל אישור נכות מגוף מוסמך', '🏢 פנה לפקיד השומה האזורי', '📝 מלא טופס 116 – בקשה לפטור', '✅ קבל אישור ופטור שוטף'],
+      details: [['סעיף חוק', 'סעיף 9(5) פקודת מס הכנסה'], ['תנאי', 'נכות 100% לפטור מלא; חלקית – הקלה יחסית'], ['פנייה', 'פקיד השומה האזורי'], ['מסמכים', 'טופס 116, אישור נכות, תלושי שכר']],
+    },
+    {
+      id: 'cat-transport-1', icon: '🚌', iconColor: 'blue',
+      name: 'הנחה בתחבורה ציבורית',
+      shortDesc: 'עד 75% הנחה על כרטיסייה',
+      description: 'נכים המוכרים על ידי הביטוח הלאומי זכאים להנחה משמעותית בתחבורה ציבורית – עד 75% על כרטיסיות ורב-קו.',
+      steps: ['🆔 הצג תעודת נכה בתוקף', '🌐 פנה לאתר הביטוח הלאומי או למשרד אזורי', '🚌 טען הנחה על כרטיס רב-קו', '✅ השתמש בתחבורה ציבורית בהנחה'],
+      details: [['ההנחה', 'עד 75% על כרטיסיות ורב-קו'], ['תנאי', 'נכות מוכרת מהביטוח הלאומי'], ['הגשה', 'אתר ביטוח לאומי / משרד אזורי'], ['מסמכים', 'תעודת נכה, ת"ז']],
+    },
+    {
+      id: 'cat-transport-2', icon: '🚕', iconColor: 'pink',
+      name: 'סיוע בניידות',
+      shortDesc: 'מענק / הסעה לנכים',
+      description: 'נכים עם מגבלת ניידות חמורה זכאים לסיוע כלכלי ברכישת רכב מותאם, הסעות, או מכשירי ניידות (כיסא גלגלים, הליכון).',
+      steps: ['📋 פנה לאגף לשיקום נכים בביטוח לאומי', '🩺 עבור הערכת ניידות תפקודית', '📄 הגש בקשה למענק ניידות', '🚕 קבל אישור ותמיכה כספית'],
+      details: [['גוף מוסמך', 'ביטוח לאומי – אגף שיקום'], ['תנאי', 'מגבלת ניידות חמורה מוכרת'], ['כולל', 'רכב מותאם, כיסא גלגלים, הסעות'], ['מסמכים', 'אישור רפואי, הערכת תפקוד, ת"ז']],
+    },
+  ];
+
+  // ─── 2. DATA LAYER ────────────────────────────────────────
+  function dbLoad(key) {
+    try {
+      const raw = localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function dbSave(key, value) {
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  // ─── KEYWORD ENGINE ───────────────────────────────────────
+  // scanDocumentText(text) → [{ rightId, matchedKeywords[] }]
+  // דטרמיניסטי לחלוטין. ללא AI. ללא המצאת תוצאות.
+  // מחזיר [] אם אין הטקסט ריק או אם לא נמצאה אף מילת מפתח.
+  function scanDocumentText(text) {
+    if (!text || typeof text !== 'string' || !text.trim()) return [];
+    const lower = text.toLowerCase();
+    const results = [];
+    for (const rule of KEYWORD_RULES) {
+      const matched = rule.keywords.filter(kw => lower.includes(kw.toLowerCase()));
+      if (matched.length > 0) {
+        results.push({ rightId: rule.rightId, matchedKeywords: matched });
+      }
+    }
+    // דירוג לפי מספר מילות מפתח שנמצאו — יותר = רלוונטי יותר
+    results.sort((a, b) => b.matchedKeywords.length - a.matchedKeywords.length);
+    return results;
+  }
+
+  // ─── 3. AUTH HELPERS ──────────────────────────────────────
+
+  function getUser()      { return dbLoad(KEYS.USER); }
+  function saveUser(user) { return dbSave(KEYS.USER, user); }
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function getInitials(name) {
+    const words = name.trim().split(/\s+/).filter(w => w.length > 0);
+    return words.slice(0, 2).map(w => w[0]).join('') || '?';
+  }
+
+  function showAuthScreen() {
+    document.querySelector('#auth-screen').classList.remove('is-hidden');
+    // העבר מיקוד לשדה הראשון בטופס הכניסה
+    const first = document.querySelector('#login-email');
+    if (first) first.focus();
+  }
+
+  function hideAuthScreen() {
+    document.querySelector('#auth-screen').classList.add('is-hidden');
+    // החזר מיקוד לתפריט הניווט
+    const navFirst = document.querySelector('.nav-tab');
+    if (navFirst) navFirst.focus();
+  }
+
+  function applyUserToUI(user) {
+    const avatarEl = document.querySelector('#header-avatar');
+    const nameEl   = document.querySelector('#header-name');
+    const emailEl  = document.querySelector('#header-email');
+    if (avatarEl) avatarEl.textContent = escapeHtml(user.initials || '?');
+    if (nameEl)   nameEl.textContent   = escapeHtml(user.name  || '—');
+    if (emailEl)  emailEl.textContent  = escapeHtml(user.email || '—');
+  }
+
+  function showAuthError(msg) {
+    const el = document.querySelector('#auth-error');
+    el.textContent = msg;
+    el.classList.add('is-visible');
+  }
+
+  function clearAuthError() {
+    const el = document.querySelector('#auth-error');
+    el.textContent = '';
+    el.classList.remove('is-visible');
+  }
+
+  // ─── 4. AUTH TAB SWITCHING ────────────────────────────────
+  document.querySelectorAll('[data-auth-tab]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.authTab;
+      document.querySelectorAll('[data-auth-tab]').forEach(b => {
+        b.classList.toggle('is-active', b.dataset.authTab === target);
+        b.setAttribute('aria-selected', b.dataset.authTab === target ? 'true' : 'false');
+      });
+      document.querySelectorAll('.auth-panel').forEach(p => {
+        p.classList.toggle('is-active', p.id === 'panel-' + target);
+      });
+      clearAuthError();
+    });
+  });
+
+  // ─── 5. LOGIN ─────────────────────────────────────────────
+  document.querySelector('#form-login').addEventListener('submit', async e => {
+    e.preventDefault();
+    clearAuthError();
+
+    const email    = document.querySelector('#login-email').value.trim();
+    const password = document.querySelector('#login-password').value;
+
+    if (!email || !password) { showAuthError('נא למלא את כל השדות.'); return; }
+
+    const btn = e.target.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.textContent = 'מתחבר...';
+
+    const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+
+    btn.disabled = false;
+    btn.textContent = 'כניסה למערכת';
+
+    if (error) {
+      showAuthError('אימייל או סיסמה שגויים. נסה שנית.');
+      return;
+    }
+
+    const { data: profile } = await supabaseClient
+      .from('users')
+      .select('full_name, phone')
+      .eq('id', data.user.id)
+      .single();
+
+    const user = {
+      name:     profile?.full_name || data.user.email,
+      email:    data.user.email,
+      initials: getInitials(profile?.full_name || data.user.email),
+      phone:    profile?.phone || null,
+    };
+    saveUser(user);
+    hideAuthScreen();
+    applyUserToUI(user);
+  });
+
+  // ─── 6. REGISTER ──────────────────────────────────────────
+  document.querySelector('#form-register').addEventListener('submit', async e => {
+    e.preventDefault();
+    clearAuthError();
+
+    const name            = document.querySelector('#reg-name').value.trim();
+    const email           = document.querySelector('#reg-email').value.trim();
+    const idNumber        = document.querySelector('#reg-id-number').value.trim();
+    const dob             = document.querySelector('#reg-dob').value;
+    const phone           = document.querySelector('#reg-phone').value.trim();
+    const password        = document.querySelector('#reg-password').value;
+    const passwordConfirm = document.querySelector('#reg-password-confirm').value;
+    const consent         = document.querySelector('#reg-consent').checked;
+
+    if (!name || !email || !idNumber || !dob || !password || !passwordConfirm) {
+      showAuthError('נא למלא את כל השדות הנדרשים.');
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showAuthError('נא להזין כתובת אימייל תקינה.');
+      return;
+    }
+    if (!/^\d{9}$/.test(idNumber)) {
+      showAuthError('מספר תעודת זהות חייב להכיל 9 ספרות.');
+      return;
+    }
+    if (password.length < 6) {
+      showAuthError('הסיסמה חייבת להכיל לפחות 6 תווים.');
+      return;
+    }
+    if (password !== passwordConfirm) {
+      showAuthError('הסיסמאות אינן תואמות.');
+      return;
+    }
+    if (!consent) {
+      showAuthError('יש לאשר את תנאי השימוש ומדיניות הפרטיות כדי להמשיך.');
+      return;
+    }
+
+    const btn = e.target.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.textContent = 'יוצר חשבון...';
+
+    const { data, error } = await supabaseClient.auth.signUp({ email, password });
+
+    if (error) {
+      btn.disabled = false;
+      btn.textContent = 'יצירת חשבון';
+      showAuthError('שגיאה ביצירת החשבון. ייתכן שהאימייל כבר רשום.');
+      return;
+    }
+
+    // אם נדרש אישור אימייל — הצג הודעה מתאימה
+    if (!data.session) {
+      btn.disabled = false;
+      btn.textContent = 'יצירת חשבון';
+      showAuthError('החשבון נוצר! בדוק את תיבת הדואר שלך לאישור.');
+      return;
+    }
+
+    const { error: profileError } = await supabaseClient
+      .from('users')
+      .insert({
+        id:            data.user.id,
+        full_name:     name,
+        id_number:     idNumber,
+        date_of_birth: dob,
+        phone:         phone || '',
+      });
+
+    btn.disabled = false;
+    btn.textContent = 'יצירת חשבון';
+
+    if (profileError) {
+      showAuthError('החשבון נוצר אך שגיאה בשמירת הפרטים. נסה להתחבר.');
+      return;
+    }
+
+    // ניקוי נתוני סשן קודם — הרשמה חדשה = לוח ריק
+    try {
+      [KEYS.APPOINTMENTS, KEYS.MEDICATIONS, KEYS.RIGHTS, KEYS.DOCUMENTS, KEYS.ONBOARDING]
+        .forEach(k => localStorage.removeItem(k));
+    } catch (_) { /* silent */ }
+
+    const user = { name, email, initials: getInitials(name), phone: phone || null };
+    saveUser(user);
+    hideAuthScreen();
+    applyUserToUI(user);
+    checkOnboarding();
+  });
+
+  // ─── 7. INIT AUTH ─────────────────────────────────────────
+  supabaseClient.auth.onAuthStateChange(async (event, session) => {
+    if (!session) {
+      // אפס state בזיכרון בעת יציאה
+      _state.appointments = [];
+      _state.conditions   = [];
+      showAuthScreen();
+      return;
+    }
+    // סשן קיים — טען פרופיל מהמטמון המקומי או מ-Supabase
+    const cached = getUser();
+    if (cached) {
+      hideAuthScreen();
+      applyUserToUI(cached);
+      await loadCloudData(session.user.id);
+      return;
+    }
+    const { data: profile } = await supabaseClient
+      .from('users')
+      .select('full_name, phone')
+      .eq('id', session.user.id)
+      .single();
+    const user = {
+      name:     profile?.full_name || session.user.email,
+      email:    session.user.email,
+      initials: getInitials(profile?.full_name || session.user.email),
+      phone:    profile?.phone || null,
+    };
+    saveUser(user);
+    hideAuthScreen();
+    applyUserToUI(user);
+    await loadCloudData(session.user.id);
+  });
+
+  // ─── TAB SWITCHING ───────────────────────────────────────
+  const tabs     = document.querySelectorAll('.nav-tab');
+  const sections = document.querySelectorAll('.section');
+
+  function switchTab(name) {
+    tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+    sections.forEach(s => s.classList.toggle('active', s.id === 'tab-' + name));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  tabs.forEach(tab => tab.addEventListener('click', () => switchTab(tab.dataset.tab)));
+
+  // ─── Phase 2: Blank Slate — אין נתוני דמו ───────────────
+  function initData() {
+    // האפליקציה מתחילה ריקה לחלוטין.
+    // כל הנתונים מוזנים ידנית על ידי המשתמש.
+  }
+
+  // ─── CLOUD DATA LOADER ────────────────────────────────────
+  async function loadCloudData(userId) {
+    const [{ data: appts }, { data: conds }] = await Promise.all([
+      supabaseClient.from('appointments').select('*').eq('user_id', userId).order('date'),
+      supabaseClient.from('medical_conditions').select('*').eq('user_id', userId),
+    ]);
+    _state.appointments = (appts || []).map(a => ({
+      id:              a.id,
+      date:            a.date,
+      time:            a.time,
+      doctor:          a.doctor_name,
+      specialty:       a.specialty,
+      remindDayBefore: a.reminder_24h,
+      remindDayOf:     a.reminder_morning,
+    }));
+    _state.conditions = (conds || []).map(c => c.condition_name);
+    // סנכרן מצבים גם למטמון המשתמש המקומי
+    const cachedUser = getUser();
+    if (cachedUser) { cachedUser.conditions = _state.conditions; saveUser(cachedUser); }
+    renderAll();
+    updateCountdown();
+    updateMedProgress();
+  }
+
+  // ─── DISPLAY HELPERS ─────────────────────────────────────
+  const MONTHS_HE = ['ינו׳','פבר׳','מרץ','אפר׳','מאי','יוני','יולי','אוג׳','ספט׳','אוק׳','נוב׳','דצמ׳'];
+
+  function parseDateStr(str) {
+    const [y,m,d] = str.split('-').map(Number);
+    return new Date(y, m - 1, d);
+  }
+
+  function formatApptDate(dateStr) {
+    const d = parseDateStr(dateStr);
+    return { day: d.getDate(), month: MONTHS_HE[d.getMonth()], yearShort: String(d.getFullYear()).slice(2) };
+  }
+
+  function todayMidnight() {
+    const t = new Date(); t.setHours(0,0,0,0); return t;
+  }
+
+  function getNextAppt(appointments) {
+    const today = todayMidnight();
+    return appointments
+      .filter(a => parseDateStr(a.date) >= today)
+      .sort((a,b) => parseDateStr(a.date) - parseDateStr(b.date))[0] || null;
+  }
+
+  const APPT_COLOR = {
+    teal:   { dateBg:'',                      dayColor:'',                       specColor:'',                       badge:'badge-teal',   badgeLabel:'הבא' },
+    orange: { dateBg:'',                      dayColor:'',                       specColor:'',                       badge:'badge-orange', badgeLabel:'מתוכנן' },
+    purple: { dateBg:'var(--appt-purple-bg)', dayColor:'var(--appt-purple-text)', specColor:'var(--appt-purple-text)', badge:'badge-purple', badgeLabel:'מתוכנן' },
+    pink:   { dateBg:'var(--appt-pink-bg)',   dayColor:'var(--appt-pink-text)',   specColor:'var(--appt-pink-text)',   badge:'badge-green',  badgeLabel:'מתוכנן' },
+  };
+
+  const STATUS_LABELS = {
+    active:  { cls:'status-active',  label:'פעיל' },
+    pending: { cls:'status-pending', label:'בבדיקה' },
+    new:     { cls:'status-new',     label:'חדש' },
+  };
+
+  const TIME_SLOT_META = {
+    morning: { groupLabel:'☀️ בוקר',   bg:'var(--time-morning-bg)', badgeCls:'time-morning', badgeLabel:'בוקר' },
+    noon:    { groupLabel:'🍽️ צהריים', bg:'var(--time-twice-bg)',   badgeCls:'time-twice',   badgeLabel:'צהריים' },
+    evening: { groupLabel:'🌙 ערב',    bg:'var(--time-evening-bg)', badgeCls:'time-evening', badgeLabel:'ערב' },
+    twice:   { groupLabel:'🔁 פעמיים', bg:'var(--time-twice-bg)',   badgeCls:'time-twice',   badgeLabel:'×2' },
+  };
+
+  const ICON_COLOR_BG = {
+    purple:'var(--icon-purple-bg)', green:'var(--icon-green-bg)',
+    blue:'var(--icon-blue-bg)',     orange:'var(--icon-orange-bg)',
+  };
+
+  const DOC_STYLE = {
+    ready:    { border:'var(--doc-ready-border)', bg:'var(--doc-ready-bg)',    statusCls:'status-active', statusLabel:'✓ מוכן',    statusStyle:'' },
+    needed:   { border:'var(--alert-border)',      bg:'var(--alert-bg)',        statusCls:'',              statusLabel:'⚠ נדרש',    statusStyle:'background:var(--badge-red-bg);color:var(--badge-red-text)' },
+    optional: { border:'var(--color-neutral-200)', bg:'var(--color-transparent)',            statusCls:'',              statusLabel:'אופציונלי', statusStyle:'background:var(--color-neutral-100);color:var(--color-neutral-500)' },
+    pending:  { border:'var(--color-neutral-200)', bg:'var(--color-transparent)',            statusCls:'',              statusLabel:'בהמתנה',    statusStyle:'background:var(--color-neutral-100);color:var(--color-neutral-500)' },
+  };
+
+  // ─── RENDER: BENTO OVERVIEW ──────────────────────────────
+  function renderHeroCard(appointments) {
+    const el = document.querySelector('#render-hero');
+    if (!el) return;
+    const appt = getNextAppt(appointments);
+    if (!appt) {
+      el.innerHTML =
+        '<div class="card hero-card empty-state-card">' +
+          '<div class="empty-state-icon">📅</div>' +
+          '<div class="empty-state-title">אין תורים קרובים</div>' +
+          '<div class="empty-state-body">הוסף את התור הראשון שלך בכרטיסיית ״תורים״.</div>' +
+        '</div>';
+      return;
+    }
+    const { day, month, yearShort } = formatApptDate(appt.date);
+    el.innerHTML =
+      `<div class="card hero-card" data-action="detail" role="button" tabindex="0" data-type="appointment" data-id="${appt.id}">` +
+        `<div class="card-header"><div class="card-icon-title"><span class="card-icon">📅</span><span class="card-title">התור הבא שלך</span></div><span class="badge badge-teal">⏰ הבא</span></div>` +
+        `<div class="hero-appointment-date">${day} ב${escapeHtml(month)} 20${yearShort}</div>` +
+        `<div class="hero-appointment-time">${escapeHtml(appt.time)} – ${escapeHtml(appt.endTime)}</div>` +
+        `<div class="hero-details">` +
+          `<div class="hero-detail-row"><span>👩‍⚕️</span><span>${escapeHtml(appt.doctor)} – <strong>${escapeHtml(appt.specialty)}</strong></span></div>` +
+          `<div class="hero-detail-row"><span>🏥</span><span>${escapeHtml(appt.clinic)}</span></div>` +
+          (appt.address ? `<div class="hero-detail-row"><span>📍</span><span>${escapeHtml(appt.address)}</span></div>` : '') +
+        `</div>` +
+        `<div class="countdown-chip"><div class="pulse-dot"></div><span id="countdown-text">מחשב...</span></div>` +
+      `</div>`;
+  }
+
+  function renderApptStatCard(appointments) {
+    const el = document.querySelector('#render-appt-stat');
+    if (!el) return;
+    const today    = todayMidnight();
+    const upcoming = appointments.filter(a => parseDateStr(a.date) >= today);
+    const next     = upcoming[0];
+    const daysToNext = next ? Math.floor((parseDateStr(next.date) - today) / 86400000) : '—';
+    const preview  = upcoming.slice(0,2).map(a => {
+      const { day, month } = formatApptDate(a.date);
+      return `<div class="appt-item">` +
+        `<div class="appt-date-block"><div class="appt-day">${day}</div><div class="appt-month">${escapeHtml(month)}</div></div>` +
+        `<div class="appt-info"><div class="appt-doctor">${escapeHtml(a.doctor)}</div><div class="appt-meta">${escapeHtml(a.specialty)}</div></div>` +
+        `<div class="appt-time">${escapeHtml(a.time)}</div>` +
+      `</div>`;
+    }).join('');
+    el.innerHTML =
+      `<div class="card blue" data-action="switch-tab" role="button" tabindex="0" data-tab="appointments">` +
+        `<div class="card-header"><div class="card-icon-title"><span class="card-icon">🗓️</span><span class="card-title">תורים קרובים</span></div><span class="badge badge-teal">חודש קרוב</span></div>` +
+        `<div class="stat-value" style="color:var(--stat-blue-text)">${upcoming.length}</div>` +
+        `<div class="stat-label">תורים מתוכננים</div>` +
+        `<div class="stat-sub">הבא בעוד <strong id="days-to-next">${daysToNext}</strong> ימים</div>` +
+        `<div class="appt-list" style="margin-top:.9rem">${preview}</div>` +
+      `</div>`;
+  }
+
+  function renderMedsOverview(medications) {
+    const el = document.querySelector('#render-meds-overview');
+    if (!el) return;
+    const ovMeds = medications.filter(m => m.showInOverview);
+    const medsHtml = ovMeds.map(m => {
+      const ts = TIME_SLOT_META[m.timeSlot] || TIME_SLOT_META.morning;
+      return `<div class="med-item">` +
+        `<input type="checkbox" class="med-checkbox overview-med" data-med-id="${m.id}" aria-label="סימון נטילת ${escapeHtml(m.name)} ${escapeHtml(m.dosage)}">` +
+        `<div class="med-info"><div class="med-name">${escapeHtml(m.name)} ${escapeHtml(m.dosage)}</div><div class="med-dosage">${escapeHtml(m.instructions)}</div></div>` +
+        `<span class="med-time-badge ${ts.badgeCls}">${ts.badgeLabel}</span>` +
+      `</div>`;
+    }).join('');
+    el.innerHTML =
+      `<div class="card green" data-action="switch-tab" role="button" tabindex="0" data-tab="medications">` +
+        `<div class="card-header"><div class="card-icon-title"><span class="card-icon">💊</span><span class="card-title">תרופות היום</span></div><span class="badge badge-green" id="meds-badge-overview">0/${ovMeds.length} נלקחו</span></div>` +
+        `<div style="margin-bottom:.85rem">` +
+          `<div style="display:flex;justify-content:space-between;margin-bottom:.3rem"><span style="font-size:.75rem;color:var(--color-neutral-500)">התקדמות יומית</span><span style="font-size:.75rem;font-weight:700;color:var(--badge-green-text)" id="meds-pct-overview">0%</span></div>` +
+          `<div style="height:.4rem;background:var(--color-neutral-200);border-radius:var(--radius-pill);overflow:hidden"><div id="meds-bar-overview" style="height:100%;width:0%;background:linear-gradient(90deg,var(--meds-bar-from),var(--meds-bar-to));border-radius:var(--radius-pill);transition:width .4s ease"></div></div>` +
+        `</div>` +
+        `<div class="med-list">${medsHtml}</div>` +
+      `</div>`;
+  }
+
+  function renderRightsOverview(rights) {
+    const el = document.querySelector('#render-rights-overview');
+    if (!el) return;
+    // ממזג רשומות רזות (שמירת אשף — id בלבד) עם נתוני הקטלוג
+    const hydrated = rights.map(r => {
+      const cat = RIGHTS_CATALOG.find(c => c.id === r.id);
+      return cat ? Object.assign({}, cat, r) : r;
+    });
+    const activeCount = hydrated.filter(r => r.status === 'active').length;
+    const itemsHtml   = hydrated.slice(0,3).map(r => {
+      const st = STATUS_LABELS[r.status] || { cls:'status-new', label:'חדש' };
+      return `<div class="right-item">` +
+        `<div class="right-icon-wrap ${escapeHtml(r.iconColor || '')}">${escapeHtml(r.icon || '⚖️')}</div>` +
+        `<div class="right-info"><div class="right-name">${escapeHtml(r.name || '')}</div><div class="right-desc">${escapeHtml(r.shortDesc || '')}</div></div>` +
+        `<span class="right-status ${st.cls}">${st.label}</span>` +
+      `</div>`;
+    }).join('');
+    el.innerHTML =
+      `<div class="card purple" data-action="switch-tab" role="button" tabindex="0" data-tab="rights">` +
+        `<div class="card-header"><div class="card-icon-title"><span class="card-icon">⚖️</span><span class="card-title">זכויות</span></div><span class="badge badge-purple">${activeCount} פעילות</span></div>` +
+        `<div class="rights-list">${itemsHtml}</div>` +
+      `</div>`;
+  }
+
+  function renderDocsOverview(documents) {
+    const el = document.querySelector('#render-docs-overview');
+    if (!el) return;
+    const neededCount = documents.filter(d => d.status === 'needed').length;
+    const badgeCls    = neededCount > 0 ? 'badge-red' : 'badge-green';
+    const badgeLabel  = neededCount > 0 ? `${neededCount} חסרים` : 'הכל מוכן';
+    const docsHtml    = documents.slice(0,4).map(d => {
+      const ds      = DOC_STYLE[d.status] || DOC_STYLE.optional;
+      const stHtml  = ds.statusCls
+        ? `<div class="doc-status" style="color:var(--badge-green-text)">✓ מוכן</div>`
+        : `<div class="doc-status" style="color:var(--badge-red-text)">⚠ נדרש</div>`;
+      const itemCls = d.status === 'ready' ? 'ready' : (d.status === 'needed' ? 'needed' : '');
+      return `<div class="doc-item ${itemCls}"><div class="doc-icon">${escapeHtml(d.icon)}</div><div class="doc-name">${escapeHtml(d.name)}</div>${stHtml}</div>`;
+    }).join('');
+    el.innerHTML =
+      `<div class="card pink" data-action="switch-tab" role="button" tabindex="0" data-tab="documents">` +
+        `<div class="card-header"><div class="card-icon-title"><span class="card-icon">📋</span><span class="card-title">מסמכים</span></div><span class="badge ${badgeCls}">${badgeLabel}</span></div>` +
+        `<div class="docs-grid">${docsHtml}</div>` +
+      `</div>`;
+  }
+
+  function renderAlertCard(documents) {
+    const el = document.querySelector('#render-alert');
+    if (!el) return;
+    const urgent = documents.filter(d => d.status === 'needed');
+    if (!urgent.length) {
+      el.innerHTML = '<div class="card"><div class="card-header"><div class="card-icon-title"><span class="card-icon">✅</span><span class="card-title">הכל תקין</span></div></div><p style="color:var(--color-neutral-500);margin-top:.5rem;font-size:.9rem">אין פעולות דחופות כרגע.</p></div>';
+      return;
+    }
+    const first = urgent[0];
+    el.innerHTML =
+      `<div class="card alert-card">` +
+        `<div class="card-header"><div class="card-icon-title"><span class="card-icon">🔔</span><span class="card-title">התראה</span></div><span class="badge badge-red">דחוף</span></div>` +
+        `<div class="alert-title">${escapeHtml(first.name)} נדרש</div>` +
+        `<div class="alert-body">${escapeHtml(first.description)}</div>` +
+        `<div style="margin-top:.85rem"><button class="btn-alert-docs" data-action="switch-tab" data-tab="documents">לניהול מסמכים ←</button></div>` +
+      `</div>`;
+  }
+
+  function renderStatsRow(appointments, medications, rights, documents) {
+    const el = document.querySelector('#render-stats-row');
+    if (!el) return;
+    const today         = todayMidnight();
+    const upcomingAppts = appointments.filter(a => parseDateStr(a.date) >= today).length;
+    const activeRights  = rights.filter(r => r.status === 'active').length;
+    const neededDocs    = documents.filter(d => d.status === 'needed').length;
+    el.innerHTML =
+      `<div class="card teal" style="cursor:default">` +
+        `<div class="card-header"><div class="card-icon-title"><span class="card-icon">📊</span><span class="card-title">סיכום מצב</span></div></div>` +
+        `<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;text-align:center">` +
+          `<div><div class="stat-value" style="color:var(--color-teal-500);font-size:1.6rem">${upcomingAppts}</div><div class="stat-label">תורים מתוכננים</div></div>` +
+          `<div><div class="stat-value" style="color:var(--stat-blue-text);font-size:1.6rem">${medications.length}</div><div class="stat-label">תרופות יומיות</div></div>` +
+          `<div><div class="stat-value" style="color:var(--stat-purple-text);font-size:1.6rem">${activeRights}</div><div class="stat-label">זכויות פעילות</div></div>` +
+          `<div><div class="stat-value" style="color:var(--stat-red-text);font-size:1.6rem">${neededDocs}</div><div class="stat-label">מסמכים חסרים</div></div>` +
+        `</div>` +
+      `</div>`;
+  }
+
+  // ─── RENDER: FULL TABS ───────────────────────────────────
+  function renderFullAppointments(appointments) {
+    const el = document.querySelector('#render-full-appts');
+    if (!el) return;
+    if (!appointments.length) {
+      el.innerHTML =
+        '<div class="card empty-state-card">' +
+          '<div class="empty-state-icon">📅</div>' +
+          '<div class="empty-state-title">אין תורים עדיין</div>' +
+          '<div class="empty-state-body">לחץ על ״+ תור חדש״ כדי להוסיף את התור הראשון שלך.</div>' +
+        '</div>';
+      return;
+    }
+    const today = todayMidnight();
+    el.innerHTML = appointments.map((a,i) => {
+      const { day, month, yearShort } = formatApptDate(a.date);
+      const clr    = APPT_COLOR[a.colorScheme] || APPT_COLOR.orange;
+      const isNext = i === 0 && parseDateStr(a.date) >= today;
+      const dateSt = clr.dateBg    ? ` style="background:${clr.dateBg}"` : '';
+      const daySt  = clr.dayColor  ? ` style="color:${clr.dayColor}"` : '';
+      const specSt = clr.specColor ? ` style="color:${clr.specColor}"` : '';
+      const remindBadge = (a.remindDayBefore || a.remindDayOf)
+        ? `<span class="reminder-badge" aria-label="תזכורת מוגדרת">🔔</span>` : '';
+      return `<div class="full-appt-item${isNext ? ' next-appt' : ''}" data-action="detail" role="button" tabindex="0" data-type="appointment" data-id="${a.id}">` +
+        `<div class="appt-date-big"${dateSt}><div class="day"${daySt}>${day}</div><div class="mon">${escapeHtml(month)} ${yearShort}׳</div></div>` +
+        `<div class="full-appt-info">` +
+          `<div class="full-appt-spec"${specSt}>${escapeHtml(a.specialty)}${remindBadge}</div>` +
+          `<div class="full-appt-doctor">${escapeHtml(a.doctor)}</div>` +
+          `<div class="full-appt-meta">🏥 ${escapeHtml(a.clinic)}${a.address ? ' &nbsp;|&nbsp; 📍 ' + escapeHtml(a.address) : ''}</div>` +
+        `</div>` +
+        `<div class="full-appt-side">` +
+          `<div class="full-appt-time">${escapeHtml(a.time)}</div>` +
+          `<div class="full-appt-loc"><span class="badge ${clr.badge}">${clr.badgeLabel}</span></div>` +
+        `</div>` +
+        `<div class="item-actions">` +
+          `<button class="btn-icon" data-action="edit" data-type="appointment" data-id="${a.id}" aria-label="עריכה">✏️</button>` +
+          `<button class="btn-icon btn-icon--danger" data-action="delete" data-type="appointment" data-id="${a.id}" aria-label="מחיקה">🗑️</button>` +
+        `</div>` +
+      `</div>`;
+    }).join('');
+  }
+
+  function renderFullMedications(medications) {
+    const el = document.querySelector('#render-full-meds');
+    if (!el) return;
+    if (!medications.length) {
+      el.innerHTML =
+        '<div class="card empty-state-card">' +
+          '<div class="empty-state-icon">💊</div>' +
+          '<div class="empty-state-title">אין תרופות רשומות</div>' +
+          '<div class="empty-state-body">לחץ על ״+ תרופה חדשה״ כדי להוסיף את התרופה הראשונה שלך.</div>' +
+        '</div>';
+      return;
+    }
+    const groups = ['morning','noon','evening'];
+    el.innerHTML = groups.map(slot => {
+      const meds = medications.filter(m => m.timeSlot === slot);
+      if (!meds.length) return '';
+      const ts = TIME_SLOT_META[slot];
+      const medsHtml = meds.map(m => {
+        const idx = medications.indexOf(m);
+        return `<div class="full-med-item" id="full-med-${idx}">` +
+          `<div class="med-pill-icon" style="background:${ts.bg}">💊</div>` +
+          `<div class="full-med-info">` +
+            `<div class="full-med-name">${escapeHtml(m.name)} ${escapeHtml(m.dosage)}</div>` +
+            `<div class="full-med-dosage">${escapeHtml(m.instructions)}</div>` +
+            `<div class="full-med-note">${escapeHtml(m.note)}</div>` +
+          `</div>` +
+          `<div class="item-actions">` +
+            `<button class="btn-icon" data-action="edit" data-type="medication" data-id="${m.id}" aria-label="עריכה">✏️</button>` +
+            `<button class="btn-icon btn-icon--danger" data-action="delete" data-type="medication" data-id="${m.id}" aria-label="מחיקה">🗑️</button>` +
+          `</div>` +
+          `<input type="checkbox" class="med-checkbox full-med" data-med-id="${m.id}" data-index="${idx}" data-full="true" aria-label="סימון נטילת ${escapeHtml(m.name)} ${escapeHtml(m.dosage)}">` +
+        `</div>`;
+      }).join('');
+      return `<div class="meds-time-group"><div class="meds-time-label">${ts.groupLabel}</div>${medsHtml}</div>`;
+    }).join('');
+  }
+
+  function renderFullRights(rights) {
+    const el = document.querySelector('#render-full-rights');
+    if (!el) return;
+    if (!rights.length) {
+      el.innerHTML =
+        '<div class="card empty-state-card">' +
+          '<div class="empty-state-icon">⚖️</div>' +
+          '<div class="empty-state-title">אין זכויות רשומות</div>' +
+          '<div class="empty-state-body">הוסף זכות ידנית, או השתמש בכרטיסיית ״ניתוח מסמך״ כדי לגלות זכויות שמגיעות לך.</div>' +
+        '</div>';
+      return;
+    }
+    el.innerHTML = rights.map(r => {
+      // ממזג רשומות רזות (שמירת אשף — id בלבד) עם נתוני הקטלוג
+      const cat    = RIGHTS_CATALOG.find(c => c.id === r.id);
+      const m      = cat ? Object.assign({}, cat, r) : r;
+      const st     = STATUS_LABELS[m.status] || { cls:'status-new', label:'חדש' };
+      const iconBg = ICON_COLOR_BG[m.iconColor] || 'var(--icon-blue-bg)';
+      // steps יכול להיות מערך (קטלוג) או מחרוזת שורות (טופס ידני) או חסר
+      const stepsArr  = Array.isArray(m.steps) ? m.steps
+                      : (m.steps ? String(m.steps).split('\n').filter(Boolean) : []);
+      const stepsHtml = stepsArr.map(s => `<span class="right-step-chip">${escapeHtml(s)}</span>`).join('');
+      const matchedJson = escapeHtml(JSON.stringify(m.matchedKeywords || []));
+      // formRightId: עדיפות לזיהוי מהקטלוג; אחרת id של הרשומה
+      const formRightId = escapeHtml(m.id);
+      return `<div class="right-full-item" data-action="detail" role="button" tabindex="0" data-type="right" data-id="${m.id}">` +
+        `<div class="right-full-header">` +
+          `<div class="right-full-icon" style="background:${iconBg}">${escapeHtml(m.icon || '⚖️')}</div>` +
+          `<div class="right-full-title">${escapeHtml(m.name || '')}</div>` +
+          `<span class="right-status ${st.cls}">${st.label}</span>` +
+          `<div class="item-actions">` +
+            `<button class="btn-icon" data-action="edit" data-type="right" data-id="${m.id}" aria-label="עריכה">✏️</button>` +
+            `<button class="btn-icon btn-icon--danger" data-action="delete" data-type="right" data-id="${m.id}" aria-label="מחיקה">🗑️</button>` +
+          `</div>` +
+        `</div>` +
+        `<div class="right-full-desc">${escapeHtml(m.description || '')}</div>` +
+        `<div class="right-steps">${stepsHtml}</div>` +
+        `<div class="right-card-actions">` +
+          `<button class="btn-generate-form" data-action="generate-form" data-right-id="${formRightId}" data-matched="${matchedJson}" aria-label="צור טופס להגשת ${escapeHtml(m.name || '')}">📝 צור טופס להגשה</button>` +
+        `</div>` +
+      `</div>`;
+    }).join('');
+  }
+
+  function renderFullDocuments(documents) {
+    const summaryEl = document.querySelector('#render-docs-summary');
+    const gridEl    = document.querySelector('#render-full-docs');
+    if (!summaryEl || !gridEl) return;
+    const readyCount  = documents.filter(d => d.status === 'ready').length;
+    const neededCount = documents.filter(d => d.status === 'needed').length;
+    summaryEl.innerHTML =
+      `<div style="display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-bottom:1rem">` +
+        `<div style="background:var(--docs-ready-panel-bg);border-radius:var(--radius-xl);padding:.75rem 1rem;display:flex;align-items:center;gap:.5rem"><span style="font-size:1.1rem">✅</span><div><div style="font-size:1.1rem;font-weight:800;color:var(--docs-ready-panel-num)">${readyCount}</div><div style="font-size:.72rem;font-weight:600;color:var(--docs-ready-panel-label)">מסמכים מוכנים</div></div></div>` +
+        `<div style="background:var(--docs-needed-panel-bg);border-radius:var(--radius-xl);padding:.75rem 1rem;display:flex;align-items:center;gap:.5rem"><span style="font-size:1.1rem">⚠️</span><div><div style="font-size:1.1rem;font-weight:800;color:var(--docs-needed-panel-num)">${neededCount}</div><div style="font-size:.72rem;font-weight:600;color:var(--docs-needed-panel-label)">מסמכים חסרים</div></div></div>` +
+      `</div>`;
+    if (!documents.length) {
+      summaryEl.innerHTML = '';
+      gridEl.innerHTML =
+        '<div class="card empty-state-card">' +
+          '<div class="empty-state-icon">📋</div>' +
+          '<div class="empty-state-title">אין מסמכים עדיין</div>' +
+          '<div class="empty-state-body">לחץ על ״+ מסמך חדש״ כדי להתחיל לעקוב אחר המסמכים הרפואיים שלך.</div>' +
+        '</div>';
+      return;
+    }
+    gridEl.innerHTML = documents.map(d => {
+      const ds     = DOC_STYLE[d.status] || DOC_STYLE.optional;
+      const stHtml = ds.statusCls
+        ? `<span class="doc-full-status ${ds.statusCls}">${ds.statusLabel}</span>`
+        : `<span class="doc-full-status" style="${ds.statusStyle}">${ds.statusLabel}</span>`;
+      return `<div class="doc-full-item" style="border-color:${ds.border};background:${ds.bg};position:relative" data-action="detail" role="button" tabindex="0" data-type="document" data-id="${d.id}">` +
+        `<div class="doc-full-icon">${escapeHtml(d.icon)}</div>` +
+        `<div class="doc-full-name">${escapeHtml(d.name)}</div>` +
+        `<div class="doc-full-desc">${escapeHtml(d.description)}</div>` +
+        stHtml +
+        `<div class="item-actions" style="justify-content:center;margin-inline-start:0;padding-inline-start:0;margin-top:.5rem">` +
+          `<button class="btn-icon" data-action="edit" data-type="document" data-id="${d.id}" aria-label="עריכה">✏️</button>` +
+          `<button class="btn-icon btn-icon--danger" data-action="delete" data-type="document" data-id="${d.id}" aria-label="מחיקה">🗑️</button>` +
+        `</div>` +
+      `</div>`;
+    }).join('');
+  }
+
+  function renderAll() {
+    const appointments = _state.appointments;
+    const medications  = dbLoad(KEYS.MEDICATIONS)  || [];
+    const rights       = dbLoad(KEYS.RIGHTS)       || [];
+    const documents    = dbLoad(KEYS.DOCUMENTS)    || [];
+    renderHeroCard(appointments);
+    renderApptStatCard(appointments);
+    renderMedsOverview(medications);
+    renderRightsOverview(rights);
+    renderDocsOverview(documents);
+    renderAlertCard(documents);
+    renderStatsRow(appointments, medications, rights, documents);
+    renderFullAppointments(appointments);
+    renderFullMedications(medications);
+    renderFullRights(rights);
+    renderFullDocuments(documents);
+  }
+
+  // ─── RENDER: תוצאות ניתוח מסמך ───────────────────────────
+  function renderScanResults(scanResults) {
+    const el = document.querySelector('#scan-results');
+    if (!el) return;
+
+    if (!scanResults.length) {
+      el.innerHTML =
+        '<div class="card scan-no-match">' +
+          '<div style="font-size:2rem;margin-bottom:.5rem">🔎</div>' +
+          '<div style="font-weight:700;color:var(--color-neutral-700);margin-bottom:.4rem">לא נמצאו זכויות תואמות</div>' +
+          '<div>נסה להדביק טקסט מלא יותר מהמסמך, כולל שמות אבחנות ותרופות.</div>' +
+        '</div>';
+      return;
+    }
+
+    const cardsHtml = scanResults.map((res, idx) => {
+      const right = RIGHTS_CATALOG.find(r => r.id === res.rightId);
+      if (!right) return '';
+      const isTop = idx === 0;
+      const kwHtml = res.matchedKeywords
+        .map(kw => `<span class="scan-keyword-chip">${escapeHtml(kw)}</span>`)
+        .join('');
+      const matchedJson = escapeHtml(JSON.stringify(res.matchedKeywords));
+      return (
+        `<div class="scan-result-card${isTop ? ' top-match' : ''}">` +
+          `<div class="scan-result-header">` +
+            `<div class="scan-result-icon">${escapeHtml(right.icon)}</div>` +
+            `<div class="scan-result-meta">` +
+              `<div class="scan-result-title">${escapeHtml(right.name)}</div>` +
+              `<div class="scan-result-short">${escapeHtml(right.shortDesc)}</div>` +
+            `</div>` +
+            (isTop ? `<span class="badge badge-teal">הכי רלוונטי</span>` : '') +
+          `</div>` +
+          `<div class="scan-result-desc">${escapeHtml(right.description)}</div>` +
+          `<div>` +
+            `<div class="scan-keywords-label">מילות מפתח שזוהו:</div>` +
+            `<div class="scan-keywords-row">${kwHtml}</div>` +
+          `</div>` +
+          `<div class="scan-result-footer">` +
+            `<button class="btn-import-right" data-action="import-right" data-right-id="${escapeHtml(right.id)}" aria-label="הוסף ${escapeHtml(right.name)} לזכויות שלי">` +
+              `+ הוסף לזכויות שלי` +
+            `</button>` +
+            `<button class="btn-view-steps" data-action="view-right-steps" data-right-id="${escapeHtml(right.id)}" aria-label="שלבי הגשה עבור ${escapeHtml(right.name)}">` +
+              `📋 שלבי הגשה` +
+            `</button>` +
+            `<button class="btn-view-steps" data-action="generate-form" data-right-id="${escapeHtml(right.id)}" data-matched="${escapeHtml(JSON.stringify(res.matchedKeywords))}" aria-label="צור טופס עבור ${escapeHtml(right.name)}">` +
+              `📝 צור טופס` +
+            `</button>` +
+          `</div>` +
+        `</div>`
+      );
+    }).join('');
+
+    el.innerHTML = `<div class="scan-results-list">${cardsHtml}</div>`;
+  }
+
+  // ─── RENDER: טופס מוכן להדפסה ───────────────────────────
+  // buildPrintForm(rightId, matchedKeywords[], rightData?) → HTML string
+  // rightData אופציונלי — אם לא הועבר, מחפשים ב-RIGHTS_CATALOG לפי rightId.
+  // משתמש אך ורק בנתונים שהמשתמש הזין ובפרטי הזכות.
+  function buildPrintForm(rightId, matchedKeywords, rightData) {
+    const right = rightData || RIGHTS_CATALOG.find(r => r.id === rightId);
+    if (!right) return '<p style="color:var(--color-red-500);padding:1rem">שגיאה: הזכות לא נמצאה.</p>';
+    const user = getUser();
+    const userName   = user ? escapeHtml(user.name  || '') : '';
+    const userIdNum  = user ? escapeHtml(user.idNum || '') : '';
+    const userDob    = user ? (user.dob || '') : '';
+    let   userAge    = '';
+    let   userDobFmt = '';
+    if (userDob) {
+      try {
+        const born = new Date(userDob);
+        const now  = new Date();
+        let age = now.getFullYear() - born.getFullYear();
+        if (now.getMonth() < born.getMonth() ||
+            (now.getMonth() === born.getMonth() && now.getDate() < born.getDate())) age--;
+        userAge    = String(age);
+        userDobFmt = born.toLocaleDateString('he-IL', { day:'2-digit', month:'2-digit', year:'numeric' });
+      } catch { /* שדות ריקים */ }
+    }
+    const today = new Date().toLocaleDateString('he-IL', { day: '2-digit', month: '2-digit', year: 'numeric' });
+
+    const kwHtml = (matchedKeywords || [])
+      .map(kw => `<span class="scan-keyword-chip">${escapeHtml(kw)}</span>`)
+      .join(' ');
+
+    const detailsHtml = (right.details || [])
+      .filter(row => Array.isArray(row) && row.length >= 2)
+      .map(([lbl, val]) =>
+        `<div class="print-field-group">` +
+          `<label class="print-field-label">${escapeHtml(String(lbl))}</label>` +
+          `<div class="print-field-value">${escapeHtml(String(val))}</div>` +
+        `</div>`
+      ).join('');
+
+    // steps יכול להיות מערך (קטלוג) או מחרוזת שורות (טופס ידני)
+    const stepsArr  = Array.isArray(right.steps) ? right.steps
+                    : (right.steps ? String(right.steps).split('\n').filter(Boolean) : []);
+    const stepsHtml = stepsArr.map((step, i) =>
+      `<div class="print-step-item">` +
+        `<div class="print-step-num">${i + 1}</div>` +
+        `<span>${escapeHtml(step)}</span>` +
+      `</div>`
+    ).join('');
+
+    // הוראות הגשה — גוף מוסמך + מסמכים נדרשים
+    const detailsMap = Object.fromEntries(
+      (right.details || []).filter(r => Array.isArray(r) && r.length >= 2)
+    );
+    const agency     = detailsMap['גוף מוסמך'] || detailsMap['סעיף חוק'] || '';
+    const reqDocs    = detailsMap['מסמכים'] || '';
+    const submission = detailsMap['הגשה'] || '';
+    const guideHtml  = (agency || reqDocs) ?
+      `<div class="print-submission-guide">` +
+        `<div class="print-guide-title">📋 הוראות הגשה</div>` +
+        (agency ?
+          `<div class="print-guide-row"><span class="print-guide-label">גוף מוסמך:</span><span>${escapeHtml(agency)}</span></div>` : '') +
+        (reqDocs ?
+          `<div class="print-guide-row"><span class="print-guide-label">מסמכים נדרשים:</span><span>${escapeHtml(reqDocs)}</span></div>` : '') +
+        (submission ?
+          `<div class="print-guide-row"><span class="print-guide-label">כתובת הגשה:</span><span>${escapeHtml(submission)}</span></div>` : '') +
+      `</div>` : '';
+
+    return (
+      `<div class="print-form-header">` +
+        `<div class="print-form-logo">🏥 DocuMed</div>` +
+        `<div class="print-form-right-name">${escapeHtml(right.icon || '')} ${escapeHtml(right.name || '')}</div>` +
+        `<div style="font-size:.8rem;color:var(--color-neutral-500)">נוצר: ${today}</div>` +
+      `</div>` +
+
+      `<div class="print-field-group">` +
+        `<label class="print-field-label" for="pf-name">שם המבקש/ת</label>` +
+        `<input id="pf-name" type="text" class="print-field-value editable" value="${userName}" aria-label="שם המבקש">` +
+      `</div>` +
+      `<div class="print-field-group">` +
+        `<label class="print-field-label" for="pf-idnum">תעודת זהות</label>` +
+        `<input id="pf-idnum" type="text" class="print-field-value editable" value="${userIdNum}" aria-label="תעודת זהות" inputmode="numeric">` +
+      `</div>` +
+      `<div class="print-field-group" style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">` +
+        `<div><label class="print-field-label" for="pf-dob">תאריך לידה</label>` +
+        `<input id="pf-dob" type="text" class="print-field-value editable" value="${escapeHtml(userDobFmt)}" aria-label="תאריך לידה"></div>` +
+        `<div><label class="print-field-label" for="pf-age">גיל</label>` +
+        `<input id="pf-age" type="text" class="print-field-value editable" value="${escapeHtml(userAge)}" aria-label="גיל"></div>` +
+      `</div>` +
+      `<div class="print-field-group">` +
+        `<label class="print-field-label" for="pf-date">תאריך הגשה</label>` +
+        `<input id="pf-date" type="text" class="print-field-value editable" value="${today}" aria-label="תאריך הגשה">` +
+      `</div>` +
+
+      (kwHtml ?
+        `<div class="print-matched-section">` +
+          `<div class="print-field-label" style="margin-bottom:.4rem">מילות מפתח שזוהו במסמך</div>` +
+          `<div class="scan-keywords-row">${kwHtml}</div>` +
+        `</div>` : '') +
+
+      detailsHtml +
+
+      `<div class="print-field-group">` +
+        `<div class="print-field-label">שלבי הגשה</div>` +
+        `<div class="print-steps-list">${stepsHtml}</div>` +
+      `</div>` +
+
+      guideHtml +
+
+      `<div class="print-field-group">` +
+        `<label class="print-field-label" for="pf-notes">הערות נוספות</label>` +
+        `<textarea id="pf-notes" class="print-field-value editable" rows="4" aria-label="הערות נוספות" style="resize:vertical"></textarea>` +
+      `</div>` +
+
+      `<div class="print-disclaimer">` +
+        `DocuMed הוא כלי עזר אישי בלבד. המידע המוצג אינו מהווה ייעוץ רפואי, משפטי, או כלכלי. לפני הגשת כל בקשה, יש להתייעץ עם גורם מוסמך.` +
+      `</div>`
+    );
+  }
+
+  // generateUniversalForm(rightId) — נקרא מכפתורי "צור טופס להגשה" בכרטיסיות הזכויות
+  function generateUniversalForm(rightId) {
+    // חיפוש בקטלוג קודם; אחרת טוענים מה-localStorage (ייבוא ידני / טופס)
+    let rightData = RIGHTS_CATALOG.find(r => r.id === rightId);
+    if (!rightData) {
+      const stored = (dbLoad(KEYS.RIGHTS) || []).find(r => r.id === rightId);
+      if (stored) {
+        const cat = RIGHTS_CATALOG.find(c => c.id === stored.id);
+        rightData = cat ? Object.assign({}, cat, stored) : stored;
+      }
+    }
+    const matchedKeywords = (rightData && rightData.matchedKeywords) ? rightData.matchedKeywords : [];
+    const contentEl = document.querySelector('#print-form-content');
+    if (contentEl) contentEl.innerHTML = buildPrintForm(rightId, matchedKeywords, rightData);
+    const overlay = document.querySelector('#print-overlay');
+    if (overlay) {
+      overlay.classList.remove('is-hidden');
+      document.body.style.overflow = 'hidden';
+      requestAnimationFrame(() => {
+        const firstBtn = overlay.querySelector('button');
+        if (firstBtn) firstBtn.focus();
+      });
+    }
+  }
+
+  // ─── CRUD ────────────────────────────────────────────────
+  const KEYS_MAP = {
+    appointment: KEYS.APPOINTMENTS,
+    medication:  KEYS.MEDICATIONS,
+    right:       KEYS.RIGHTS,
+    document:    KEYS.DOCUMENTS,
+  };
+
+  const FORM_FIELDS = {
+    appointment: [
+      { key:'date',        label:'תאריך',               type:'date',     required:true },
+      { key:'time',        label:'שעת התחלה',           type:'time',     required:true },
+      { key:'endTime',     label:'שעת סיום',            type:'time' },
+      { key:'doctor',      label:'שם הרופא/ה',          type:'text',     required:true },
+      { key:'specialty',   label:'התמחות',              type:'text',     required:true },
+      { key:'clinic',      label:'קופת חולים / מרפאה',  type:'text',     required:true },
+      { key:'address',     label:'כתובת',               type:'text' },
+      { key:'reason',      label:'סיבת הביקור',         type:'textarea' },
+      { key:'prep',        label:'הכנה לתור',           type:'textarea' },
+      { key:'colorScheme', label:'צבע',                 type:'select',
+        options:[{v:'teal',l:'טורקיז'},{v:'orange',l:'כתום'},{v:'purple',l:'סגול'},{v:'pink',l:'ורוד'}] },
+      { key:'_reminders',      label:'תזכורות',              type:'heading' },
+      { key:'remindDayBefore', label:'הזכר לי 24 שעות לפני', type:'checkbox' },
+      { key:'remindDayOf',     label:'הזכר לי בבוקר התור',   type:'checkbox' },
+    ],
+    medication: [
+      { key:'name',           label:'שם התרופה',       type:'text',     required:true },
+      { key:'dosage',         label:'מינון (כולל יחידות)', type:'text', required:true },
+      { key:'timeSlot',       label:'זמן נטילה',       type:'select',
+        options:[{v:'morning',l:'בוקר'},{v:'noon',l:'צהריים'},{v:'evening',l:'ערב'}] },
+      { key:'instructions',   label:'הוראות נטילה',    type:'text',     required:true },
+      { key:'note',           label:'הערה',            type:'textarea' },
+      { key:'showInOverview', label:'הצג בסקירה הכללית', type:'checkbox' },
+    ],
+    right: [
+      { key:'icon',        label:'אמוג׳י (אייקון)',    type:'text' },
+      { key:'iconColor',   label:'צבע',                type:'select',
+        options:[{v:'purple',l:'סגול'},{v:'green',l:'ירוק'},{v:'blue',l:'כחול'},{v:'orange',l:'כתום'}] },
+      { key:'name',        label:'שם הזכות',           type:'text',     required:true },
+      { key:'shortDesc',   label:'תיאור קצר',          type:'text',     required:true },
+      { key:'status',      label:'סטטוס',              type:'select',
+        options:[{v:'active',l:'פעיל'},{v:'pending',l:'בבדיקה'},{v:'new',l:'חדש'}] },
+      { key:'description', label:'תיאור מלא',          type:'textarea', required:true },
+      { key:'steps',       label:'שלבים (שורה לכל שלב)', type:'textarea' },
+    ],
+    document: [
+      { key:'icon',        label:'אמוג׳י (אייקון)',    type:'text' },
+      { key:'name',        label:'שם המסמך',           type:'text',     required:true },
+      { key:'status',      label:'סטטוס',              type:'select',
+        options:[{v:'ready',l:'מוכן'},{v:'needed',l:'נדרש'},{v:'optional',l:'אופציונלי'},{v:'pending',l:'בהמתנה'}] },
+      { key:'description', label:'תיאור',              type:'textarea', required:true },
+    ],
+  };
+
+  let _crudState = { type: null, id: null };
+
+  function openAddModal(type) {
+    _crudState = { type, id: null };
+    const labels = { appointment:'הוספת תור', medication:'הוספת תרופה', right:'הוספת זכות', document:'הוספת מסמך' };
+    document.querySelector('#modal-form-title').textContent = labels[type] || 'הוספה';
+    document.querySelector('#modal-form-body').innerHTML = buildFormFields(type, null);
+    openModal('modal-form');
+  }
+
+  function openEditModal(type, id) {
+    _crudState = { type, id };
+    const labels = { appointment:'עריכת תור', medication:'עריכת תרופה', right:'עריכת זכות', document:'עריכת מסמך' };
+    const data = type === 'appointment' ? _state.appointments : (dbLoad(KEYS_MAP[type]) || []);
+    const item = data.find(x => x.id === id);
+    if (!item) return;
+    document.querySelector('#modal-form-title').textContent = labels[type] || 'עריכה';
+    document.querySelector('#modal-form-body').innerHTML = buildFormFields(type, item);
+    openModal('modal-form');
+  }
+
+  function openDeleteModal(type, id) {
+    _crudState = { type, id };
+    const data = type === 'appointment' ? _state.appointments : (dbLoad(KEYS_MAP[type]) || []);
+    const item = data.find(x => x.id === id);
+    const name = item ? (item.name || item.doctor || item.specialty || 'פריט זה') : 'פריט זה';
+    document.querySelector('#modal-delete-msg').textContent =
+      `האם למחוק את "${name}"? פעולה זו אינה הפיכה.`;
+    openModal('modal-confirm-delete');
+  }
+
+  function buildFormFields(type, item) {
+    return (FORM_FIELDS[type] || []).map(f => {
+      const val = item !== null && item[f.key] !== undefined ? item[f.key] : '';
+      return buildField(f, val);
+    }).join('');
+  }
+
+  function buildField(f, val) {
+    const idAttr  = 'field-' + f.key;
+    const reqAttr = f.required ? ' required' : '';
+    let input = '';
+    if (f.type === 'textarea') {
+      // steps stored as array — join to multiline string for editing
+      const textVal = Array.isArray(val) ? val.join('\n') : String(val ?? '');
+      input = `<textarea id="${idAttr}" name="${f.key}" class="form-input form-textarea" autocomplete="off"${reqAttr}>${escapeHtml(textVal)}</textarea>`;
+    } else if (f.type === 'select') {
+      const opts = f.options.map(o =>
+        `<option value="${escapeHtml(o.v)}"${val === o.v ? ' selected' : ''}>${escapeHtml(o.l)}</option>`
+      ).join('');
+      input = `<select id="${idAttr}" name="${f.key}" class="form-input" autocomplete="off"${reqAttr}>${opts}</select>`;
+    } else if (f.type === 'heading') {
+      return `<div class="reminder-group"><div class="reminder-group-title">${escapeHtml(f.label)}</div></div>`;
+    } else if (f.type === 'checkbox') {
+      return `<div class="form-group"><label class="form-check-row"><input type="checkbox" name="${f.key}"${val ? ' checked' : ''}> ${escapeHtml(f.label)}</label></div>`;
+    } else {
+      input = `<input id="${idAttr}" name="${f.key}" type="${f.type}" class="form-input" value="${escapeHtml(String(val ?? ''))}" autocomplete="off"${reqAttr}>`;
+    }
+    return `<div class="form-group"><label class="form-label" for="${idAttr}">${escapeHtml(f.label)}${f.required ? ' *' : ''}</label>${input}</div>`;
+  }
+
+  async function handleFormSubmit() {
+    const { type, id } = _crudState;
+    if (!type) return;
+    const formBody = document.querySelector('#modal-form-body');
+    const fields   = FORM_FIELDS[type] || [];
+    const item     = {};
+    // Validate + collect
+    for (const f of fields) {
+      const el = formBody.querySelector(`[name="${f.key}"]`);
+      if (!el) continue;
+      el.classList.remove('is-invalid');
+      el.removeAttribute('aria-invalid');
+      let val;
+      if (f.type === 'checkbox') {
+        val = el.checked;
+      } else {
+        val = el.value.trim();
+        if (f.required && !val) {
+          el.classList.add('is-invalid');
+          el.setAttribute('aria-invalid', 'true');
+          el.focus();
+          return;
+        }
+      }
+      // steps textarea → array
+      item[f.key] = (f.key === 'steps') ? val.split('\n').map(s => s.trim()).filter(Boolean) : val;
+    }
+
+    // ── תורים — Supabase ──────────────────────────────────────
+    if (type === 'appointment') {
+      const saveBtn = document.querySelector('#btn-form-save');
+      if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = 'שומר...'; }
+      const { data: { user: authUser } } = await supabaseClient.auth.getUser();
+      if (!authUser) {
+        if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = 'שמור'; }
+        return;
+      }
+      if (id) {
+        // עדכן תור קיים
+        const { error } = await supabaseClient.from('appointments').update({
+          doctor_name:      item.doctor,
+          specialty:        item.specialty,
+          date:             item.date,
+          time:             item.time,
+          reminder_24h:     !!item.remindDayBefore,
+          reminder_morning: !!item.remindDayOf,
+        }).eq('id', id);
+        if (error) {
+          if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = 'שגיאה — נסה שוב'; setTimeout(() => { saveBtn.textContent = 'שמור'; }, 2500); }
+          return;
+        }
+        const idx = _state.appointments.findIndex(x => x.id === id);
+        if (idx !== -1) _state.appointments[idx] = Object.assign({}, _state.appointments[idx], item, { id });
+      } else {
+        // הוסף תור חדש
+        const { data: inserted, error } = await supabaseClient.from('appointments').insert({
+          user_id:          authUser.id,
+          doctor_name:      item.doctor,
+          specialty:        item.specialty,
+          date:             item.date,
+          time:             item.time,
+          reminder_24h:     !!item.remindDayBefore,
+          reminder_morning: !!item.remindDayOf,
+        }).select().single();
+        if (error) {
+          if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = 'שגיאה — נסה שוב'; setTimeout(() => { saveBtn.textContent = 'שמור'; }, 2500); }
+          return;
+        }
+        item.id = inserted.id;
+        _state.appointments.push(item);
+      }
+      if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = 'שמור'; }
+      closeModal('modal-form');
+      renderAll();
+      updateCountdown();
+      updateMedProgress();
+      return;
+    }
+
+    // ── שאר הסוגים — localStorage ─────────────────────────────
+    const data = dbLoad(KEYS_MAP[type]) || [];
+    if (id) {
+      // Edit existing — preserve details[] and any fields not in the form
+      const idx = data.findIndex(x => x.id === id);
+      if (idx !== -1) {
+        const preserved = { id, details: data[idx].details };
+        data[idx] = Object.assign({}, data[idx], item, preserved);
+      }
+    } else {
+      // Add new
+      item.id = type.slice(0, 4) + '-' + Date.now();
+      if (!item.details) item.details = [];
+      if (type === 'right' && !item.steps) item.steps = [];
+      data.push(item);
+    }
+    dbSave(KEYS_MAP[type], data);
+    closeModal('modal-form');
+    renderAll();
+    updateCountdown();
+    updateMedProgress();
+  }
+
+  async function handleConfirmDelete() {
+    const { type, id } = _crudState;
+    if (!type || !id) return;
+
+    // ── תורים — Supabase ──────────────────────────────────────
+    if (type === 'appointment') {
+      const { error } = await supabaseClient.from('appointments').delete().eq('id', id);
+      if (!error) _state.appointments = _state.appointments.filter(x => x.id !== id);
+      closeModal('modal-confirm-delete');
+      renderAll();
+      updateCountdown();
+      updateMedProgress();
+      return;
+    }
+
+    // ── שאר הסוגים — localStorage ─────────────────────────────
+    const data = (dbLoad(KEYS_MAP[type]) || []).filter(x => x.id !== id);
+    dbSave(KEYS_MAP[type], data);
+    closeModal('modal-confirm-delete');
+    renderAll();
+    updateCountdown();
+    updateMedProgress();
+  }
+
+  // ─── DETAIL MODAL ────────────────────────────────────────
+  function openDetailModalById(type, id) {
+    const data = type === 'appointment' ? _state.appointments
+               : type === 'right'       ? (dbLoad(KEYS.RIGHTS) || [])
+               : (dbLoad(KEYS.DOCUMENTS) || []);
+    if (!data) return;
+    const item = data.find(x => x.id === id);
+    if (!item) return;
+    const titleEl = document.querySelector('#modal-detail-title');
+    const bodyEl  = document.querySelector('#modal-detail-body');
+    if (!titleEl || !bodyEl) return;
+    let title = '';
+    let rows  = [];
+    if (type === 'appointment') {
+      const { day, month, yearShort } = formatApptDate(item.date);
+      title = `📅 ${item.specialty}`;
+      rows  = [['תאריך',`${day} ב${month} 20${yearShort}`],['שעה',item.endTime ? `${item.time} – ${item.endTime}` : item.time],['רופא/ה',item.doctor],['קופת חולים',item.clinic]];
+      if (item.address) rows.push(['מיקום',item.address]);
+      if (item.reason)  rows.push(['סיבת הביקור',item.reason]);
+      if (item.prep)    rows.push(['הכנה',item.prep]);
+    } else if (type === 'right') {
+      const cat = RIGHTS_CATALOG.find(c => c.id === item.id);
+      const mi  = cat ? Object.assign({}, cat, item) : item;
+      const stLabel = { active:'✓ פעיל', pending:'⏳ בבדיקה', new:'✨ חדש' };
+      title = `${mi.icon || '⚖️'} ${mi.name || ''}`;
+      rows  = [...(mi.details || [])];
+      rows.push(['סטטוס', stLabel[mi.status] || mi.status || 'חדש']);
+    } else {
+      title = `${item.icon} ${item.name}`;
+      rows  = [...(item.details || [])];
+    }
+    titleEl.textContent = title;
+    // סינון שורות לא תקינות לפני הרינדור (הגנה מפני נתונים פגומים ב-localStorage)
+    bodyEl.innerHTML = rows
+      .filter(row => Array.isArray(row) && row.length >= 2)
+      .map(([lbl, val]) =>
+        `<div class="modal-row"><span class="modal-row-label">${escapeHtml(String(lbl))}</span><span>${escapeHtml(String(val))}</span></div>`
+      ).join('');
+    openModal('modal-detail');
+  }
+
+  // ─── COUNTDOWN ───────────────────────────────────────────
+  function updateCountdown() {
+    const appointments = _state.appointments;
+    const next   = getNextAppt(appointments);
+    const el     = document.querySelector('#countdown-text');
+    const daysEl = document.querySelector('#days-to-next');
+    if (!next || !el) return;
+    const target = new Date(next.date + 'T' + next.time + ':00');
+    const diff   = target - new Date();
+    if (diff <= 0) {
+      el.textContent = 'התור מתקיים עכשיו!';
+      if (daysEl) daysEl.textContent = '0';
+      return;
+    }
+    const days  = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    const mins  = Math.floor((diff % 3600000)  / 60000);
+    el.textContent = days > 0       ? `בעוד ${days} ימים, ${hours} שעות`
+                   : hours > 0      ? `בעוד ${hours} שעות ו-${mins} דקות`
+                   : `בעוד ${mins} דקות`;
+    if (daysEl) daysEl.textContent = days;
+  }
+
+  // ─── MEDICATION PROGRESS ─────────────────────────────────
+  function updateMedProgress() {
+    // Sync overview checkboxes → full-tab checkboxes by data-med-id
+    document.querySelectorAll('.overview-med').forEach(cb => {
+      const full = document.querySelector(`.full-med[data-med-id="${cb.dataset.medId}"]`);
+      if (full && full !== cb) full.checked = cb.checked;
+    });
+    // Count full-tab meds
+    const fullMeds = document.querySelectorAll('.full-med');
+    let checked = 0;
+    fullMeds.forEach(cb => {
+      const idx  = cb.dataset.index;
+      const item = document.querySelector('#full-med-' + idx);
+      if (cb.checked) { checked++; if (item) item.classList.add('checked'); }
+      else            {            if (item) item.classList.remove('checked'); }
+    });
+    const total = fullMeds.length;
+    const pct   = total ? Math.round(checked / total * 100) : 0;
+    // Overview progress
+    const ovCbs     = document.querySelectorAll('.overview-med');
+    const ovChecked = [...ovCbs].filter(c => c.checked).length;
+    const ovTotal   = ovCbs.length;
+    const badge  = document.querySelector('#meds-badge-overview');
+    const barOv  = document.querySelector('#meds-bar-overview');
+    const pctOv  = document.querySelector('#meds-pct-overview');
+    if (badge) badge.textContent = `${ovChecked}/${ovTotal} נלקחו`;
+    if (barOv) barOv.style.width = (ovTotal ? Math.round(ovChecked/ovTotal*100) : 0) + '%';
+    if (pctOv) pctOv.textContent = (ovTotal ? Math.round(ovChecked/ovTotal*100) : 0) + '%';
+    // Full-tab progress
+    const barFull   = document.querySelector('#meds-bar-full');
+    const pctFull   = document.querySelector('#meds-pct-full');
+    const countFull = document.querySelector('#meds-count-full');
+    if (barFull)   barFull.style.width   = pct + '%';
+    if (pctFull)   pctFull.textContent   = pct + '%';
+    if (countFull) countFull.textContent = `${checked} מתוך ${total} נטילות הושלמו`;
+  }
+
+  function resetMeds() {
+    document.querySelectorAll('.med-checkbox').forEach(cb => cb.checked = false);
+    document.querySelectorAll('.full-med-item').forEach(el => el.classList.remove('checked'));
+    updateMedProgress();
+  }
+
+  // ─── MODALS ──────────────────────────────────────────────
+  const FOCUSABLE = 'button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
+  let _modalTrigger = null;  // שמירת האלמנט שפתח את המודל להחזרת פוקוס
+
+  function openModal(id) {
+    const el = document.querySelector('#' + id);
+    if (!el) return;
+    _modalTrigger = document.activeElement;
+    el.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    // העברת פוקוס לאלמנט הראשון בתוך המודל
+    requestAnimationFrame(() => {
+      const first = el.querySelector(FOCUSABLE);
+      if (first) first.focus();
+    });
+    // מלכודת פוקוס בתוך המודל
+    el._focusTrap = function(e) {
+      if (e.key !== 'Tab') return;
+      const focusable = [...el.querySelectorAll(FOCUSABLE)];
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last  = focusable[focusable.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+      } else {
+        if (document.activeElement === last)  { e.preventDefault(); first.focus(); }
+      }
+    };
+    el.addEventListener('keydown', el._focusTrap);
+  }
+  function closeModal(id) {
+    const el = document.querySelector('#' + id);
+    if (!el) return;
+    el.classList.remove('open');
+    document.body.style.overflow = '';
+    if (el._focusTrap) { el.removeEventListener('keydown', el._focusTrap); delete el._focusTrap; }
+    // החזרת פוקוס לאלמנט שפתח את המודל
+    if (_modalTrigger && _modalTrigger.focus) { _modalTrigger.focus(); _modalTrigger = null; }
+  }
+  function closeModalOverlay(event, id) {
+    if (event.target === event.currentTarget) closeModal(id);
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      // F12: אשף האונבורדינג חוסם Escape — אסור לסגור לפני השלמה
+      const ob = document.querySelector('#onboarding-overlay');
+      if (ob && !ob.classList.contains('is-hidden')) return;
+
+      // סגור print overlay קודם — אם פתוח
+      const overlay = document.querySelector('#print-overlay');
+      if (overlay && !overlay.classList.contains('is-hidden')) {
+        overlay.classList.add('is-hidden');
+        document.body.style.overflow = '';
+        return;
+      }
+      document.querySelectorAll('.modal-overlay.open').forEach(m => {
+        closeModal(m.id);
+      });
+    }
+  });
+
+  // ─── EVENT LISTENERS ─────────────────────────────────────
+  // ── האזנה מואצלת לכרטיסים ולכפתורים המרונדרים דינמית ──
+  function _handleAction(e, actionEl) {
+    if (!actionEl) return;
+    const action = actionEl.dataset.action;
+    const type   = actionEl.dataset.type;
+    const id     = actionEl.dataset.id;
+    const tab    = actionEl.dataset.tab;
+    if (action === 'detail')          { openDetailModalById(type, id); }
+    else if (action === 'edit')       { e.stopPropagation(); openEditModal(type, id); }
+    else if (action === 'delete')     { e.stopPropagation(); openDeleteModal(type, id); }
+    else if (action === 'switch-tab') { switchTab(tab); }
+    else if (action === 'import-right') {
+      e.stopPropagation();
+      const catalogId = actionEl.dataset.rightId;
+      const right = RIGHTS_CATALOG.find(r => r.id === catalogId);
+      if (!right) return;
+      const data = dbLoad(KEYS.RIGHTS) || [];
+      if (data.find(r => r.name === right.name)) {
+        actionEl.textContent = '✓ כבר קיים';
+        actionEl.disabled = true;
+        return;
+      }
+      const newRight = Object.assign({}, right, {
+        id: 'right-' + Date.now(),
+        status: 'new',
+      });
+      data.push(newRight);
+      dbSave(KEYS.RIGHTS, data);
+      renderAll();
+      actionEl.textContent = '✓ נוסף לזכויות';
+      actionEl.disabled = true;
+    }
+    else if (action === 'view-right-steps') {
+      e.stopPropagation();
+      const catalogId = actionEl.dataset.rightId;
+      const right = RIGHTS_CATALOG.find(r => r.id === catalogId);
+      if (!right) return;
+      const titleEl = document.querySelector('#modal-detail-title');
+      const bodyEl  = document.querySelector('#modal-detail-body');
+      if (titleEl) titleEl.textContent = `${right.icon} ${right.name}`;
+      if (bodyEl) bodyEl.innerHTML =
+        (right.details || []).map(([lbl, val]) =>
+          `<div class="modal-row">` +
+            `<span class="modal-row-label">${escapeHtml(String(lbl))}</span>` +
+            `<span>${escapeHtml(String(val))}</span>` +
+          `</div>`
+        ).join('') +
+        `<hr style="margin:1rem 0;border-color:var(--color-neutral-200)">` +
+        `<div style="font-weight:700;margin-bottom:.5rem;color:var(--color-neutral-700)">שלבי הגשה:</div>` +
+        (right.steps || []).map((s, i) =>
+          `<div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.4rem;font-size:.875rem">` +
+            `<span style="flex-shrink:0;width:1.4rem;height:1.4rem;background:var(--color-teal-500);color:var(--color-white);border-radius:var(--radius-circle);display:inline-flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700">${i + 1}</span>` +
+            `<span>${escapeHtml(s)}</span>` +
+          `</div>`
+        ).join('');
+      openModal('modal-detail');
+    }
+    else if (action === 'generate-form') {
+      e.stopPropagation();
+      const rightId = actionEl.dataset.rightId;
+      generateUniversalForm(rightId);
+    }
+  }
+  document.addEventListener('click', e => _handleAction(e, e.target.closest('[data-action]')));
+  // תמיכה במקלדת: Enter/Space מפעילים כרטיסים אינטראקטיביים (role=button)
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    const actionEl = e.target.closest('[data-action][role="button"]');
+    if (!actionEl) return;
+    e.preventDefault();
+    _handleAction(e, actionEl);
+  });
+
+  // ── טאבים ──
+  document.querySelector('#btn-reset-meds').addEventListener('click', resetMeds);
+  // ── מודל פרטים ──
+  document.querySelector('#btn-close-modal-detail').addEventListener('click', () => closeModal('modal-detail'));
+  document.querySelector('#modal-detail').addEventListener('click', e => closeModalOverlay(e, 'modal-detail'));
+  // ── מודל טופס ──
+  document.querySelector('#btn-close-modal-form').addEventListener('click', () => closeModal('modal-form'));
+  document.querySelector('#btn-form-cancel').addEventListener('click', () => closeModal('modal-form'));
+  document.querySelector('#btn-form-save').addEventListener('click', handleFormSubmit);
+  document.querySelector('#modal-form').addEventListener('click', e => closeModalOverlay(e, 'modal-form'));
+  // ── מודל מחיקה ──
+  document.querySelector('#btn-close-modal-delete').addEventListener('click', () => closeModal('modal-confirm-delete'));
+  document.querySelector('#btn-delete-cancel').addEventListener('click', () => closeModal('modal-confirm-delete'));
+  document.querySelector('#btn-delete-confirm').addEventListener('click', handleConfirmDelete);
+  document.querySelector('#modal-confirm-delete').addEventListener('click', e => closeModalOverlay(e, 'modal-confirm-delete'));
+  // ── כפתורי הוספה ──
+  document.querySelector('#btn-add-appt').addEventListener('click',  () => openAddModal('appointment'));
+  document.querySelector('#btn-add-right').addEventListener('click', () => openAddModal('right'));
+  document.querySelector('#btn-add-med').addEventListener('click',   () => openAddModal('medication'));
+  document.querySelector('#btn-add-doc').addEventListener('click',   () => openAddModal('document'));
+  // ── האזנה מואצלת לצ'קבוקסים של תרופות ──
+  document.querySelector('main').addEventListener('change', e => {
+    if (e.target.classList.contains('med-checkbox')) updateMedProgress();
+  });
+
+  // ── print overlay ──
+  document.querySelector('#btn-print-trigger').addEventListener('click', () => window.print());
+  document.querySelector('#btn-print-close').addEventListener('click', () => {
+    const overlay = document.querySelector('#print-overlay');
+    if (overlay) overlay.classList.add('is-hidden');
+    document.body.style.overflow = '';
+  });
+
+  // ── ניתוח מסמך (tab-scan) — קובץ בלבד ──
+
+  function scanHandleFile(file) {
+    const preview  = document.querySelector('#scan-selected-file');
+    const nameEl   = document.querySelector('#scan-file-name');
+    const sizeEl   = document.querySelector('#scan-file-size');
+    const scanBtn  = document.querySelector('#btn-scan-document');
+    const dropZone = document.querySelector('#scan-drop-zone');
+    if (!file) {
+      if (preview)  preview.classList.add('is-hidden');
+      if (scanBtn)  scanBtn.disabled = true;
+      if (dropZone) dropZone.classList.remove('is-drag-over');
+      return;
+    }
+    if (!/\.(pdf|jpe?g|png)$/i.test(file.name)) {
+      const re = document.querySelector('#scan-results');
+      if (re) re.innerHTML = '<p role="alert" style="color:var(--color-red-500);padding:.75rem 0">סוג קובץ לא נתמך. נא להעלות PDF, JPG, או PNG.</p>';
+      if (dropZone) dropZone.classList.remove('is-drag-over');
+      return;
+    }
+    if (nameEl)   nameEl.textContent = file.name;
+    if (sizeEl) {
+      const kb = file.size / 1024;
+      sizeEl.textContent = kb < 1024 ? Math.round(kb) + ' KB' : (kb / 1024).toFixed(1) + ' MB';
+    }
+    if (preview)  preview.classList.remove('is-hidden');
+    if (scanBtn)  scanBtn.disabled = false;
+    if (dropZone) dropZone.classList.remove('is-drag-over');
+  }
+
+  // change על input קובץ
+  const scanFileInput = document.querySelector('#scan-file-upload');
+  if (scanFileInput) scanFileInput.addEventListener('change', e => scanHandleFile(e.target.files?.[0] || null));
+
+  // כפתור הסרת קובץ
+  const btnScanRemove = document.querySelector('#btn-scan-remove-file');
+  if (btnScanRemove) btnScanRemove.addEventListener('click', () => {
+    const fi = document.querySelector('#scan-file-upload');
+    const re = document.querySelector('#scan-results');
+    if (fi) fi.value = '';
+    if (re) re.innerHTML = '';
+    scanHandleFile(null);
+  });
+
+  // drag-drop על אזור ההעלאה
+  const scanDropZone = document.querySelector('#scan-drop-zone');
+  if (scanDropZone) {
+    scanDropZone.addEventListener('dragover',  e => { e.preventDefault(); scanDropZone.classList.add('is-drag-over'); });
+    scanDropZone.addEventListener('dragleave', ()  => scanDropZone.classList.remove('is-drag-over'));
+    scanDropZone.addEventListener('drop', e => {
+      e.preventDefault();
+      const file = e.dataTransfer.files?.[0];
+      if (!file) return;
+      const dt = new DataTransfer();
+      dt.items.add(file);
+      const fi = document.querySelector('#scan-file-upload');
+      if (fi) { fi.files = dt.files; fi.dispatchEvent(new Event('change')); }
+    });
+    scanDropZone.addEventListener('click',   () => document.querySelector('#scan-file-upload')?.click());
+    scanDropZone.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); document.querySelector('#scan-file-upload')?.click(); } });
+  }
+
+  // כפתור "נתח מסמך" — קורא שם קובץ בלבד
+  document.querySelector('#btn-scan-document').addEventListener('click', () => {
+    const nameEl  = document.querySelector('#scan-file-name');
+    const results = scanDocumentText(nameEl?.textContent?.trim() || '');
+    renderScanResults(results);
+    const resultsEl = document.querySelector('#scan-results');
+    if (resultsEl && results.length) resultsEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+
+  // ─── Phase 3: Onboarding Wizard ──────────────────────────
+
+  function checkOnboarding() {
+    const done = dbLoad(KEYS.ONBOARDING);
+    if (done) return;
+
+    const overlay = document.querySelector('#onboarding-overlay');
+    if (!overlay) return;
+
+    document.body.classList.add('is-onboarding');
+    overlay.classList.remove('is-hidden');
+    obGoToStep(1);
+    startSmsCountdown(60);
+
+    // Focus trap — כולל תמיכה בשלב 3 שאין בו כפתורים (sentinel עוגן)
+    const FOCUSABLE = 'input:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]';
+    overlay._focusTrap = e => {
+      if (e.key !== 'Tab') return;
+      const focusable = [...overlay.querySelectorAll(FOCUSABLE)]
+        .filter(el => !el.closest('.is-hidden'));
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last  = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    overlay.addEventListener('keydown', overlay._focusTrap);
+  }
+
+  function obGoToStep(step) {
+    document.querySelectorAll('.onboarding-step').forEach(s => s.classList.add('is-hidden'));
+    const el = document.querySelector('#onboarding-step-' + step);
+    if (el) el.classList.remove('is-hidden');
+
+    // פס התקדמות: שלב 1=50%, 2=100%, 3 (ניתוח)=100%
+    const pct = step === 1 ? 50 : 100;
+    const bar = document.querySelector('#ob-progress-bar');
+    if (bar) {
+      bar.style.width = pct + '%';
+      const progressEl = bar.closest('[role="progressbar"]');
+      if (progressEl) progressEl.setAttribute('aria-valuenow', String(pct));
+    }
+
+    // תווית שלב
+    const label = document.querySelector('#ob-step-label');
+    if (label) label.textContent = step < 3 ? 'שלב ' + step + ' מתוך 2' : 'מנתח...';
+
+    // עדכון aria-labelledby לכותרת השלב הנוכחי
+    const overlay = document.querySelector('#onboarding-overlay');
+    if (overlay) overlay.setAttribute('aria-labelledby', 'ob-title-' + step);
+
+    // מיקוד: שלב 3 — עוגן ייעודי; שלבים 1–2 — אלמנט ראשון
+    if (el) {
+      const target = step === 3
+        ? document.querySelector('#ob-step3-anchor')
+        : el.querySelector('input:not([disabled]), textarea:not([disabled]), button:not([disabled])');
+      if (target) target.focus();
+    }
+  }
+
+  // M5: אנימציית ניתוח — הודעות מוזרקות ל-ob-live (מחוץ לשלב 3) לאמינות aria-live
+  function obRunAnalyzingStep(onComplete) {
+    const messages = [
+      'מזהה מחלות כרוניות...',
+      'בודק זכאויות ביטוח לאומי...',
+      'מכין את הדשבורד שלך...',
+    ];
+    const liveEl   = document.querySelector('#ob-live');
+    const statusEl = document.querySelector('#ob-status-text');
+    const scanBar  = document.querySelector('#ob-scan-bar');
+
+    // הזרקת ההודעה הראשונה מיד — aria-live כבר רשום
+    if (liveEl)   liveEl.textContent   = messages[0];
+    if (statusEl) statusEl.textContent = messages[0];
+
+    // הפעלת סרגל הסריקה
+    if (scanBar) requestAnimationFrame(() => scanBar.classList.add('is-scanning'));
+
+    let i = 0;
+    const interval = setInterval(() => {
+      i++;
+      if (i < messages.length) {
+        if (liveEl)   liveEl.textContent   = messages[i];
+        if (statusEl) statusEl.textContent = messages[i];
+      }
+    }, 550);
+
+    setTimeout(() => {
+      clearInterval(interval);
+      onComplete();
+    }, 1750);
+  }
+
+  // M4: toast — חשיפה לפני הכתיבה כדי שה-live region יירשם ב-a11y tree לפני המוטציה
+  function showOnboardingToast(count) {
+    const toast = document.querySelector('#ob-toast');
+    if (!toast) return;
+    const noun = count === 1 ? 'זכות' : 'זכויות';
+    const msg  = count > 0
+      ? `✅ נמצאו ${count} ${noun} — ברוכים הבאים!`
+      : '✅ ברוכים הבאים ל-DocuMed!';
+    toast.classList.remove('is-hidden');          // חשיפה קודמת — כניסה לעץ הנגישות
+    requestAnimationFrame(() => {
+      toast.textContent = msg;                    // כתיבה אחרי רישום ה-live region
+    });
+    setTimeout(() => toast.classList.add('is-hidden'), 4000);
+  }
+
+  // ─── SMS COUNTDOWN ───────────────────────────────────────
+  let _smsTimer = null;
+  function startSmsCountdown(seconds) {
+    clearInterval(_smsTimer);
+    const resendBtn   = document.querySelector('#ob-sms-resend');
+    const countdownEl = document.querySelector('#ob-sms-countdown');
+    if (!resendBtn || !countdownEl) return;
+    resendBtn.disabled = true;
+    let remaining = seconds;
+    function tick() {
+      if (remaining > 0) {
+        countdownEl.textContent = `(${remaining} שניות)`;
+        remaining--;
+      } else {
+        clearInterval(_smsTimer);
+        countdownEl.textContent = '';
+        resendBtn.disabled = false;
+      }
+    }
+    tick();
+    _smsTimer = setInterval(tick, 1000);
+  }
+
+  const obSmsResend = document.querySelector('#ob-sms-resend');
+  if (obSmsResend) obSmsResend.addEventListener('click', () => {
+    // סימולציה: שולחים קוד חדש — כל 6 ספרות תקינות
+    startSmsCountdown(60);
+    obSmsResend.disabled = true;
+  });
+
+  // ─── OTP AUTO-ADVANCE ────────────────────────────────────
+  document.querySelectorAll('.otp-input').forEach((input, idx, all) => {
+    input.addEventListener('input', e => {
+      // קבל רק ספרה אחת
+      const val = e.target.value.replace(/\D/g, '').slice(-1);
+      e.target.value = val;
+      if (val && idx < all.length - 1) all[idx + 1].focus();
+    });
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Backspace' && !e.target.value && idx > 0) all[idx - 1].focus();
+      if (e.key === 'ArrowLeft'  && idx < all.length - 1) all[idx + 1].focus();
+      if (e.key === 'ArrowRight' && idx > 0)               all[idx - 1].focus();
+    });
+    // תמיכה בהדבקה של 6 ספרות בבת אחת
+    input.addEventListener('paste', e => {
+      e.preventDefault();
+      const pasted = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '').slice(0, 6);
+      [...pasted].forEach((ch, i) => { if (all[idx + i]) all[idx + i].value = ch; });
+      const nextIdx = Math.min(idx + pasted.length, all.length - 1);
+      all[nextIdx].focus();
+    });
+  });
+
+  // ─── FINISH ONBOARDING (shared) ──────────────────────────
+  function finishOnboarding(rightCount) {
+    const obOverlay = document.querySelector('#onboarding-overlay');
+    if (obOverlay) {
+      if (obOverlay._focusTrap) {
+        obOverlay.removeEventListener('keydown', obOverlay._focusTrap);
+        delete obOverlay._focusTrap;
+      }
+      obOverlay.classList.add('is-hidden');
+    }
+    clearInterval(_smsTimer);
+    document.body.classList.remove('is-onboarding');
+    renderAll();
+    switchTab('rights');
+
+    // M2: dashboard reveal animation
+    const mainEl = document.querySelector('.main');
+    if (mainEl) {
+      mainEl.classList.add('dashboard-reveal-enter');
+      requestAnimationFrame(() => {
+        mainEl.classList.add('dashboard-reveal-active');
+        requestAnimationFrame(() => mainEl.classList.remove('dashboard-reveal-enter'));
+      });
+    }
+
+    showOnboardingToast(rightCount);
+
+    const mainHeading = document.querySelector('#main-content h2[tabindex]');
+    if (mainHeading) mainHeading.focus();
+  }
+
+  // ─── ONBOARDING BTN HANDLERS ─────────────────────────────
+  const obBtnNext   = document.querySelector('#ob-btn-next');
+  const obBtnSubmit = document.querySelector('#ob-btn-submit');
+  const obBtnSkip   = document.querySelector('#ob-btn-skip');
+
+  // שלב 1: אימות OTP — כל 6 ספרות תקינות (סימולציה)
+  if (obBtnNext) obBtnNext.addEventListener('click', () => {
+    const otp = [1,2,3,4,5,6]
+      .map(i => (document.querySelector('#otp-' + i)?.value || ''))
+      .join('');
+    const err = document.querySelector('#ob-step1-error');
+    if (!/^\d{6}$/.test(otp)) {
+      err.classList.remove('is-hidden');
+      return;
+    }
+    err.classList.add('is-hidden');
+    obGoToStep(2);
+  });
+
+  // שלב 2: ניתוח מסמך (קובץ בלבד — אופציונלי)
+  const obFileInput = document.querySelector('#ob-file-upload');
+  if (obFileInput) obFileInput.addEventListener('change', () => {
+    const file    = obFileInput.files?.[0];
+    const preview = document.querySelector('#ob-file-preview');
+    const name    = document.querySelector('#ob-file-preview-name');
+    const submit  = document.querySelector('#ob-btn-submit');
+    if (file && preview && name) {
+      name.textContent = file.name;
+      preview.classList.remove('is-hidden');
+    }
+    if (submit) submit.disabled = false;
+  });
+
+  const obRemoveFile = document.querySelector('#ob-btn-remove-file');
+  if (obRemoveFile) obRemoveFile.addEventListener('click', () => {
+    const fileInput = document.querySelector('#ob-file-upload');
+    const preview   = document.querySelector('#ob-file-preview');
+    if (fileInput) fileInput.value = '';
+    if (preview)   preview.classList.add('is-hidden');
+  });
+
+  // drag-drop על אזור ההעלאה של onboarding
+  const obDropZone = document.querySelector('#ob-drop-zone');
+  if (obDropZone) {
+    obDropZone.addEventListener('dragover', e => { e.preventDefault(); obDropZone.classList.add('is-drag-over'); });
+    obDropZone.addEventListener('dragleave', () => obDropZone.classList.remove('is-drag-over'));
+    obDropZone.addEventListener('drop', e => {
+      e.preventDefault();
+      obDropZone.classList.remove('is-drag-over');
+      const file = e.dataTransfer.files?.[0];
+      if (!file) return;
+      const allowed = /\.(pdf|jpe?g|png)$/i;
+      if (!allowed.test(file.name)) { document.querySelector('#ob-step2-error').textContent = 'סוג קובץ לא נתמך. נא להעלות PDF, JPG, או PNG.'; document.querySelector('#ob-step2-error').classList.remove('is-hidden'); return; }
+      const dt = new DataTransfer();
+      dt.items.add(file);
+      const fi = document.querySelector('#ob-file-upload');
+      if (fi) { fi.files = dt.files; fi.dispatchEvent(new Event('change')); }
+    });
+    obDropZone.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); document.querySelector('#ob-file-upload')?.click(); } });
+  }
+
+  if (obBtnSubmit) obBtnSubmit.addEventListener('click', () => {
+    const fileInput = document.querySelector('#ob-file-upload');
+    const file      = fileInput?.files?.[0];
+    document.querySelector('#ob-step2-error').classList.add('is-hidden');
+
+    const matches = file ? scanDocumentText(file.name) : [];
+    const rights  = matches.map(m => ({
+      id:              m.rightId,
+      matchedKeywords: m.matchedKeywords,
+      savedAt:         new Date().toISOString(),
+    }));
+    if (rights.length) dbSave(KEYS.RIGHTS, rights);
+    dbSave(KEYS.ONBOARDING, '1');
+
+    obGoToStep(3);
+    obRunAnalyzingStep(() => finishOnboarding(rights.length));
+  });
+
+  // דלג — ללא banner, ללא nagging
+  if (obBtnSkip) obBtnSkip.addEventListener('click', () => {
+    dbSave(KEYS.ONBOARDING, '1');
+    finishOnboarding(0);
+  });
+
+  // ─── PERSONAL AREA ────────────────────────────────────────
+  const CONDITION_OPTIONS = [
+    { id: 'diabetes',     label: '🩺 סוכרת' },
+    { id: 'hypertension', label: '🫀 יתר לחץ דם' },
+    { id: 'heart',        label: '❤️ מחלת לב' },
+    { id: 'stroke',       label: '🧠 שבץ מוחי' },
+    { id: 'copd',         label: '🫁 מחלת ריאות / COPD' },
+    { id: 'asthma',       label: '💨 אסתמה' },
+    { id: 'cancer',       label: '🎗️ סרטן' },
+    { id: 'kidney',       label: '🫘 מחלת כליות' },
+    { id: 'disability',   label: '♿ נכות מוכרת' },
+    { id: 'mental',       label: '🧘 דיכאון / חרדה' },
+    { id: 'dementia',     label: '🗂️ דמנציה / אלצהיימר' },
+    { id: 'arthritis',    label: '🦴 דלקת מפרקים' },
+    { id: 'osteoporosis', label: '🦷 אוסטאופורוזיס' },
+    { id: 'thyroid',      label: '⚕️ בלוטת התריס' },
+  ];
+
+  function openPersonalArea() {
+    const user = getUser();
+    if (!user) return;
+    const paName   = document.querySelector('#pa-name');
+    const paEmail  = document.querySelector('#pa-email');
+    const paPhone  = document.querySelector('#pa-phone');
+    const paPinNew = document.querySelector('#pa-pin-new');
+    if (paName)   paName.value   = user.name  || '';
+    if (paEmail)  paEmail.value  = user.email || '';
+    if (paPhone)  paPhone.value  = user.phone || '';
+    if (paPinNew) paPinNew.value = '';
+
+    const grid = document.querySelector('#pa-conditions-grid');
+    if (grid) {
+      const saved = Array.isArray(user.conditions) ? user.conditions : [];
+      grid.innerHTML = CONDITION_OPTIONS.map(c =>
+        `<label class="condition-chip">` +
+          `<input type="checkbox" name="cond_${escapeHtml(c.id)}"${saved.includes(c.id) ? ' checked' : ''} aria-label="${escapeHtml(c.label)}">` +
+          `<span>${escapeHtml(c.label)}</span>` +
+        `</label>`
+      ).join('');
+    }
+    openModal('modal-personal-area');
+  }
+
+  document.querySelector('#btn-open-personal-area')?.addEventListener('click', openPersonalArea);
+  document.querySelector('#btn-close-pa')?.addEventListener('click',  () => closeModal('modal-personal-area'));
+  document.querySelector('#btn-pa-cancel')?.addEventListener('click', () => closeModal('modal-personal-area'));
+
+  document.querySelector('#modal-personal-area')?.addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeModal('modal-personal-area');
+  });
+
+  document.querySelector('#btn-pa-save')?.addEventListener('click', async () => {
+    const user   = getUser();
+    if (!user) return;
+    const name   = document.querySelector('#pa-name')?.value.trim()   || '';
+    const email  = document.querySelector('#pa-email')?.value.trim()  || '';
+    const phone  = document.querySelector('#pa-phone')?.value.trim()  || '';
+    const pinNew = document.querySelector('#pa-password-new')?.value.trim() || '';
+    const saveBtn = document.querySelector('#btn-pa-save');
+
+    function paError(msg) {
+      if (saveBtn) { saveBtn.textContent = msg; setTimeout(() => { saveBtn.textContent = 'שמור שינויים'; }, 2500); }
+    }
+
+    if (!name || !email)                               { paError('שם ואימייל הם שדות חובה'); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))    { paError('כתובת אימייל לא תקינה'); return; }
+    if (pinNew && pinNew.length < 6)                   { paError('סיסמה חדשה: לפחות 6 תווים'); return; }
+
+    const conditions = CONDITION_OPTIONS
+      .filter(c => document.querySelector(`#pa-conditions-grid input[name="cond_${c.id}"]`)?.checked)
+      .map(c => c.id);
+
+    user.name       = name;
+    user.email      = email;
+    user.phone      = phone || null;
+    user.initials   = getInitials(name);
+    user.conditions = conditions;
+
+    if (pinNew) {
+      const { error: pwErr } = await supabaseClient.auth.updateUser({ password: pinNew });
+      if (pwErr) { paError('שגיאה בשינוי סיסמה — נסה שוב'); return; }
+    }
+
+    if (!saveUser(user)) { paError('לא ניתן לשמור — נסה שוב'); return; }
+
+    // עדכן פרופיל ומצבים רפואיים ב-Supabase
+    const { data: { user: paAuthUser } } = await supabaseClient.auth.getUser();
+    if (paAuthUser) {
+      await supabaseClient
+        .from('users')
+        .update({ full_name: name, phone: phone || '' })
+        .eq('id', paAuthUser.id);
+      // סנכרן מצבים: מחק הישנים והוסף החדשים
+      await supabaseClient.from('medical_conditions').delete().eq('user_id', paAuthUser.id);
+      if (conditions.length > 0) {
+        await supabaseClient.from('medical_conditions').insert(
+          conditions.map(c => ({ user_id: paAuthUser.id, condition_name: c }))
+        );
+      }
+      _state.conditions = conditions;
+    }
+
+    applyUserToUI(user);
+    closeModal('modal-personal-area');
+  });
+
+  async function logout() {
+    closeModal('modal-personal-area');
+    await supabaseClient.auth.signOut();
+    localStorage.removeItem(KEYS.USER);
+    sessionStorage.clear();
+    const avatarEl = document.querySelector('#header-avatar');
+    const nameEl   = document.querySelector('#header-name');
+    const emailEl  = document.querySelector('#header-email');
+    if (avatarEl) avatarEl.textContent = '?';
+    if (nameEl)   nameEl.textContent   = '—';
+    if (emailEl)  emailEl.textContent  = '—';
+    showAuthScreen();
+  }
+
+  document.querySelector('#btn-pa-logout')?.addEventListener('click', logout);
+
+  document.querySelector('#btn-pa-delete-all')?.addEventListener('click', async () => {
+    if (!confirm('האם למחוק את כל הנתונים שלך?\nפעולה זו אינה הפיכה.')) return;
+    await supabaseClient.auth.signOut();
+    try { localStorage.clear(); } catch (_) { /* silent */ }
+    sessionStorage.clear();
+    location.reload();
+  });
+
+  // ─── INIT ─────────────────────────────────────────────────
+  initData();
+  renderAll();
+  checkOnboarding();
+  updateCountdown();
+  setInterval(updateCountdown, 60000);
+  const dateEl = document.querySelector('#meds-date-full');
+  if (dateEl) dateEl.textContent = new Date().toLocaleDateString('he-IL', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+  updateMedProgress();
+</script>
+</body>
+</html>
