@@ -1899,6 +1899,197 @@
     border-top: 1px solid var(--color-neutral-200);
   }
 
+  /* ── AI RIGHTS ZONE ───────────────────────────────────────── */
+  .rights-ai-zone {
+    background: var(--bg-purple-soft);
+    border: 1px solid var(--border-purple);
+    border-radius: var(--radius-2xl);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .rights-ai-zone__header {
+    display: flex;
+    align-items: flex-start;
+    gap: .75rem;
+    margin-bottom: 1rem;
+  }
+  .rights-ai-zone__icon { font-size: 1.75rem; line-height: 1; flex-shrink: 0; }
+  .rights-ai-zone__title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-neutral-800);
+  }
+  .rights-ai-zone__subtitle {
+    font-size: .82rem;
+    color: var(--color-neutral-500);
+    margin-top: .2rem;
+    line-height: 1.5;
+  }
+  .rights-ai-zone__actions { display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; }
+  .rights-ai-upload-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    background: var(--color-teal-btn);
+    color: var(--color-white);
+    border-radius: var(--radius-xl);
+    padding: .6rem 1.25rem;
+    font-size: .875rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    font-family: var(--font-sans);
+    transition: opacity .18s;
+  }
+  .rights-ai-upload-btn:hover { opacity: .88; }
+  .rights-ai-upload-btn input[type="file"] { display: none; }
+  .rights-ai-loading {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    margin-top: 1rem;
+    padding: .75rem 1rem;
+    background: var(--color-white);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--border-purple);
+  }
+  .rights-ai-loading.is-hidden { display: none; }
+  .rights-ai-loading__dots { display: flex; gap: .3rem; }
+  .rights-ai-loading__dots span {
+    width: .55rem;
+    height: .55rem;
+    background: var(--color-teal-500);
+    border-radius: var(--radius-circle);
+    animation: ai-dot-bounce .9s ease-in-out infinite;
+  }
+  .rights-ai-loading__dots span:nth-child(2) { animation-delay: .15s; }
+  .rights-ai-loading__dots span:nth-child(3) { animation-delay: .3s; }
+  @keyframes ai-dot-bounce {
+    0%, 80%, 100% { transform: translateY(0); opacity: .4; }
+    40%           { transform: translateY(-.4rem); opacity: 1; }
+  }
+  .rights-ai-loading__text {
+    font-size: .875rem;
+    font-weight: 500;
+    color: var(--color-neutral-600);
+  }
+
+  /* ── ELIGIBLE RIGHTS CARDS (תוצאות AI) ────────────────────── */
+  .rights-eligible-header-row {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    margin-bottom: .75rem;
+  }
+  .rights-eligible-title-row {
+    font-size: .875rem;
+    font-weight: 700;
+    color: var(--color-neutral-700);
+  }
+  .rights-eligible-count {
+    background: var(--badge-purple-bg);
+    color: var(--badge-purple-text);
+    border-radius: var(--radius-pill);
+    padding: .15rem .55rem;
+    font-size: .72rem;
+    font-weight: 700;
+  }
+  .rights-eligible-list { display: flex; flex-direction: column; gap: .9rem; margin-bottom: 1.5rem; }
+  .right-eligible-card {
+    background: var(--color-white);
+    border-radius: var(--radius-xl);
+    padding: 1rem 1.25rem;
+    border: 1.5px solid var(--color-neutral-200);
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow .18s, opacity .25s;
+  }
+  .right-eligible-card.is-realized {
+    opacity: .65;
+    border-color: var(--border-green);
+    background: var(--bg-green-soft);
+  }
+  .right-eligible-card__header {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    margin-bottom: .6rem;
+  }
+  .right-eligible-card__icon {
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: var(--radius-xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .right-eligible-card__body { flex: 1; min-width: 0; }
+  .right-eligible-card__name {
+    font-size: .9rem;
+    font-weight: 700;
+    color: var(--color-neutral-800);
+    line-height: 1.3;
+  }
+  .right-eligible-card__authority {
+    display: inline-flex;
+    align-items: center;
+    gap: .2rem;
+    margin-top: .25rem;
+    font-size: .72rem;
+    font-weight: 600;
+    color: var(--badge-purple-text);
+    background: var(--badge-purple-bg);
+    border-radius: var(--radius-pill);
+    padding: .1rem .5rem;
+  }
+  .right-eligible-card__actions {
+    display: flex;
+    gap: .5rem;
+    flex-wrap: wrap;
+    margin-top: .75rem;
+    padding-top: .75rem;
+    border-top: 1px solid var(--color-neutral-200);
+  }
+  .btn-realized {
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+    background: var(--color-neutral-100);
+    border: 1.5px solid var(--color-neutral-200);
+    border-radius: var(--radius-pill);
+    padding: .4rem .9rem;
+    font-size: .8rem;
+    font-weight: 600;
+    color: var(--color-neutral-600);
+    cursor: pointer;
+    font-family: var(--font-sans);
+    transition: background .18s, border-color .18s, color .18s;
+  }
+  .btn-realized:hover { background: var(--bg-green-soft); border-color: var(--border-green); }
+  .btn-realized.is-realized {
+    background: var(--bg-green-soft);
+    border-color: var(--border-green);
+    color: var(--status-active-text);
+  }
+  .btn-prepare-form {
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+    background: var(--color-teal-btn);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--radius-pill);
+    padding: .4rem .9rem;
+    font-size: .8rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: var(--font-sans);
+    transition: opacity .18s;
+  }
+  .btn-prepare-form:hover { opacity: .88; }
+  .btn-prepare-form:disabled { opacity: .6; cursor: not-allowed; }
+
   /* ── EMPTY STATE ─────────────────────────────────────────── */
   .empty-state-card {
     display: flex;
@@ -2209,6 +2400,34 @@
       <h2 class="section-title" id="title-tab-rights">⚖️ זכויות והטבות</h2>
       <button class="btn-add" id="btn-add-right" aria-label="הוסף זכות">+ הוסף זכות</button>
     </div>
+
+    <!-- אזור ניתוח AI -->
+    <div class="rights-ai-zone">
+      <div class="rights-ai-zone__header">
+        <span class="rights-ai-zone__icon" aria-hidden="true">🤖</span>
+        <div>
+          <div class="rights-ai-zone__title">ניתוח מסמכים חכם</div>
+          <div class="rights-ai-zone__subtitle">העלה מסמך רפואי וסוכן ה-AI יזהה את הזכויות שמגיעות לך אוטומטית</div>
+        </div>
+      </div>
+      <div class="rights-ai-zone__actions">
+        <label class="rights-ai-upload-btn" for="rights-doc-upload">
+          <span aria-hidden="true">📎</span> העלה מסמך לניתוח
+          <input id="rights-doc-upload" type="file" accept=".pdf,.jpg,.jpeg,.png" aria-label="בחירת מסמך לניתוח זכויות">
+        </label>
+      </div>
+      <div class="rights-ai-loading is-hidden" id="rights-ai-loading" role="status" aria-live="polite" aria-atomic="true">
+        <div class="rights-ai-loading__dots" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+        <div class="rights-ai-loading__text">סוכן ה-AI מנתח את המסמכים...</div>
+      </div>
+    </div>
+
+    <!-- תוצאות AI -->
+    <div id="rights-ai-results" aria-live="polite" aria-atomic="false"></div>
+
+    <!-- זכויות שנוספו ידנית -->
     <div class="rights-full-list" id="render-full-rights"></div>
   </section>
 
@@ -3599,6 +3818,91 @@
     );
   }
 
+  // ─── AI AGENTS ──────────────────────────────────────────────
+
+  /**
+   * agentOne_analyzeRights — סוכן 1: ניתוח מסמך וחיפוש זכויות
+   * מדמה סריקת מסמך וחיפוש באתרי ממשלה (כל זכות, ביטוח לאומי).
+   * @param {File} documentFile
+   * @returns {Promise<Array>}
+   */
+  async function agentOne_analyzeRights(documentFile) { // eslint-disable-line no-unused-vars
+    // Placeholder: מחזיר זכויות מדומות לאחר 2 שניות
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    return [
+      {
+        rightId:   'cat-diabetes-1',
+        name:      'קצבת נכות לחולי סוכרת',
+        authority: 'ביטוח לאומי',
+        icon:      '🩺',
+        iconBg:    'var(--bg-teal-soft)',
+      },
+      {
+        rightId:   'cat-disability-2',
+        name:      'תו נכה וחניה נגישה',
+        authority: 'משרד התחבורה',
+        icon:      '🚗',
+        iconBg:    'var(--bg-blue-soft)',
+      },
+      {
+        rightId:   'cat-transport-1',
+        name:      'הנחה בתחבורה ציבורית',
+        authority: 'משרד התחבורה',
+        icon:      '🚌',
+        iconBg:    'var(--bg-orange-soft)',
+      },
+    ];
+  }
+
+  /**
+   * agentTwo_generateForm — סוכן 2: הכנת טופס ביורוקרטי
+   * מדמה עיבוד נתוני מטופל ויצירת טופס הגשה מותאם אישית.
+   * @param {string} rightId
+   * @param {Object} patientData
+   */
+  async function agentTwo_generateForm(rightId, patientData) { // eslint-disable-line no-unused-vars
+    // Placeholder: מדמה עיבוד 3 שניות ומציג הודעת הצלחה
+    await new Promise(resolve => setTimeout(resolve, 3000));
+    alert('הטופס הוכן בהצלחה ומוכן להורדה/הגשה');
+  }
+
+  /**
+   * renderEligibleRights — מרנדר את תוצאות ניתוח ה-AI בכרטיסיית הזכויות
+   */
+  function renderEligibleRights(rights) {
+    const el = document.querySelector('#rights-ai-results');
+    if (!el) return;
+    if (!rights || !rights.length) { el.innerHTML = ''; return; }
+    el.innerHTML =
+      `<div class="rights-eligible-header-row">` +
+        `<span class="rights-eligible-title-row">זכויות שזוהו עבורך</span>` +
+        `<span class="rights-eligible-count">${rights.length} זכויות</span>` +
+      `</div>` +
+      `<div class="rights-eligible-list">` +
+        rights.map(r =>
+          `<div class="right-eligible-card" id="right-eligible-${escapeHtml(r.rightId)}">` +
+            `<div class="right-eligible-card__header">` +
+              `<div class="right-eligible-card__icon" style="background:${r.iconBg || 'var(--bg-purple-soft)'}">` +
+                `${escapeHtml(r.icon || '⚖️')}` +
+              `</div>` +
+              `<div class="right-eligible-card__body">` +
+                `<div class="right-eligible-card__name">${escapeHtml(r.name)}</div>` +
+                `<span class="right-eligible-card__authority"><span aria-hidden="true">🏛️</span> ${escapeHtml(r.authority)}</span>` +
+              `</div>` +
+            `</div>` +
+            `<div class="right-eligible-card__actions">` +
+              `<button class="btn-realized" data-action="toggle-realized" data-right-id="${escapeHtml(r.rightId)}" aria-label="סמן ${escapeHtml(r.name)} כמומש">` +
+                `✓ מימשתי` +
+              `</button>` +
+              `<button class="btn-prepare-form" data-action="ai-generate-form" data-right-id="${escapeHtml(r.rightId)}" data-right-name="${escapeHtml(r.name)}" aria-label="הכן טופס עבור ${escapeHtml(r.name)}">` +
+                `📋 הכן טופס נדרש` +
+              `</button>` +
+            `</div>` +
+          `</div>`
+        ).join('') +
+      `</div>`;
+  }
+
   // generateUniversalForm(rightId) — נקרא מכפתורי "צור טופס להגשה" בכרטיסיות הזכויות
   function generateUniversalForm(rightId) {
     // חיפוש בקטלוג קודם; אחרת טוענים מה-localStorage (ייבוא ידני / טופס)
@@ -4109,6 +4413,25 @@
       const rightId = actionEl.dataset.rightId;
       generateUniversalForm(rightId);
     }
+    else if (action === 'toggle-realized') {
+      e.stopPropagation();
+      const card = document.querySelector(`#right-eligible-${actionEl.dataset.rightId}`);
+      if (!card) return;
+      const isRealized = card.classList.toggle('is-realized');
+      actionEl.classList.toggle('is-realized', isRealized);
+      actionEl.textContent = isRealized ? '✓ מומש' : '✓ מימשתי';
+    }
+    else if (action === 'ai-generate-form') {
+      e.stopPropagation();
+      const rightId = actionEl.dataset.rightId;
+      const user = getUser();
+      actionEl.disabled = true;
+      actionEl.textContent = 'מכין טופס...';
+      agentTwo_generateForm(rightId, user || {}).finally(() => {
+        actionEl.disabled = false;
+        actionEl.textContent = '📋 הכן טופס נדרש';
+      });
+    }
   }
   document.addEventListener('click', e => _handleAction(e, e.target.closest('[data-action]')));
   // תמיכה במקלדת: Enter/Space מפעילים כרטיסים אינטראקטיביים (role=button)
@@ -4181,6 +4504,34 @@
     if (preview)  preview.classList.remove('is-hidden');
     if (scanBtn)  scanBtn.disabled = false;
     if (dropZone) dropZone.classList.remove('is-drag-over');
+  }
+
+  // ── קובץ לניתוח AI זכויות ──
+  const rightsDocInput = document.querySelector('#rights-doc-upload');
+  if (rightsDocInput) {
+    rightsDocInput.addEventListener('change', async function(e) {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      const loadingEl = document.querySelector('#rights-ai-loading');
+      const resultsEl = document.querySelector('#rights-ai-results');
+      if (loadingEl) loadingEl.classList.remove('is-hidden');
+      if (resultsEl) resultsEl.innerHTML = '';
+      try {
+        const rights = await agentOne_analyzeRights(file);
+        renderEligibleRights(rights);
+        if (resultsEl && rights.length) resultsEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      } catch (_) {
+        if (resultsEl) resultsEl.innerHTML =
+          '<div class="card empty-state-card" style="margin-bottom:1rem">' +
+            '<div class="empty-state-icon">⚠️</div>' +
+            '<div class="empty-state-title">שגיאה בניתוח המסמך</div>' +
+            '<div class="empty-state-body">אירעה שגיאה בעת ניתוח המסמך. אנא נסה שוב.</div>' +
+          '</div>';
+      } finally {
+        if (loadingEl) loadingEl.classList.add('is-hidden');
+        e.target.value = '';
+      }
+    });
   }
 
   // change על input קובץ
