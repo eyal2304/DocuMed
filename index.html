@@ -2,7 +2,7 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' https://cdn.jsdelivr.net https://*.supabase.co; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src https://*.supabase.co https://cdn.jsdelivr.net;">
 <title>DocuMed – ניהול מחלות כרוניות</title>
 <style>
@@ -1013,7 +1013,7 @@
     border: 2px solid var(--color-neutral-200);
     border-radius: var(--radius-xl);
     font-family: var(--font-sans);
-    font-size: .9rem;
+    font-size: 1rem; /* ≥16px מונע זום אוטומטי ב-iOS Safari */
     color: var(--color-neutral-800);
     background: var(--color-white);
     transition: border-color .18s, box-shadow .18s;
@@ -1249,7 +1249,7 @@
     border: 1px solid var(--color-neutral-200);
     border-radius: var(--radius-xl);
     font-family: var(--font-sans);
-    font-size: .9rem;
+    font-size: 1rem; /* ≥16px מונע זום אוטומטי ב-iOS Safari */
     color: var(--color-neutral-800);
     box-sizing: border-box;
     transition: border-color .15s, box-shadow .15s;
@@ -1279,6 +1279,22 @@
     min-height: 44px;
   }
 
+  /* ── רשת סטטיסטיקות (4 עמודות, קורס ל-2 במובייל) ── */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    text-align: center;
+  }
+
+  /* ── רשת סיכום מסמכים (2 עמודות, קורסת ל-1 במובייל) ── */
+  .docs-summary-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .7rem;
+    margin-bottom: 1rem;
+  }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
     .col-span-4, .col-span-5, .col-span-6, .col-span-7, .col-span-8 { grid-column: span 12; }
@@ -1291,8 +1307,31 @@
     .col-span-4, .col-span-5, .col-span-6, .col-span-7, .col-span-8, .col-span-12 { grid-column: span 1; }
     .main { padding: .75rem; }
     .docs-grid { grid-template-columns: 1fr; }
+    .docs-full-grid { grid-template-columns: 1fr; }
     .hero-appointment-date { font-size: 1.5rem; }
-    .docs-full-grid { grid-template-columns: 1fr 1fr; }
+    /* פאנלי סטטיסטיקות ומסמכים */
+    .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+    .docs-summary-grid { grid-template-columns: 1fr !important; }
+    /* מודאל */
+    .modal {
+      padding: 1rem;
+      max-width: calc(100vw - 1.5rem);
+      max-height: 90vh;
+    }
+    .modal-footer {
+      flex-wrap: wrap;
+      padding: .75rem 1rem;
+      gap: .5rem;
+    }
+    .modal-footer .btn-danger-outline {
+      width: 100%;
+      margin-inline-end: 0;
+    }
+    /* כרטיס כניסה */
+    .auth-card { padding: 1.5rem 1rem; }
+    /* כותרת וניווט */
+    .header { padding-inline: .75rem; }
+    .nav-bar { padding-inline: .5rem; }
   }
 
   /* ── SKIP LINK ── */
@@ -3174,7 +3213,7 @@
     el.innerHTML =
       `<div class="card teal" style="cursor:default">` +
         `<div class="card-header"><div class="card-icon-title"><span class="card-icon">📊</span><span class="card-title">סיכום מצב</span></div></div>` +
-        `<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;text-align:center">` +
+        `<div class="stats-grid">` +
           `<div><div class="stat-value" style="color:var(--color-teal-500);font-size:1.6rem">${upcomingAppts}</div><div class="stat-label">תורים מתוכננים</div></div>` +
           `<div><div class="stat-value" style="color:var(--stat-blue-text);font-size:1.6rem">${medications.length}</div><div class="stat-label">תרופות יומיות</div></div>` +
           `<div><div class="stat-value" style="color:var(--stat-purple-text);font-size:1.6rem">${activeRights}</div><div class="stat-label">זכויות פעילות</div></div>` +
@@ -3313,7 +3352,7 @@
     const readyCount  = documents.filter(d => d.status === 'ready').length;
     const neededCount = documents.filter(d => d.status === 'needed').length;
     summaryEl.innerHTML =
-      `<div style="display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-bottom:1rem">` +
+      `<div class="docs-summary-grid">` +
         `<div style="background:var(--docs-ready-panel-bg);border-radius:var(--radius-xl);padding:.75rem 1rem;display:flex;align-items:center;gap:.5rem"><span style="font-size:1.1rem">✅</span><div><div style="font-size:1.1rem;font-weight:800;color:var(--docs-ready-panel-num)">${readyCount}</div><div style="font-size:.72rem;font-weight:600;color:var(--docs-ready-panel-label)">מסמכים מוכנים</div></div></div>` +
         `<div style="background:var(--docs-needed-panel-bg);border-radius:var(--radius-xl);padding:.75rem 1rem;display:flex;align-items:center;gap:.5rem"><span style="font-size:1.1rem">⚠️</span><div><div style="font-size:1.1rem;font-weight:800;color:var(--docs-needed-panel-num)">${neededCount}</div><div style="font-size:.72rem;font-weight:600;color:var(--docs-needed-panel-label)">מסמכים חסרים</div></div></div>` +
       `</div>`;
@@ -3565,7 +3604,6 @@
 
   // ─── CRUD ────────────────────────────────────────────────
   const KEYS_MAP = {
-    appointment: KEYS.APPOINTMENTS,
     medication:  KEYS.MEDICATIONS,
     right:       KEYS.RIGHTS,
     document:    KEYS.DOCUMENTS,
@@ -3786,9 +3824,23 @@
 
     // ── תורים — Supabase ──────────────────────────────────────
     if (type === 'appointment') {
+      const deleteBtn = document.querySelector('#btn-delete-confirm');
+      if (deleteBtn) { deleteBtn.disabled = true; deleteBtn.textContent = 'מוחק...'; }
+
       const { error } = await supabaseClient.from('appointments').delete().eq('id', id);
-      if (!error) _state.appointments = _state.appointments.filter(x => x.id !== id);
+
+      if (error) {
+        if (deleteBtn) {
+          deleteBtn.disabled = false;
+          deleteBtn.textContent = 'שגיאה — נסה שוב';
+          setTimeout(() => { deleteBtn.textContent = 'מחיקה'; }, 2500);
+        }
+        return;
+      }
+
+      _state.appointments = _state.appointments.filter(x => x.id !== id);
       closeModal('modal-confirm-delete');
+      if (deleteBtn) { deleteBtn.disabled = false; deleteBtn.textContent = 'מחיקה'; }
       renderAll();
       updateCountdown();
       updateMedProgress();
@@ -4520,16 +4572,25 @@
     // עדכן פרופיל ומצבים רפואיים ב-Supabase
     const { data: { user: paAuthUser } } = await supabaseClient.auth.getUser();
     if (paAuthUser) {
-      await supabaseClient
+      // עדכן שם וטלפון
+      const { error: profileErr } = await supabaseClient
         .from('users')
         .update({ full_name: name, phone: phone || '' })
         .eq('id', paAuthUser.id);
-      // סנכרן מצבים: מחק הישנים והוסף החדשים
-      await supabaseClient.from('medical_conditions').delete().eq('user_id', paAuthUser.id);
+      if (profileErr) { paError('שגיאה בשמירת הפרופיל — נסה שוב'); return; }
+
+      // סנכרן מצבים רפואיים: מחק הישנים והוסף החדשים
+      const { error: condDelErr } = await supabaseClient
+        .from('medical_conditions')
+        .delete()
+        .eq('user_id', paAuthUser.id);
+      if (condDelErr) { paError('שגיאה בשמירת מצבים רפואיים — נסה שוב'); return; }
+
       if (conditions.length > 0) {
-        await supabaseClient.from('medical_conditions').insert(
-          conditions.map(c => ({ user_id: paAuthUser.id, condition_name: c }))
-        );
+        const { error: condInsErr } = await supabaseClient
+          .from('medical_conditions')
+          .insert(conditions.map(c => ({ user_id: paAuthUser.id, condition_name: c })));
+        if (condInsErr) { paError('שגיאה בשמירת מצבים רפואיים — נסה שוב'); return; }
       }
       _state.conditions = conditions;
     }

@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 \"/mnt/c/Users/eyal2/OneDrive/DocuMed/.claude/hooks/validate_index.py\")",
+      "Bash(python3:*)",
+      "Bash(grep -n \"#[0-9a-fA-F]\\\\{3,6\\\\}\" /mnt/c/Users/eyal2/OneDrive/DocuMed/index.html)",
+      "Bash(git init:*)",
+      "Bash(cp:*)",
+      "Bash(gh auth:*)",
+      "Bash(git --version)",
+      "Bash(export GD=\"--git-dir=/mnt/c/Users/eyal2/OneDrive/DocuMed/.git --work-tree=/mnt/c/Users/eyal2/OneDrive/DocuMed\")",
+      "Bash(git $GD config user.name \"eyal2304\")",
+      "Bash(git $GD config user.email \"eyal2304@users.noreply.github.com\")",
+      "Bash(git $GD config core.fileMode false)",
+      "Bash(git $GD add index.html CLAUDE.md agents/ frontend/ ruls/ skills/)",
+      "Bash(git $GD:*)"
+    ]
+  }
+}
